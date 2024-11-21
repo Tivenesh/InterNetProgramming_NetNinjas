@@ -2,10 +2,14 @@ package com.tvpss.controller;
 
 import com.tvpss.model.User;
 import com.tvpss.service.UserService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -13,22 +17,50 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // View all users (manage users page)
     @GetMapping("/manageUsers")
-    public String manageUsers(Model model) {
-        model.addAttribute("users", userService.findAllUsers()); // Add the users to the model
-        return "superadmin/manageUsers"; // Return the view to display users
+    public String manageUsers(@RequestParam(defaultValue = "1") int page, Model model) {
+        int pageSize = 6; // Number of users per page
+        List<User> allUsers = userService.findAllUsers();
+        int totalUsers = allUsers.size();
+        int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalUsers);
+        List<User> usersOnPage = allUsers.subList(startIndex, endIndex);
+
+        model.addAttribute("users", usersOnPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        return "superadmin/manageUsers";
     }
 
+    @GetMapping("/addUser")
+    public String addUser(@RequestParam("username") String username, Model model) {
+        User user = userService.findAllUsers().stream()
+                               .filter(u -> u.getUsername().equals(username))
+                               .findFirst()
+                               .orElse(null);
+        model.addAttribute("user", user);
+        return "superadmin/addUser"; 
+    }
+    
     // Add a new user
     @PostMapping("/addUser")
     public String addUser(@RequestParam("username") String username,
-                          @RequestParam("password") String password,
+                          @RequestParam("email") String email,
                           @RequestParam("role") int role,
+                          @RequestParam("state") String state,
+                          @RequestParam("password") String password,
+                          @RequestParam("confirmPassword") String confirmPassword,
                           Model model) {
-        userService.addUser(username, password, role); // Add the user via the service
-        model.addAttribute("message", "User added successfully!");
-        return "redirect:/message"; // Redirect to message page
+        // Validate if passwords match
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error", "Passwords do not match.");
+            return "superadmin/addUser";
+        }
+
+        userService.addUser(username, email, role, state, password);
+        return "redirect:/manageUsers";
     }
 
     // Show edit user form
@@ -38,31 +70,31 @@ public class UserController {
                                .filter(u -> u.getUsername().equals(username))
                                .findFirst()
                                .orElse(null);
-        model.addAttribute("user", user); // Add the user to the model for editing
-        return "superadmin/editUser"; // Return the view for editing
+        model.addAttribute("user", user);
+        return "superadmin/editUser";
     }
 
     // Update user
     @PostMapping("/updateUser")
     public String updateUser(@RequestParam("username") String username,
                              @RequestParam("password") String password,
-                             @RequestParam("role") int role) {
-        userService.updateUser(username, password, role); // Update the user
-        return "redirect:/manageUsers"; // Redirect back to the user table
+                             @RequestParam("role") int role,
+                             @RequestParam("state") String state,
+                             @RequestParam("email") String email) {
+        userService.updateUser(username, password, role, state, email);
+        return "redirect:/manageUsers";
     }
-
 
     // Delete a user
     @PostMapping("/deleteUser")
     public String deleteUser(@RequestParam("username") String username, Model model) {
-        userService.deleteUser(username); // Delete the user via the service
+        userService.deleteUser(username);
         model.addAttribute("message", "User deleted successfully!");
-        return "redirect:/message"; // Redirect to message page
+        return "redirect:/message";
     }
 
-    // Show message after actions
     @GetMapping("/message")
     public String showMessage(Model model) {
-        return "superadmin/message"; // Show message page
+        return "superadmin/message";
     }
 }
