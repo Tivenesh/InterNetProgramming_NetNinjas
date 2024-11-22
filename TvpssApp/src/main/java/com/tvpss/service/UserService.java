@@ -47,13 +47,13 @@ public class UserService {
         users.put(username, new User(username, password, role, state, email));
     }
     
-    public void updateUser(String username, String password, int role, String state, String email) {
+    public void updateUser(String username, String email, int role, String state) {
         User user = users.get(username);
         if (user != null) {
-            user.setPassword(password);
+            user.setEmail(email);
             user.setRole(role);
             user.setState(state);
-            user.setEmail(email);
+           
         }
     }
 
