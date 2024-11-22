@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Add User</title>
-    <link rel="stylesheet" href="/TvpssApp/resources/css/superAdminDashboard.css"> <!-- Reference your existing CSS -->
+    <link rel="stylesheet" href="/TvpssApp/resources/css/superAdminDashboard.css">
     <style>
         .form-container {
-            background: #FFFFFF; /* White background for the form */
+            background: #FFFFFF;
             border-radius: 10px;
             padding: 30px;
             max-width: 500px;
-            margin: 40px auto; /* Center horizontally and add space on top */
+            margin: 40px auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -67,8 +67,9 @@
             background: #D1D5DB; /* Darker gray on hover */
         }
 
+		/* Breadcrumb Styling */
         .breadcrumb {
-            margin: 20px 30px; /* Space for the breadcrumb above the form */
+            margin: 20px 10px; /* Space for the breadcrumb above the form */
             font-size: 14px;
             color: #6B7280; /* Neutral gray for breadcrumb */
         }
@@ -78,19 +79,8 @@
             color: #4B6CB7; /* Blue color for active breadcrumb */
         }
     </style>
-    <script>
-        // JavaScript function to validate passwords
-        function validatePasswords() {
-            const password = document.getElementById("password").value;
-            const confirmPassword = document.getElementById("confirmPassword").value;
-            if (password !== confirmPassword) {
-                alert("Passwords do not match!");
-                return false; // Prevent form submission
-            }
-            return true;
-        }
-    </script>
 </head>
+
 <body>
     <div class="dashboard">
         <!-- Sidebar -->
@@ -133,6 +123,11 @@
                         <span>User<br>Super Admin</span>
                     </div>
                 </div>
+                <div class="divider"></div> <!-- Thin dividing line -->
+			    <!-- Bottom Section: Welcome and Search Bar -->
+			    <div class="welcome-search">
+			        <h1>User Management</h1>
+			    </div>
             </header>
 
             <!-- Breadcrumb -->
@@ -142,13 +137,12 @@
 
             <!-- Add User Form -->
             <div class="form-container">
-                <h1>Create New User</h1>
-                <form action="/TvpssApp/addUser" method="post" onsubmit="return validatePasswords()">
+                <form action="/TvpssApp/addUser" method="post" onsubmit="return validateForm()">
                     <label for="username">Full Name:</label>
                     <input type="text" id="username" name="username" required placeholder="Fill in your name">
 
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required placeholder="email@moe.gov.my">
+                    <input type="email" id="email" name="email" required placeholder="email@tvpss.com">
 
                     <label for="role">Type of Role:</label>
                     <select id="role" name="role" required>
@@ -164,21 +158,18 @@
                     <select id="state" name="state" required>
                         <option value="" disabled selected>Select a state</option>
                         <option value="Johor">Johor</option>
-                        <option value="Kedah">Kedah</option>
-                        <option value="Kelantan">Kelantan</option>
                         <option value="Melaka">Melaka</option>
                         <option value="Negeri Sembilan">Negeri Sembilan</option>
+                        <option value="Selangor">Selangor</option>
                         <option value="Pahang">Pahang</option>
                         <option value="Perak">Perak</option>
+                        <option value="Kelantan">Kelantan</option>
+                        <option value="Terengganu">Terengganu</option>
+                        <option value="Penang">Penang</option>
+                        <option value="Kedah">Kedah</option>
                         <option value="Perlis">Perlis</option>
-                        <option value="Pulau Pinang">Pulau Pinang</option>
                         <option value="Sabah">Sabah</option>
                         <option value="Sarawak">Sarawak</option>
-                        <option value="Selangor">Selangor</option>
-                        <option value="Terengganu">Terengganu</option>
-                        <option value="Kuala Lumpur">Kuala Lumpur</option>
-                        <option value="Labuan">Labuan</option>
-                        <option value="Putrajaya">Putrajaya</option>
                     </select>
 
                     <label for="password">Password:</label>
@@ -195,5 +186,27 @@
             </div>
         </main>
     </div>
+    
+    <script>
+	 	// Validate email and passwords
+	    function validateForm() {
+	        const email = document.getElementById("email").value;
+	        const password = document.getElementById("password").value;
+	        const confirmPassword = document.getElementById("confirmPassword").value;
+	        
+	        // Check if email ends with @tvpss.com
+	        if (!email.endsWith("@tvpss.com")) {
+	            alert("Email must end with @tvpss.com");
+	            return false; // Prevent form submission
+	        }
+	        
+	        // Check if passwords match
+	        if (password !== confirmPassword) {
+	            alert("Passwords do not match!");
+	            return false;
+	        }
+	        return true;
+	    }
+    </script>
 </body>
 </html>

@@ -7,7 +7,6 @@
     <title>Manage Users</title>
     <link rel="stylesheet" href="/TvpssApp/resources/css/superAdminDashboard.css">
     <style>
-    	/* General Styling */
 		body {
 		    font-family: Arial, sans-serif;
 		    background-color: #F8FAFF;
@@ -16,58 +15,34 @@
 		}
 		
 		/* Breadcrumb Styling */
-.breadcrumb {
-    font-size: 14px;
-    color: #6B7280; /* Neutral gray */
-    margin-bottom: 20px;
-}
-
-.breadcrumb span {
-    display: inline-block;
-    margin-right: 5px;
-}
-
-.breadcrumb span:last-child {
-    font-weight: bold; /* Highlight the current page */
-}
-
-.breadcrumb i {
-    margin-right: 5px;
-    color: #6B7280; /* Neutral gray for icons */
-}
-
-/* Sidebar Styling for Active Item */
-.sidebar nav ul li a.active {
-    background: #4B6CB7; /* Highlighted background */
-    color: #FFFFFF; /* White text */
-    display: flex;
-    align-items: center;
-    padding-left: 15px; /* Add some padding for alignment */
-}
-
-.sidebar nav ul li a:hover {
-    background: #354A9F; /* Darker highlight on hover */
-    color: #FFFFFF;
-}
-
-/* Adjust the Search and Add User Section */
-.manage-users-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.manage-users-header .search-bar input {
-    width: 300px; /* Adjust input width */
-    padding: 10px;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-/* Add User Button */
-.add-user-btn {
+		.breadcrumb {
+		            margin: 20px 10px;
+		            font-size: 14px;
+		            color: #6B7280;
+		        }
+		
+		.breadcrumb span {
+		            font-weight: bold;
+		            color: #4B6CB7;
+		        }
+		
+		.manage-users-header {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    margin-bottom: 20px;
+		}
+		
+		.manage-users-header .search-bar input {
+		    width: 300px; /* Adjust input width */
+		    padding: 10px;
+		    border: 1px solid #D1D5DB;
+		    border-radius: 8px;
+		    font-size: 14px;
+		}
+		
+		/* Add User Button */
+		.add-user-btn {
             background-color: #4B6CB7;
             color: #FFFFFF;
             padding: 10px 15px;
@@ -114,6 +89,7 @@
             color: #555;
         }
 
+		/* Edit User Button */
         .edit-btn {
             background-color: #28A745;
             color: white;
@@ -128,6 +104,7 @@
             background-color: #218838;
         }
 
+		/* Delete User Button */
         .delete-btn {
             background-color: #DC3545;
             color: white;
@@ -171,9 +148,142 @@
 		    color: white;
 		}
 
-    </style>
+		/* Modal Styling */
+		.overlay {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background: rgba(0, 0, 0, 0.5);
+		    z-index: 999;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		}
+		
+		.modal {
+		    position: fixed;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		    width: 500px;
+		    background: #ffffff;
+		    border-radius: 12px;
+		    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		    z-index: 1000;
+		    padding: 30px;
+		}
+		
+		.modal-header {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    margin-bottom: 20px;
+		}
+		
+		.modal-header h2 {
+		    font-size: 20px;
+		    font-weight: bold;
+		    color: #1E3A8A; /* Dark Blue */
+		    margin: 0;
+		}
+
+		.modal-header .close-btn {
+		    font-size: 18px;
+		    background: none;
+		    border: none;
+		    color: #6B7280;
+		    cursor: pointer;
+		}
+		
+		.modal-body {
+		    font-size: 14px;
+		    color: #6B7280;
+		    margin-bottom: 20px;
+		}
+		
+		.modal-footer {
+		    display: flex;
+		    justify-content: flex-end;
+		    align-items: center;
+		    gap: 15px;
+		}
+		
+		.modal-footer .btn-cancel {
+		    background-color: #E5E7EB;
+		    color: #374151;
+		    border: none;
+		    border-radius: 8px;
+		    padding: 10px 20px;
+		    font-size: 14px;
+		    cursor: pointer;
+		    text-align: center;
+		}
+		
+		.modal-footer .btn-cancel:hover {
+		    background-color: #D1D5DB;
+		}
+		
+		.modal-footer .btn-confirm {
+		    background-color: #1E3A8A;
+		    color: #ffffff;
+		    border: none;
+		    border-radius: 8px;
+		    padding: 10px 20px;
+		    font-size: 14px;
+		    cursor: pointer;
+		    text-align: center;
+		}
+		
+		.modal-footer .btn-confirm:hover {
+		    background-color: #163A72;
+		}
+	</style>
 </head>
+
 <body>
+	<!-- Success Message -->
+	<c:if test="${param.success == 'true'}">
+	    <div class="alert">
+	        <div>
+	            <img src="/TvpssApp/resources/images/successIcon.png" alt="Success Icon" style="width: 24px; height: 24px;">
+	        </div>
+	        <div>
+	            <strong>Data Updated Successfully!</strong>
+	            <p>Action was successfully performed.</p>
+	        </div>
+	        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+	    </div>
+	</c:if>
+	
+	<!-- Error Message -->
+	<c:if test="${not empty error}">
+	    <div class="alert error">
+	        <span class="message">${error}</span>
+	        <button class="close" onclick="this.parentElement.style.display='none';">&times;</button>
+	    </div>
+	</c:if>
+	
+	<!-- Delete Confirmation Modal -->
+	<div class="overlay" id="overlay" style="display: none;"></div>
+	<div class="modal" id="confirmationModal" style="display: none;">
+	    <div class="modal-header">
+	        <h2>Do you want to delete the user?</h2>
+	        <button class="close-btn" onclick="hideModal()">×</button>
+	    </div>
+	    <div class="modal-body">
+	        <p>This will be an irreversible operation.</p>
+	    </div>
+	    <div class="modal-footer">
+	        <button class="btn-cancel" onclick="hideModal()">No</button>
+	        <form id="deleteForm" action="/TvpssApp/deleteUser" method="post" style="margin: 0;">
+	            <input type="hidden" name="username" id="deleteUsername" value="">
+	            <button class="btn-confirm" type="submit">Yes</button>
+	        </form>
+	    </div>
+	</div>
+	
     <div class="dashboard">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -189,20 +299,18 @@
                 </ul>
             </nav>
             <div class="settings">
-    <div class="setting-item">
-        <i class="icon-settings"></i> Setting
-    </div>
-    <div class="divider"></div>
-    <div class="setting-item">
-        <i class="icon-logout"></i> Logout
-    </div>
-</div>
-
+			    <div class="setting-item">
+			        <i class="icon-settings"></i> Setting
+			    </div>
+			    <div class="divider"></div>
+			    <div class="setting-item">
+			        <i class="icon-logout"></i> Logout
+			    </div>
+			</div>
         </aside>
 
         <!-- Main Content -->
         <main class="content">
-        
             <header class="header">
 			    <div class="header-top">
 			    <!-- Notification Icon -->
@@ -214,7 +322,7 @@
 			    </div>
 			        <div class="user-info">
 			            <img src="/TvpssApp/resources/images/superAdminLogo.png" alt="User Avatar">
-			            <span>User</span>
+			            <span>User<br>Super Admin</span>
 			        </div>
 			    </div>
 			    <div class="divider"></div> <!-- Thin dividing line -->
@@ -224,79 +332,107 @@
 			    </div>
 			</header>
 
-<!-- Breadcrumb Section -->
-<div class="breadcrumb">
-    <i class="icon-user"></i>
-    <span>User Management</span> &gt; <span>All Users</span>
-</div>
+			<!-- Breadcrumb Section -->
+			<div class="breadcrumb">
+			    <i class="icon-user"></i>
+			    <span>User Management</span> &gt; <span>All Users</span>
+			</div>
 
-<!-- Search Bar, Sort Dropdown, and Add User Button -->
-<section class="manage-users-header">
-    <div class="search-bar">
-        <input type="text" placeholder="Search Users">
-    </div>
-    <div class="sort-dropdown">
-        <label for="sort">Sort by:</label>
-        <select id="sort">
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-        </select>
-    </div>
-    <button class="add-user-btn" onclick="location.href='/TvpssApp/addUser?username=${user.username}'">+ Add New User</button>
-</section>
+			<section class="manage-users-header">
+			    <div class="search-bar">
+			        <input type="text" placeholder="Search Users">
+			    </div>
+			    <div class="sort-dropdown">
+			        <label for="sort">Sort by:</label>
+			        <select id="sort">
+			            <option value="newest">Newest</option>
+			            <option value="oldest">Oldest</option>
+			        </select>
+			    </div>
+			    <button class="add-user-btn" onclick="location.href='/TvpssApp/addUser?username=${user.username}'">+ Add New User</button>
+			</section>
 
 
-        <!-- User Table -->
-        <section class="user-table-container">
-            <table class="user-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>State</th>
-                        <th>Type of Role</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="user" items="${users}">
-                        <tr>
-                            <td>${user.username}</td>
-                            <td>${user.state}</td>
-                            <td>${user.getUserRoleName()}</td>
-                            <td>${user.email}</td>
-                            <td>
-                                <button class="edit-btn" onclick="location.href='/TvpssApp/editUser?username=${user.username}'">Edit</button>
-                                <form action="/TvpssApp/deleteUser" method="post" style="display:inline;">
-                                    <input type="hidden" name="username" value="${user.username}">
-                                    <button type="submit" class="delete-btn">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </section>
+	        <!-- User Table -->
+	        <section class="user-table-container">
+	            <table class="user-table">
+	                <thead>
+	                    <tr>
+	                        <th>Name</th>
+	                        <th>State</th>
+	                        <th>Type of Role</th>
+	                        <th>Email</th>
+	                        <th>Actions</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+					    <c:forEach var="user" items="${users}">
+					        <tr>
+					            <td>${user.username}</td>
+					            <td>${user.state}</td>
+					            <td>${user.getUserRoleName()}</td>
+					            <td>${user.email}</td>
+					            <td>
+					                <!-- Check if the user is not a Super Admin -->
+					                <c:if test="${user.getUserRoleName() != 'Super Admin'}">
+					                    <button class="edit-btn" onclick="location.href='/TvpssApp/editUser?username=${user.username}'">Edit</button>
+					                    <button class="delete-btn" onclick="showModal('${user.username}')">Delete</button>
+					                </c:if>
+					            </td>
+					        </tr>
+					    </c:forEach>
+					</tbody>
+	            </table>
+	        </section>
 
-        <!-- Pagination Section -->
-		<div class="pagination">
-		    <c:if test="${currentPage > 1}">
-		        <button onclick="location.href='?page=${currentPage - 1}'">&lt;</button>
-		    </c:if>
+	        <!-- Pagination Section -->
+			<div class="pagination">
+			    <c:if test="${currentPage > 1}">
+			        <button onclick="location.href='?page=${currentPage - 1}'">&lt;</button>
+			    </c:if>
+			
+			    <c:forEach begin="1" end="${totalPages}" var="i">
+			        <button 
+			            class="${currentPage == i ? 'active' : ''}" 
+			            onclick="location.href='?page=${i}'">${i}</button>
+			    </c:forEach>
+			
+			    <c:if test="${currentPage < totalPages}">
+			        <button onclick="location.href='?page=${currentPage + 1}'">&gt;</button>
+			    </c:if>
+			</div>
+    	</main>
+	</div>
+	
+	<script>
+	    // Automatically hide the alert box after 5 seconds with slide-out effect
+	    setTimeout(() => {
+	        const alertBox = document.querySelector('.alert');
+	        if (alertBox) {
+	            alertBox.classList.add('slide-out');
+	            setTimeout(() => {
+	                alertBox.style.display = 'none';
+	            }, 500);
+	        }
+	    }, 5000);
+	    
+	    //Delete confirmation
+	    function showModal(username) {
+		    const overlay = document.getElementById('overlay');
+		    const modal = document.getElementById('confirmationModal');
+		    const deleteUsername = document.getElementById('deleteUsername');
+		    deleteUsername.value = username;
 		
-		    <c:forEach begin="1" end="${totalPages}" var="i">
-		        <button 
-		            class="${currentPage == i ? 'active' : ''}" 
-		            onclick="location.href='?page=${i}'">${i}</button>
-		    </c:forEach>
+		    overlay.style.display = 'flex'; // Show the modal and center it
+		    modal.style.display = 'block';
+		}
+		function hideModal() {
+		    const overlay = document.getElementById('overlay');
+		    const modal = document.getElementById('confirmationModal');
 		
-		    <c:if test="${currentPage < totalPages}">
-		        <button onclick="location.href='?page=${currentPage + 1}'">&gt;</button>
-		    </c:if>
-		</div>
-
-    </main>
-</div>
-
+		    overlay.style.display = 'none';
+		    modal.style.display = 'none';
+		}
+	</script>
 </body>
 </html>
