@@ -24,13 +24,13 @@ public class UserService {
     }
 
     // // For superAdmin
-    // static {
-    //     users.put("superadmin", new User("superadmin", "super123", UserRoles.SUPER_ADMIN, "Selangor", "superadmin@tvpss.com"));
-    //     users.put("adminppd", new User("adminppd", "ppd123", UserRoles.ADMIN_PPD, "Johor", "adminppd@tvpss.com"));
-    //     users.put("adminstate", new User("adminstate", "state123", UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com"));
-    //     users.put("adminschool", new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com"));
-    //     users.put("student", new User("student", "student123", UserRoles.STUDENT, "Penang", "student@tvpss.com"));
-    // }
+    static {
+        users.put("superadmin", new User("superadmin", "super123", UserRoles.SUPER_ADMIN, "Selangor", "superadmin@tvpss.com"));
+        users.put("adminppd", new User("adminppd", "ppd123", UserRoles.ADMIN_PPD, "Johor", "adminppd@tvpss.com"));
+        users.put("adminstate", new User("adminstate", "state123", UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com"));
+        users.put("adminschool", new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com"));
+        users.put("student", new User("student", "student123", UserRoles.STUDENT, "Penang", "student@tvpss.com"));
+    }
 
     public User findByUsernameAndPassword(String username, String password) {
         User user = users.get(username);

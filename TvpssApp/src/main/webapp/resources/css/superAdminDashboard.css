@@ -7,8 +7,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #F8FAFF; /* Light background for the main layout */
-    color: #4B5563; /* Neutral gray for body text */
+    background: #F8FAFF; 
+    color: #4B5563;
 }
 
 /* Dashboard Layout */
@@ -20,7 +20,7 @@ body {
 /* Sidebar */
 .sidebar {
     width: 250px;
-    background: #E8EAFB; /* Light lavender background */
+    background: #E8EAFB; 
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -29,20 +29,20 @@ body {
 
 .sidebar .logo {
     display: flex;
-    align-items: center; /* Align logo and text vertically */
-    gap: 10px; /* Space between the logo and text */
+    align-items: center; 
+    gap: 10px; 
     margin-bottom: 20px;
 }
 
 .sidebar .logo img {
-    width: 130px; /* Increase the width of the logo */
-    height: auto; /* Maintain aspect ratio */
+    width: 130px;
+    height: auto; 
 }
 
 .sidebar .logo h2 {
-    font-size: 18px; /* Reduce the size of the "TVPSS" text */
-    font-weight: bold; /* Keep it bold for emphasis */
-    color: #4B5563; /* Neutral gray for the text */
+    font-size: 18px;
+    font-weight: bold;
+    color: #4B5563;
 }
 
 .sidebar nav ul {
@@ -60,19 +60,19 @@ body {
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
-    color: #4B5563; /* Neutral gray for text */
+    color: #4B5563;
     padding: 10px;
     border-radius: 8px;
     transition: 0.3s;
 }
 
 .sidebar nav ul li a.active {
-    background: #4B6CB7; /* Blue for active link background */
-    color: #FFFFFF; /* White text for active link */
+    background: #4B6CB7;
+    color: #FFFFFF;
 }
 
 .sidebar nav ul li a:hover {
-    background: #354A9F; /* Darker blue for hover state */
+    background: #354A9F;
     color: #FFFFFF;
 }
 
@@ -81,28 +81,28 @@ body {
     margin-top: auto;
     text-align: center;
     font-size: 14px;
-    color: #6B7280; /* Neutral gray for the settings text */
+    color: #6B7280;
     padding: 20px 0;
 }
 
 .settings .setting-item {
     display: flex;
-    align-items: center; /* Align icon and text vertically */
-    justify-content: center; /* Center items horizontally */
-    gap: 8px; /* Space between icon and text */
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
     font-size: 16px;
-    margin: 10px 0; /* Space between items */
-    color: #6B7280; /* Neutral gray for settings items */
+    margin: 10px 0; 
+    color: #6B7280;
     cursor: pointer;
 }
 
 .settings .setting-item:hover {
-    color: #4B6CB7; /* Blue on hover */
+    color: #4B6CB7;
 }
 
 .settings .divider {
     height: 1px;
-    background-color: #D1D5DB; /* Light gray for divider */
+    background-color: #D1D5DB;
     margin: 10px 0;
 }
 
@@ -116,73 +116,73 @@ body {
 /* Header Styling */
 .header {
     padding: 10px 20px;
-    background-color: #F7F9FF; /* Light blue background */
+    background-color: #F7F9FF;
 }
 
 .header-top {
     display: flex;
-    justify-content: flex-end; /* Align user info to the right */
-    align-items: center; /* Align items vertically */
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .user-info {
     display: flex;
-    align-items: center; /* Align avatar and text vertically */
-    gap: 10px; /* Space between avatar and text */
+    align-items: center;
+    gap: 10px;
 }
 
 .user-info img {
-    width: 40px; /* Adjust avatar size */
+    width: 40px;
     height: 40px;
-    border-radius: 50%; /* Circular avatar */
-    border: 2px solid #4B6CB7; /* Blue border around avatar */
+    border-radius: 50%;
+    border: 2px solid #4B6CB7;
 }
 
 .user-info span {
     font-size: 16px;
-    color: #4B5563; /* Neutral gray for user text */
+    color: #4B5563;
     font-weight: bold;
 }
 
 .divider {
     height: 1px;
-    background: #D1D5DB; /* Light gray divider line */
+    background: #D1D5DB;
     margin: 10px 0;
 }
 
 /* Bottom Section: Welcome and Search Bar */
 .welcome-search {
     display: flex;
-    align-items: center; /* Align Hello and search bar vertically */
-    gap: 10px; /* Place Hello on the left, search bar on the right */
+    align-items: center; 
+    gap: 10px; 
     margin-top: 10px;
 }
 
 .welcome-search h1 {
     font-size: 24px;
-    color: #4B6CB7; /* Blue for welcome text */
+    color: #4B6CB7;
     margin: 0;
     font-weight: normal;
 }
 
 .search-bar {
     flex: 1;
-    max-width: 400px; /* Adjust search bar width */
+    max-width: 400px; 
 }
 
 .search-bar input {
     padding: 10px;
-    border: 1px solid #C7D2FE; /* Subtle border */
+    border: 1px solid #C7D2FE;
     border-radius: 5px;
     font-size: 16px;
     width: 100%;
-    background-color: #F0F3FF; /* Light blue-gray background */
-    color: #4B5563; /* Neutral gray for input text */
+    background-color: #F0F3FF;
+    color: #4B5563; 
 }
 
 /* Notification Icon */
 .notification {
-    margin-right: 20px; /* Space between notification and user info */
+    margin-right: 20px; 
 }
 
 .notification-icon {
@@ -190,19 +190,19 @@ body {
     display: inline-block;
     width: 40px;
     height: 40px;
-    background: #E0E6F8; /* Light blue-gray background */
-    border-radius: 10px; /* Rounded edges */
+    background: #E0E6F8; 
+    border-radius: 10px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 /* Bell Icon */
 .icon-bell:before {
-    content: "\1F514"; /* Unicode for bell icon */
+    content: "\1F514"; 
     font-size: 18px;
-    color: #FFFFFF; /* White bell icon */
+    color: #FFFFFF; 
 }
 
 /* Notification Badge */
@@ -212,7 +212,89 @@ body {
     right: 5px;
     width: 10px;
     height: 10px;
-    background: #FF5C5C; /* Red for the notification badge */
+    background: #FF5C5C;
     border-radius: 50%;
-    border: 2px solid #E0E6F8; /* Match background color to create a border */
+    border: 2px solid #E0E6F8; 
+}
+
+.alert {
+    position: absolute; 
+    top: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4B6CB7; 
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 20px 30px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    z-index: 999; 
+}
+
+.alert img {
+    width: 55px;
+    height: 55px;
+}
+
+.alert strong {
+    font-size: 16px; 
+    font-weight: 600;
+}
+
+.alert p {
+    margin: 0; 
+    font-size: 12px; 
+}
+
+.alert .close-btn {
+    margin-left: auto; 
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.alert .close-btn:hover {
+    color: #E6E6E6; 
+}
+
+/* Slide-In Animation */
+@keyframes slideInFromTop {
+    0% {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+/* Slide-Out Animation */
+@keyframes slideOutToTop {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+    }
+}
+
+/* Apply animation when alert enters */
+.alert {
+    animation: slideInFromTop 1.0s ease-out;
+    transition: opacity 1.0s ease-out;
+}
+
+/* Add this class dynamically for the slide-out effect */
+.alert.slide-out {
+    animation: slideOutToTop 1.0s ease-in;
 }
