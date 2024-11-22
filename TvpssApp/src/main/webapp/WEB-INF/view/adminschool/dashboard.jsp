@@ -22,21 +22,21 @@
         <!-- Dashboard Cards -->
         <section class="stats-cards">
             <div class="card">
-                <div class="card-icon"></div>
+                <div class="card-icon"><img src="<c:url value='/resources/images/numOfStudent.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Number of Students</span>
                     <h2>${numStudents}</h2>
                 </div>
             </div>
             <div class="card">
-                <div class="card-icon"></div>
+                <div class="card-icon"><img src="<c:url value='/resources/images/totalAchievement.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Total Achievement</span>
                     <h2>${totalAchievements}</h2>
                 </div>
             </div>
             <div class="card">
-                <div class="card-icon"></div>
+                <div class="card-icon"><img src="<c:url value='/resources/images/numOfCrew.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Number of Crew</span>
                     <h2>${numCrew}</h2>

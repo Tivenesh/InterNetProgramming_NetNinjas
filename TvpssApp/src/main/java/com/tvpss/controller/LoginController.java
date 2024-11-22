@@ -48,15 +48,15 @@ public class LoginController {
         if (role != null) {
             switch (role) {
                 case UserRoles.SUPER_ADMIN:
-                    return "superadmin/dashboard";
+                    return "redirect:/superadmin/dashboard";
                 case UserRoles.ADMIN_PPD:
-                    return "adminppd/dashboard";
+                    return "redirect:/adminppd/dashboard";
                 case UserRoles.ADMIN_STATE:
-                    return "adminstate/dashboard";
+                    return "redirect:/adminstate/dashboard";
                 case UserRoles.ADMIN_SCHOOL:
-                    return "adminschool/dashboard";
+                    return "redirect:/adminschool/dashboard";
                 case UserRoles.STUDENT:
-                    return "student/dashboard";
+                    return "redirect:/student/dashboard";
                 default:
                     model.addAttribute("error", "Role not recognized.");
                     return "login";
