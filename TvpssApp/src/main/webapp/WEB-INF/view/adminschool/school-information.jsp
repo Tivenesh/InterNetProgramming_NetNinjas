@@ -19,18 +19,29 @@
             
             <hr class="divider">
             <!-- School Information Form -->
-            <h2>School Information</h2>
-            <c:if test="${not empty showViewButton}">
-    			<button id="viewSchoolButton" onclick="openViewSchoolModal()">View</button>
-			</c:if>
+            <div class="title-container">
+                <h2>School Information</h2>
+                <c:if test="${not empty showViewButton}">
+                    <button id="viewSchoolButton" onclick="openViewSchoolModal()">View</button>
+                </c:if>
+            </div>
             
             
             <div class="form-container">
                 <form action="<c:url value='/adminschool/save-school-information'/>" method="POST" enctype="multipart/form-data" id="schoolForm">
+                    
                     <div class="form-group">
+                    	<label for="schoolCode">School Code</label>
+                        <div class="input-wrapper">
+        					<input type="text" id="schoolCode" name="code" placeholder="Enter school code" value="${school.code}" required>
+        					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolCode')" alt="Clear">
+    					</div>
+    				</div>
+    					
+    				<div class="form-group">
                         <label for="schoolName">School Name</label>
                         <div class="input-wrapper">
-        					<input type="text" id="schoolName" name="schoolName" placeholder="Enter school name" value="${school.name}" required>
+        					<input type="text" id="schoolName" name="name" placeholder="Enter school name" value="${school.name}" required>
         					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolName')" alt="Clear">
     					</div>
                     </div>
@@ -38,7 +49,7 @@
                     <div class="form-group">
                         <label for="schoolAddress1">School Address I</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="schoolAddress1" name="schoolAddress1" placeholder="Enter school address I" value="${school.address1}" required>
+                        	<input type="text" id="schoolAddress1" name="address1" placeholder="Enter school address I" value="${school.address1}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolAddress1')" alt="Clear">
                         </div>
                     </div>
@@ -46,7 +57,7 @@
                     <div class="form-group">
                         <label for="schoolAddress2">School Address II</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="schoolAddress2" name="schoolAddress2" placeholder="Enter school address II" value="${school.address2}" required>
+                        	<input type="text" id="schoolAddress2" name="address2" placeholder="Enter school address II" value="${school.address2}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolAddress2')" alt="Clear">
                         </div>
                     </div>
@@ -70,7 +81,7 @@
                     <div class="form-group half-width">
                         <label for="telephone">Tel. No</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="telephone" name="telephone" placeholder="Enter telephone number" value="${school.telephoneNumber}" required>
+                        	<input type="text" id="telephone" name="telephoneNumber" placeholder="Enter telephone number" value="${school.telephoneNumber}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('telephone')" alt="Clear">
                         </div>
                     </div>
@@ -135,6 +146,7 @@
     <div class="view-modal-content">
         <span class="view-close" onclick="closeViewSchoolModal()">&times;</span>
         <h2>School Information</h2>
+        <p><strong>School Code:</strong> <c:out value="${school.code}" default="Not available" /></p>
         <p><strong>School Name:</strong> <c:out value="${school.name}" default="Not available" /></p>
 		<p><strong>Address 1:</strong> <c:out value="${school.address1}" default="Not available" /></p>
 		<p><strong>Address 2:</strong> <c:out value="${school.address2}" default="Not available" /></p>
