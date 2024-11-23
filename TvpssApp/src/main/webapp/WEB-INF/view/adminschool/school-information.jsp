@@ -21,27 +21,23 @@
             <!-- School Information Form -->
             <div class="title-container">
                 <h2>School Information</h2>
-                <c:if test="${not empty showViewButton}">
-                    <button id="viewSchoolButton" onclick="openViewSchoolModal()">View</button>
-                </c:if>
             </div>
             
             
             <div class="form-container">
                 <form action="<c:url value='/adminschool/save-school-information'/>" method="POST" enctype="multipart/form-data" id="schoolForm">
-                    
                     <div class="form-group">
                     	<label for="schoolCode">School Code</label>
                         <div class="input-wrapper">
-        					<input type="text" id="schoolCode" name="code" placeholder="Enter school code" value="${school.code}" required>
-        					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolCode')" alt="Clear">
+        					<input type="text" name="code" placeholder="Enter school code" value="${school.code}" required>
+        					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('code')" alt="Clear">
     					</div>
     				</div>
     					
     				<div class="form-group">
                         <label for="schoolName">School Name</label>
                         <div class="input-wrapper">
-        					<input type="text" id="schoolName" name="name" placeholder="Enter school name" value="${school.name}" required>
+        					<input type="text" name="name" placeholder="Enter school name" value="${school.name}" required>
         					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolName')" alt="Clear">
     					</div>
                     </div>
@@ -49,7 +45,7 @@
                     <div class="form-group">
                         <label for="schoolAddress1">School Address I</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="schoolAddress1" name="address1" placeholder="Enter school address I" value="${school.address1}" required>
+                        	<input type="text" name="address1" placeholder="Enter school address I" value="${school.address1}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolAddress1')" alt="Clear">
                         </div>
                     </div>
@@ -57,7 +53,7 @@
                     <div class="form-group">
                         <label for="schoolAddress2">School Address II</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="schoolAddress2" name="address2" placeholder="Enter school address II" value="${school.address2}" required>
+                        	<input type="text" name="address2" placeholder="Enter school address II" value="${school.address2}">
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolAddress2')" alt="Clear">
                         </div>
                     </div>
@@ -65,7 +61,7 @@
                     <div class="form-group half-width">
                         <label for="postcode">Postcode</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="postcode" name="postcode" placeholder="Enter postcode" value="${school.postcode}" required>
+                        	<input type="text" name="postcode" placeholder="Enter postcode" value="${school.postcode}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('postcode')" alt="Clear">
                         </div>
                     </div>
@@ -73,7 +69,7 @@
                     <div class="form-group half-width">
                         <label for="state">State</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="state" name="state" placeholder="Enter state" value="${school.state}" required>
+                        	<input type="text" name="state" placeholder="Enter state" value="${school.state}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('state')" alt="Clear">
                         </div>
                     </div>
@@ -81,7 +77,7 @@
                     <div class="form-group half-width">
                         <label for="telephone">Tel. No</label>
                         <div class="input-wrapper">
-                        	<input type="text" id="telephone" name="telephoneNumber" placeholder="Enter telephone number" value="${school.telephoneNumber}" required>
+                        	<input type="text" name="telephoneNumber" placeholder="Enter telephone number" value="${school.telephoneNumber}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('telephone')" alt="Clear">
                         </div>
                     </div>
@@ -89,7 +85,7 @@
                     <div class="form-group half-width">
                         <label for="email">Email</label>
                         <div class="input-wrapper">
-                        	<input type="email" id="email" name="email" placeholder="Enter school email" value="${school.email}" required>
+                        	<input type="email" name="email" placeholder="Enter school email" value="${school.email}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('email')" alt="Clear">
                         </div>
                     </div>
@@ -97,11 +93,7 @@
                     <div class="form-group">
                         <label for="logo">School Logo</label>
                         <div class="input-wrapper">
-                        	<input type="file" id="logo" name="logo" value="${school.logo}" required>
-                        	<!-- Show the logo if it exists -->
-        					<c:if test="${not empty school.logo}">
-            					<img src="/resources/uploads/school-logos/${school.logo}" alt="School Logo" style="max-width: 100px;">
-        					</c:if>
+                        	<input type="file" name="logo" accept="image/*">
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('logo')" alt="Clear">
                         </div>
                     </div>
@@ -109,7 +101,7 @@
                     <div class="form-group">
                         <label for="youtubeLink">Link Video</label>
                         <div class="input-wrapper">
-                        	<input type="url" id="youtubeLink" name="youtubeLink" placeholder="Upload YouTube link" value="${school.youtubeLink}" required>
+                        	<input type="url" name="youtubeLink" placeholder="Upload YouTube link" value="${school.youtubeLink}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('logo')" alt="Clear">
                         </div>
                     </div>
@@ -140,43 +132,6 @@
             <p>Your data has been recorded to the system.</p>
         </div>
     </div>
-    
-   <!-- View Information Modal -->
-<div id="viewSchoolModal" class="view-modal" style="display: none;">
-    <div class="view-modal-content">
-        <span class="view-close" onclick="closeViewSchoolModal()">&times;</span>
-        <h2>School Information</h2>
-        <p><strong>School Code:</strong> <c:out value="${school.code}" default="Not available" /></p>
-        <p><strong>School Name:</strong> <c:out value="${school.name}" default="Not available" /></p>
-		<p><strong>Address 1:</strong> <c:out value="${school.address1}" default="Not available" /></p>
-		<p><strong>Address 2:</strong> <c:out value="${school.address2}" default="Not available" /></p>
-		<p><strong>Postcode:</strong> <c:out value="${school.postcode}" default="Not available" /></p>
-		<p><strong>State:</strong> <c:out value="${school.state}" default="Not available" /></p>
-		<p><strong>Telephone:</strong> <c:out value="${school.telephoneNumber}" default="Not available" /></p>
-		<p><strong>Email:</strong> <c:out value="${school.email}" default="Not available" /></p>
-		<p><strong>Logo:</strong> 
-	    <c:if test="${not empty school.logo}">
-	        <img src="/resources/uploads/school-logos/${school.logo}" alt="School Logo" width="100">
-	    </c:if>
-	    <c:if test="${empty school.logo}">
-	        <span>No logo uploaded</span>
-	    </c:if>
-</p>
-<p><strong>YouTube Link:</strong> 
-    <c:if test="${not empty school.youtubeLink}">
-        <a href="${school.youtubeLink}" target="_blank">${school.youtubeLink}</a>
-    </c:if>
-    <c:if test="${empty school.youtubeLink}">
-        <span>No link provided</span>
-    </c:if>
-</p>
-        
-        
-        <!-- Edit Button -->
-        <button id="editSchoolButton" onclick="redirectToEdit()">Edit</button>
-    </div>
-</div>
-    
 
 </section>
 </div>
@@ -291,20 +246,6 @@ window.onclick = function(event) {
     }
 };
 
-// Open the View School Modal
-function openViewSchoolModal() {
-    document.getElementById("viewSchoolModal").style.display = "block";
-}
-
-// Close the View School Modal
-function closeViewSchoolModal() {
-    document.getElementById("viewSchoolModal").style.display = "none";
-}
-
-// Redirect to Edit Page
-function redirectToEdit() {
-    window.location.href = "/adminschool/edit"; // Replace with your edit route
-}
 
    
 </script>
