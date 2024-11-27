@@ -19,7 +19,7 @@
             font-size: 14px;
             font-weight: bold;
             display:flex;
-			align-item: center;
+			align-items: center;
         }
 
         .btn.achievement :hover {
@@ -48,7 +48,7 @@
                 <button class="btn view">Search</button>
                 
                 <!-- Add Achievement Button -->
-                <button class="btn achievement" onclick="window.location.href='<c:url value='/adminschool/submit-achievement' />'">+ Add Achievement</button>
+                <button class="btn achievement" onclick="window.location.href='<c:url value='/adminschool/submit-achievement;' />'">+ Add Achievement</button>
             </div>
             
             <!-- Table -->
@@ -84,9 +84,9 @@
                                         ${achievement.status}
                                     </span>
                                 </td>
-                                <td><button class="btn view" onclick="viewAchievement(${achievement.achievementId})">View</button></td>
+                                <td><button class="btn view">View</button></td>
                                 <td>
-                                    <button class="btn edit" onclick="window.location.href='<c:url value='/adminschool/submit-achievement?id=${achievement.achievementId}' />'"><i class="fa fa-edit"></i></button>
+                                    <button class="btn edit" onclick="window.location.href='<c:url value='/adminschool/submit-achievement?id=$:{achievementId};' />'"><i class="fa fa-edit"></i></button>
                                     <button class="btn delete" onclick="showModal('${achievement.achievementId}')"><i class='fa fa-trash'></i></button>
                                 </td>
                             </tr>

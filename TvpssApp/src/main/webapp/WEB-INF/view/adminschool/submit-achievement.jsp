@@ -157,7 +157,7 @@
 	        </div>
 	        
 	        <!-- Success Dialog -->
-		    <div id="successModal" class="modal" style="display: ${not empty successMessage ? 'block' : 'none'};">
+		    <div id="successModal" class="modal">
 		        <div class="modal-content">
 		            <span class="close" onclick="closeSuccessDialog()">&times;</span>
 		            <h2>${successMessage}</h2>
