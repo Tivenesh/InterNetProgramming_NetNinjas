@@ -4,8 +4,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Admin State Dashboard</title>
-    <link rel="stylesheet" href="/TvpssApp/resources/css/superAdminDashboard.css">
+	<title>State Admin Dashboard</title>
+    <link rel="stylesheet" href="/TvpssApp/resources/css/stateAdminDashboard.css">
     <style>
         .dashboard-container {
             padding: 20px;
@@ -118,11 +118,9 @@
 	            </div>
 	            <nav>
 	                <ul>
-	                    <li><a href="#" class="active">Dashboard</a></li>
-	                    <li><a href="/TvpssApp/???">Crew Application</a></li>
-	                    <li><a href="/TvpssApp/???">Student Achievement</a></li>
-	                    <li><a href="/TvpssApp/???">School Information</a></li>
-	                    <li><a href="/TvpssApp/???">Submit TVPSS Version</a></li>
+                    <li><a href="/TvpssApp/adminstate/dashboard" class="menu-item ${page == null || page == 'dashboard' ? 'active' : ''}">Dashboard</a><li>
+			        <li><a href="/TvpssApp/adminstate/viewCertApplication" class="menu-item ${page == 'viewCertApplication' || page == 'generateCertificate' ? 'active' : ''}">Generate E-Certificate</a><li>
+				    <li><a href="/TvpssApp/adminstate/???" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
 	                </ul>
 	            </nav>
 	            <div class="settings">
@@ -148,8 +146,8 @@
 	                    </div>
 	                </div>
 	                <div class="user-info">
-	                    <img src="/TvpssApp/resources/images/PPDAdminLogo.png" alt="User Avatar">
-	                    <span>User<br>Admin State</span>
+	                    <img src="/TvpssApp/resources/images/stateAdminLogo.png" alt="User Avatar">
+	                    <span>User<br>State Admin</span>
 	                </div>
 	            </div>
 	            <div class="divider"></div>

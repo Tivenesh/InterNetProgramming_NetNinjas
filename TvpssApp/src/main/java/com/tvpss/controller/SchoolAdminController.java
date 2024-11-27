@@ -1,6 +1,7 @@
 package com.tvpss.controller;
 
 import java.io.IOException;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,31 +24,36 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tvpss.model.Achievement;
 import com.tvpss.model.CrewApplication;
 import com.tvpss.model.School;
+import com.tvpss.service.AchievementService;
 import com.tvpss.service.ApplicationService;
 import com.tvpss.service.SchoolService;
-
 
 @Controller
 @RequestMapping("/adminschool") // Base path for admin school routes
 @SessionAttributes("school")
 public class SchoolAdminController {
-	
-	@Autowired
-	private SchoolService schoolService;
-	
-	@Autowired
+
+    @Autowired
+    private SchoolService schoolService;
+
+    @Autowired
     private ApplicationService applicationService;
-	
-	 private static final String UPLOAD_DIRECTORY = "src/main/webapp/resources/static/uploads/school-logos";
-	 
-	@ModelAttribute("school")
+
+    @Autowired
+    private AchievementService achievementService;
+
+    private static final String UPLOAD_DIRECTORY = "src/main/webapp/resources/static/uploads/school-logos";
+
+    @ModelAttribute("school")
     public School school() {
         return schoolService.getSchool();
     }
 
-	
+    // School Information and Dashboard Management
+
     @GetMapping("/dashboard")
     public String showAdminSchoolDashboard(Model model) {
         model.addAttribute("page", "dashboard");
@@ -63,12 +70,11 @@ public class SchoolAdminController {
 
         return "adminschool/dashboard"; // Maps to WEB-INF/views/adminschool/dashboard.jsp
     }
-    
+
     @GetMapping("/school-information")
     public String showSchoolInformation(HttpSession session, Model model) {
-    	School school = (School) session.getAttribute("school");
+        School school = (School) session.getAttribute("school");
 
-        // Add the retrieved object to the model
         model.addAttribute("school", school);
         model.addAttribute("pageTitle", "School Information");
         model.addAttribute("page", "school-information");
@@ -81,32 +87,24 @@ public class SchoolAdminController {
             RedirectAttributes redirectAttributes) {
 
         try {
-            MultipartFile logo = school.getLogo(); // Get the uploaded file
+            MultipartFile logo = school.getLogo();
 
             if (logo != null && !logo.isEmpty()) {
-                // Create upload directory if it does not exist
-                Path uploadPath = Paths.get("src/main/webapp/resources/static/uploads/school-logos");
+                Path uploadPath = Paths.get(UPLOAD_DIRECTORY);
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                 }
 
-                // Generate unique filename
                 String originalFilename = logo.getOriginalFilename();
                 String newFilename = System.currentTimeMillis() + "_" + originalFilename;
 
-                // Save file to the upload directory
                 Path filePath = uploadPath.resolve(newFilename);
                 Files.copy(logo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-                // Update the school object to store the filename (optional)
-                // This assumes you want to save the filename for later retrieval
-                school.setLogoFilename(newFilename); // Add a new String field for filename in School class
+                school.setLogoFilename(newFilename);
             }
 
-            // Save the School object
             schoolService.saveSchool(school);
-
-            // Add success message
             redirectAttributes.addFlashAttribute("successMessage", "School information saved successfully!");
             return "redirect:/adminschool/viewSchoolInformation";
 
@@ -117,15 +115,12 @@ public class SchoolAdminController {
         }
     }
 
-
-
     @GetMapping("/viewSchoolInformation")
     public String viewSchoolInformation(HttpSession session, Model model) {
-    	School school = (School) session.getAttribute("school");
-    	
-    	if (school == null) {
-    		System.out.println("School object is null, redirecting to form."); // Debug log
-    		return "redirect:/adminschool/school-information";
+        School school = (School) session.getAttribute("school");
+
+        if (school == null) {
+            return "redirect:/adminschool/school-information";
         }
 
         model.addAttribute("school", school);
@@ -137,22 +132,129 @@ public class SchoolAdminController {
     @GetMapping("/saveSchoolDB")
     public String saveToDatabase(HttpSession session, RedirectAttributes redirectAttributes) {
         School school = (School) session.getAttribute("school");
-            schoolService.saveSchool(school); // Save to in-memory database or actual DB
-            redirectAttributes.addFlashAttribute("message", "School details saved successfully.");
-            return "redirect:/adminschool/school-information";
-       
+        schoolService.saveSchool(school);
+        redirectAttributes.addFlashAttribute("message", "School details saved successfully.");
+        return "redirect:/adminschool/school-information";
+    }
+
+ // Achievement Management
+
+    @GetMapping("/student-achievement")
+    public String viewAchievements(Model model) {
+        List<Achievement> achievements = achievementService.getAllAchievements();
+        model.addAttribute("achievements", achievements);
+        model.addAttribute("page", "student-achievement");
+        model.addAttribute("pageTitle", "Student Achievements");
+        return "adminschool/student-achievement";
+    }
+
+    @GetMapping("/submit-achievement")
+    public String showSubmitAchievementForm(Model model) {
+        model.addAttribute("achievement", new Achievement());
+        return "adminschool/submit-achievement";
     }
     
+    @PostMapping("/submit-achievement")
+    public String handleAchievementSubmission(
+            @RequestParam("formMode") String formMode,
+            @RequestParam(value = "icNumber", required = false) String icNumber,
+            @RequestParam(value = "fullName", required = false) String fullName,
+            @RequestParam("activityName") String activityName,
+            @RequestParam("category") String category,
+            @RequestParam(value = "subCategory", required = false) String subCategory,
+            @RequestParam(value = "awardInfo", required = false) String awardInfo,
+            @RequestParam(value = "uploadDoc", required = false) MultipartFile uploadDoc,
+            @RequestParam(value = "supportDoc", required = false) MultipartFile[] supportDoc,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
+
+        try {
+            if ("single".equalsIgnoreCase(formMode)) {
+                Achievement singleAchievement = new Achievement();
+                singleAchievement.setAchievementId(generateUniqueId());
+                singleAchievement.setIcNumber(icNumber);
+                singleAchievement.setFullName(fullName);
+                singleAchievement.setActivityName(activityName);
+                singleAchievement.setCategory(category);
+                singleAchievement.setSubCategory(subCategory);
+                singleAchievement.setAwardInfo(awardInfo);
+                singleAchievement.setFormMode("Single");
+                singleAchievement.setStatus("Pending");
+                achievementService.addAchievement(singleAchievement);
+
+            } else if ("multiple".equalsIgnoreCase(formMode)) {
+                Achievement multipleAchievement = new Achievement();
+                multipleAchievement.setAchievementId(generateUniqueId());
+                multipleAchievement.setActivityName(activityName);
+                multipleAchievement.setCategory(category);
+                multipleAchievement.setFormMode("Multiple");
+                multipleAchievement.setStatus("Pending");
+
+                if (uploadDoc != null && !uploadDoc.isEmpty()) {
+                    File savedCsvFile = saveUploadedFile(uploadDoc, request);
+                    multipleAchievement.setUploadDoc(savedCsvFile);
+                }
+
+                if (supportDoc != null) {
+                    for (MultipartFile file : supportDoc) {
+                        if (!file.isEmpty()) {
+                            saveUploadedFile(file, request);
+                        }
+                    }
+                }
+
+                achievementService.addAchievement(multipleAchievement);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "File upload failed: " + e.getMessage());
+            return "redirect:/adminschool/submit-achievement";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while processing the request: " + e.getMessage());
+            return "redirect:/adminschool/submit-achievement";
+        }
+
+        return "redirect:/adminschool/student-achievement";
+    }
+
+    private String generateUniqueId() {
+        return "ACH" + System.currentTimeMillis();
+    }
+
+    private File saveUploadedFile(MultipartFile file, HttpServletRequest request) throws IOException {
+        String uploadDir = request.getServletContext().getRealPath("/resources/uploads");
+        File uploadDirFile = new File(uploadDir);
+        if (!uploadDirFile.exists()) {
+            uploadDirFile.mkdirs();
+        }
+        File uploadedFile = new File(uploadDir, file.getOriginalFilename());
+        file.transferTo(uploadedFile);
+        return uploadedFile;
+    }
+    
+    @PostMapping("/add-achievement")
+    public String saveAchievementApplication(
+            @ModelAttribute("achievement") Achievement achievements,
+            RedirectAttributes redirectAttributes) {
+
+    	achievementService.addAchievement(achievements);
+            redirectAttributes.addFlashAttribute("successMessage", "School information saved successfully!");
+            return "redirect:/adminschool/student-achievement";
+
+    }
+    
+    // Crew Application Management
+
     @GetMapping("/crew-application")
     public String getCrewApplications(Model model) {
         List<CrewApplication> applications = applicationService.getAllApplications();
-        model.addAttribute("page","crew-application");
+        model.addAttribute("page", "crew-application");
         model.addAttribute("pageTitle", "Crew Application");
         model.addAttribute("applications", applications);
         return "adminschool/crew-application";
     }
-    
- // View details of a specific application
+
     @GetMapping("/view/{id}")
     public String viewApplication(@PathVariable String id, Model model) {
         CrewApplication application = applicationService.getApplicationById(id);
@@ -170,7 +272,6 @@ public class SchoolAdminController {
             @RequestParam("status") String status,
             RedirectAttributes redirectAttributes) {
 
-        // Update the status for each selected application
         for (String applicationId : applicationIds) {
             applicationService.updateApplicationStatus(applicationId, status);
         }
@@ -179,14 +280,10 @@ public class SchoolAdminController {
         return "redirect:/adminschool/crew-application";
     }
 
-    // Search for applications
     @GetMapping("/searchApplication")
     public String searchApplications(@RequestParam String search, Model model) {
         List<CrewApplication> results = applicationService.searchApplications(search);
         model.addAttribute("applications", results);
-        return "crew-application";
+        return "adminschool/crew-application";
     }
-
-    
 }
-

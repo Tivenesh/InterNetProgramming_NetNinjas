@@ -7,7 +7,7 @@
     <nav class="sidebar-menu">
         <a href="<c:url value='/adminschool/dashboard' />" class="menu-item ${page == null || page == 'dashboard' ? 'active' : ''}">Dashboard</a>
         <a href="<c:url value='/adminschool/crew-application' />" class="menu-item ${page == 'crew-application' ? 'active' : ''}">Crew Application</a>
-        <a href="<c:url value='/adminschool/student-achievement' />" class="menu-item ${page == 'student-achievement' ? 'active' : ''}">Student Achievement</a>
+        <a href="<c:url value='/adminschool/student-achievement' />" class="menu-item ${page == 'student-achievement' || page == 'submit-achievement' ? 'active' : ''}">Student Achievement</a>
         <a href="<c:url value='/adminschool/school-information' />" class="menu-item ${page == 'school-information' ? 'active' : ''}">School Information</a>
         <a href="<c:url value='/adminschool/tvpss-version' />" class="menu-item ${page == 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a>
     </nav>
