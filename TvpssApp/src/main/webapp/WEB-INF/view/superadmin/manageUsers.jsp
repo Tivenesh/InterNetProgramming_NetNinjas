@@ -270,7 +270,7 @@
 	<div class="modal" id="confirmationModal" style="display: none;">
 	    <div class="modal-header">
 	        <h2>Do you want to delete the user?</h2>
-	        <button class="close-btn" onclick="hideModal()">×</button>
+	        <button class="close-btn" onclick="hideModal()">Ã</button>
 	    </div>
 	    <div class="modal-body">
 	        <p>This will be an irreversible operation.</p>
@@ -299,14 +299,15 @@
                 </ul>
             </nav>
             <div class="settings">
-			    <div class="setting-item">
-			        <i class="icon-settings"></i> Setting
-			    </div>
-			    <div class="divider"></div>
-			    <div class="setting-item">
-			        <i class="icon-logout"></i> Logout
-			    </div>
-			</div>
+                <div class="setting-item">
+                    <i class="icon-settings"></i> Setting
+                </div>
+                <div class="divider"></div>
+                <div class="setting-item">
+		            <i class="icon-logout"></i>
+		            <a href="/TvpssApp/login" style="text-decoration: none; color: inherit;">Logout</a>
+		        </div>
+            </div>
         </aside>
 
         <!-- Main Content -->
