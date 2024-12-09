@@ -13,6 +13,6 @@
     </nav>
     <div class="sidebar-footer">
         <a href="<c:url value='/settings' />" class="menu-item">Settings</a>
-        <a href="<c:url value='/logout' />" class="menu-item">Log Out</a>
+        <a href="<c:url value='/login' />" class="menu-item">Log Out</a>
     </div>
 </aside>
