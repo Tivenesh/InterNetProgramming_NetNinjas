@@ -345,7 +345,7 @@
 	<div class="modal" id="confirmationModal" style="display: none;">
 	    <div class="modal-header">
 	        <h2>Do you want to delete the user?</h2>
-	        <button class="close-btn" onclick="hideModal()">Ã</button>
+	        <button class="close-btn" onclick="hideModal()">ÃÂ</button>
 	    </div>
 	    <div class="modal-body">
 	        <p>This will be an irreversible operation.</p>
@@ -588,8 +588,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create a div to represent the A4 certificate
         const certificatePreview = document.createElement('div');
         
-        // A4 dimensions: 210mm × 297mm
-        // At 300 DPI, this translates to 2480 × 3508 pixels
+        // A4 dimensions: 210mm Ã 297mm
+        // At 300 DPI, this translates to 2480 Ã 3508 pixels
         certificatePreview.style.width = '2480px';
         certificatePreview.style.height = '3508px';
         certificatePreview.style.position = 'relative';
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', function() {
             switch(type) {
                 case 'pdf':
                     const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF('l', 'px', [2480, 3508]);
+                    const pdf = new jsPDF('p', 'px', [2480, 3508]);
                     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 2480, 3508);
                     pdf.save('certificate.pdf');
                     break;
