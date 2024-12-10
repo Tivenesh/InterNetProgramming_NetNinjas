@@ -17,7 +17,7 @@
 
         .form-container h1 {
             font-size: 24px;
-            color: #4B6CB7; /* Blue heading */
+            color: #4B6CB7; 
             margin-bottom: 20px;
             text-align: center;
         }
@@ -25,7 +25,7 @@
         .form-container label {
             display: block;
             font-size: 14px;
-            color: #6B7280; /* Neutral gray for labels */
+            color: #6B7280; 
             margin-bottom: 5px;
         }
 
@@ -33,10 +33,10 @@
             width: 100%;
             padding: 10px;
             font-size: 14px;
-            border: 1px solid #D1D5DB; /* Light gray border */
+            border: 1px solid #D1D5DB; 
             border-radius: 5px;
             margin-bottom: 20px;
-            background: #F9FAFB; /* Light gray background */
+            background: #F9FAFB; 
         }
 
         .form-container button {
@@ -50,33 +50,33 @@
         }
 
         .form-container .submit-btn {
-            background: #4B6CB7; /* Blue submit button */
+            background: #4B6CB7;
             color: #FFFFFF;
         }
 
         .form-container .submit-btn:hover {
-            background: #354A9F; /* Darker blue on hover */
+            background: #354A9F;
         }
 
         .form-container .cancel-btn {
-            background: #E5E7EB; /* Neutral light gray cancel button */
-            color: #4B5563; /* Neutral dark gray text */
+            background: #E5E7EB;
+            color: #4B5563; 
         }
 
         .form-container .cancel-btn:hover {
-            background: #D1D5DB; /* Darker gray on hover */
+            background: #D1D5DB;
         }
 
 		/* Breadcrumb Styling */
         .breadcrumb {
-            margin: 20px 10px; /* Space for the breadcrumb above the form */
+            margin: 20px 10px; 
             font-size: 14px;
-            color: #6B7280; /* Neutral gray for breadcrumb */
+            color: #6B7280; 
         }
 
         .breadcrumb span {
             font-weight: bold;
-            color: #4B6CB7; /* Blue color for active breadcrumb */
+            color: #4B6CB7; 
         }
     </style>
 </head>

@@ -71,14 +71,14 @@
         
         /* Breadcrumb Styling */
         .breadcrumb {
-            margin: 20px 10px; /* Space for the breadcrumb above the form */
+            margin: 20px 10px; 
             font-size: 14px;
-            color: #6B7280; /* Neutral gray for breadcrumb */
+            color: #6B7280; 
         }
 
         .breadcrumb span {
             font-weight: bold;
-            color: #4B6CB7; /* Blue color for active breadcrumb */
+            color: #4B6CB7; 
         }
     </style>
 </head>

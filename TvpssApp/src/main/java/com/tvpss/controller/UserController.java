@@ -20,7 +20,7 @@ public class UserController {
     // View all users (manage users page)
     @GetMapping("/manageUsers")
     public String manageUsers(@RequestParam(defaultValue = "1") int page, Model model) {
-        int pageSize = 6; // Number of users per page
+        int pageSize = 5; // Number of users per page
         List<User> allUsers = userService.findAllUsers();
         int totalUsers = allUsers.size();
         int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
@@ -72,8 +72,8 @@ public class UserController {
                                .filter(u -> u.getUsername().equals(username))
                                .findFirst()
                                .orElse(null);
-        model.addAttribute("user", user); // Add the user to the model for editing
-        return "superadmin/editUser"; // Return the view for editing
+        model.addAttribute("user", user); 
+        return "superadmin/editUser"; 
     }
 
     // Update user
@@ -91,9 +91,9 @@ public class UserController {
     // Delete a user
     @PostMapping("/deleteUser")
     public String deleteUser(@RequestParam("username") String username, RedirectAttributes redirectAttributes) {
-        userService.deleteUser(username); // Delete the user via the service
-        redirectAttributes.addFlashAttribute("success", "User deleted successfully!"); // Add a success message
-        return "redirect:/manageUsers?success=true"; // Redirect to Manage Users with a query parameter
+        userService.deleteUser(username);
+        redirectAttributes.addFlashAttribute("success", "User deleted successfully!"); 
+        return "redirect:/manageUsers?success=true"; 
     }
 
 }
