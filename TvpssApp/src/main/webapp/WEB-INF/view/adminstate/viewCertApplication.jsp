@@ -294,7 +294,7 @@
 	<div class="modal" id="confirmationModal" style="display: none;">
 	    <div class="modal-header">
 	        <h2>Do you want to delete the user?</h2>
-	        <button class="close-btn" onclick="hideModal()">Ã</button>
+	        <button class="close-btn" onclick="hideModal()">ÃÂ</button>
 	    </div>
 	    <div class="modal-body">
 	        <p>This will be an irreversible operation.</p>
