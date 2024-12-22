@@ -71,14 +71,14 @@
         
         /* Breadcrumb Styling */
         .breadcrumb {
-            margin: 20px 10px; /* Space for the breadcrumb above the form */
+            margin: 20px 10px; 
             font-size: 14px;
-            color: #6B7280; /* Neutral gray for breadcrumb */
+            color: #6B7280; 
         }
 
         .breadcrumb span {
             font-weight: bold;
-            color: #4B6CB7; /* Blue color for active breadcrumb */
+            color: #4B6CB7; 
         }
     </style>
 </head>
@@ -97,6 +97,16 @@
                     <li><a href="/TvpssApp/manageUsers" class="active">User Management</a></li>
                 </ul>
             </nav>
+            <div class="settings">
+                <div class="setting-item">
+                    <i class="icon-settings"></i> Setting
+                </div>
+                <div class="divider"></div>
+                <div class="setting-item">
+		            <i class="icon-logout"></i>
+		            <a href="/TvpssApp/login" style="text-decoration: none; color: inherit;">Logout</a>
+		        </div>
+            </div>
         </aside>
 
 		<!-- Main Content -->
