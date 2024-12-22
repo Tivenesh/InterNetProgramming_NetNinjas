@@ -167,7 +167,7 @@
 	                    <p>15</p>
 	                </div>
 	                <div class="stats-card">
-	                    <h4>Number of Applications Certificate</h4>
+	                    <h4>Number of Achievements</h4>
 	                    <p>89</p>
 	                </div>
 	                <div class="stats-card">

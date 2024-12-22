@@ -407,7 +407,7 @@
 					                </c:if>
 					                <c:choose>
 			                            <c:when test="${certificate.status != 'Generated'}">
-			                            	<a href="${pageContext.request.contextPath}/adminstate/generateCertificate?certificateId=${certificate.certificateId}">
+			                            	<a href="${pageContext.request.contextPath}/adminstate/ ?certificateId=${certificate.certificateId}">
 											    <button class="btn preview" type="button">Preview</button>
 											</a>
 
