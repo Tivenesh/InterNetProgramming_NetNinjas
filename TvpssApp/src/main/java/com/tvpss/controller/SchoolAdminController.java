@@ -49,7 +49,7 @@ public class SchoolAdminController {
 
     @ModelAttribute("school")
     public School school() {
-        return schoolService.getSchool();
+        return new School();
     }
 
     // School Information and Dashboard Management
@@ -59,8 +59,8 @@ public class SchoolAdminController {
         model.addAttribute("page", "dashboard");
         model.addAttribute("pageTitle", "Welcome Admin School!");
         model.addAttribute("numStudents", 500);
-        model.addAttribute("totalAchievements", 120);
-        model.addAttribute("numCrew", 20);
+        model.addAttribute("totalAchievements", achievementService.getAllAchievements().size());
+        model.addAttribute("numCrew", applicationService.getAllApplications().size());
 
         // Chart data
         model.addAttribute("chartLabels", "['21 Nov', '22 Nov', '23 Nov', '24 Nov', '25 Nov', '26 Nov', '27 Nov']");
@@ -73,7 +73,7 @@ public class SchoolAdminController {
 
     @GetMapping("/school-information")
     public String showSchoolInformation(HttpSession session, Model model) {
-        School school = (School) session.getAttribute("school");
+        School school = schoolService.getSchool();
 
         model.addAttribute("school", school);
         model.addAttribute("pageTitle", "School Information");
@@ -116,13 +116,8 @@ public class SchoolAdminController {
     }
 
     @GetMapping("/viewSchoolInformation")
-    public String viewSchoolInformation(HttpSession session, Model model) {
-        School school = (School) session.getAttribute("school");
-
-        if (school == null) {
-            return "redirect:/adminschool/school-information";
-        }
-
+    public String viewSchoolInformation(Model model) {
+        School school = schoolService.getSchool();
         model.addAttribute("school", school);
         model.addAttribute("page", "school-information");
         model.addAttribute("pageTitle", "School Information");
@@ -180,7 +175,7 @@ public class SchoolAdminController {
                 singleAchievement.setAwardInfo(awardInfo);
                 singleAchievement.setFormMode("Single");
                 singleAchievement.setStatus("Pending");
-                achievementService.addAchievement(singleAchievement);
+                achievementService.saveAchievement(singleAchievement);
 
             } else if ("multiple".equalsIgnoreCase(formMode)) {
                 Achievement multipleAchievement = new Achievement();
@@ -192,7 +187,7 @@ public class SchoolAdminController {
 
                 if (uploadDoc != null && !uploadDoc.isEmpty()) {
                     File savedCsvFile = saveUploadedFile(uploadDoc, request);
-                    multipleAchievement.setUploadDoc(savedCsvFile);
+                    multipleAchievement.setUploadDocPath(savedCsvFile);
                 }
 
                 if (supportDoc != null) {
@@ -203,7 +198,7 @@ public class SchoolAdminController {
                     }
                 }
 
-                achievementService.addAchievement(multipleAchievement);
+                achievementService.saveAchievement(multipleAchievement);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -238,7 +233,7 @@ public class SchoolAdminController {
             @ModelAttribute("achievement") Achievement achievements,
             RedirectAttributes redirectAttributes) {
 
-    	achievementService.addAchievement(achievements);
+    	achievementService.saveAchievement(achievements);
             redirectAttributes.addFlashAttribute("successMessage", "School information saved successfully!");
             return "redirect:/adminschool/student-achievement";
 

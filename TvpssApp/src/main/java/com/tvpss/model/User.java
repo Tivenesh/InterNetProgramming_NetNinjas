@@ -1,17 +1,29 @@
 package com.tvpss.model;
 
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
+
+    @Id
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "role", nullable = false)
     private int role; // e.g., 1 for SUPER_ADMIN, 2 for ADMIN_PPD, etc.
+
+    @Column(name = "state")
     private String state; 
+
+    @Column(name = "email", unique = true)
     private String email;
 
-    public User(String username, String password, int role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+    public User() {}
 
     // Add a new constructor
     public User(String username, String password, int role, String state, String email) {
@@ -35,7 +47,7 @@ public class User {
         return role;
     }
 
-     public void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -47,22 +59,22 @@ public class User {
         this.role = role;
     }
 
-    public String getState() { // Add getter
+    public String getState() {
         return state;
     }
 
-    public void setState(String state) { // Add setter
+    public void setState(String state) {
         this.state = state;
     }
 
-    public String getEmail() { // Add getter for email
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) { // Add setter for email
+    public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getUserRoleName() {
         switch (this.role) {
             case 1:
@@ -80,4 +92,3 @@ public class User {
         }
     }
 }
-

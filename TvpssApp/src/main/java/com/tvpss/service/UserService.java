@@ -1,54 +1,62 @@
 package com.tvpss.service;
 
+import com.tvpss.repository.UserDao;
 import com.tvpss.model.User;
 import com.tvpss.model.UserRoles;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 @Service
 public class UserService {
 
-    // In-memory user data (replace with database in a real application)
-    private static final Map<String, User> users = new HashMap<>();
+    @Autowired
+    private UserDao userDao;
 
-    static {
-        users.put("superadmin", new User("superadmin", "super123", UserRoles.SUPER_ADMIN));
-        users.put("adminppd", new User("adminppd", "ppd123", UserRoles.ADMIN_PPD));
-        users.put("adminstate", new User("adminstate", "state123", UserRoles.ADMIN_STATE));
-        users.put("adminschool", new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL));
-        users.put("student", new User("student", "student123", UserRoles.STUDENT));
+    @PostConstruct
+    @Transactional
+    public void initializeUsers() {
+        if(userDao.findAllUsers().isEmpty()) {
+            userDao.save(new User("superadmin", "super123", UserRoles.SUPER_ADMIN, "Selangor", "superadmin@tvpss.com"));
+            userDao.save(new User("adminppd", "ppd123", UserRoles.ADMIN_PPD, "Johor", "adminppd@tvpss.com"));
+            userDao.save(new User("adminstate", "state123", UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com"));
+            userDao.save(new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com"));
+            userDao.save(new User("student", "student123", UserRoles.STUDENT, "Penang", "student@tvpss.com"));
+        }
     }
-
-    // // For superAdmin
-    static {
-        users.put("superadmin", new User("superadmin", "super123", UserRoles.SUPER_ADMIN, "Selangor", "superadmin@tvpss.com"));
-        users.put("adminppd", new User("adminppd", "ppd123", UserRoles.ADMIN_PPD, "Johor", "adminppd@tvpss.com"));
-        users.put("adminstate", new User("adminstate", "state123", UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com"));
-        users.put("adminschool", new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com"));
-        users.put("student", new User("student", "student123", UserRoles.STUDENT, "Penang", "student@tvpss.com"));
-    }
-
+   
+    @Transactional
     public User findByUsernameAndPassword(String username, String password) {
-        User user = users.get(username);
+        User user = userDao.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
         return null; // Return null if credentials don't match
     }
+
+    @Transactional
     public List<User> findAllUsers() {
-        return users.values().stream().collect(Collectors.toList());
+        return userDao.findAllUsers();
     }
     
+    @Transactional
     public void addUser(String username, String email, int role, String state, String password) {
-        users.put(username, new User(username, password, role, state, email));
+        User user = userDao.findByUsername(username);
+        if(user != null) {
+            user.setEmail(email);
+            user.setRole(role);
+            user.setState(state);
+            userDao.save(user);
+        }
     }
     
+    @Transactional
     public void updateUser(String username, String email, int role, String state) {
-        User user = users.get(username);
+        User user = userDao.findByUsername(username);
         if (user != null) {
             user.setEmail(email);
             user.setRole(role);
@@ -57,7 +65,8 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void deleteUser(String username) {
-        users.remove(username);
+        userDao.deleteByUsername(username);
     }
 }
