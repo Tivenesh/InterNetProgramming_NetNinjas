@@ -18,7 +18,7 @@
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-webmvc</artifactId>
-        <version>5.3.21</version> <!-- Use the latest stable version -->
+        <version>5.3.30</version> <!-- Use the latest stable version -->
     </dependency>
 
     <!-- Servlet API (for web applications) -->
@@ -35,22 +35,26 @@
 	    <version>1.2</version>
     </dependency>
     
+    <!-- Commons FileUpload for handling multipart requests -->
     <dependency>
-    	<groupId>com.example</groupId>
-    	<artifactId>SpringLabApp</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.5</version>
     </dependency>
-
+    
+    <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+    </dependency>
+        
+   <!-- Spring Core and ORM -->
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
         <version>5.3.30</version>
     </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-webmvc</artifactId>
-        <version>5.3.30</version>
-    </dependency>
+
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-orm</artifactId>
@@ -70,28 +74,28 @@
         <artifactId>mysql-connector-java</artifactId>
         <version>8.0.33</version>
     </dependency>
-
-    <!-- Commons FileUpload for handling multipart requests -->
-    <dependency>
-        <groupId>commons-fileupload</groupId>
-        <artifactId>commons-fileupload</artifactId>
-        <version>1.5</version>
-    </dependency>
-    
-    <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
-    </dependency>
-
-    <dependency>
-    	<groupId>com.ip2025</groupId>
-    	<artifactId>SpringApp01</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
+      
   </dependencies>
   <build>
     <finalName>TvpssApp</finalName>
-  </build>
-</project>
+    <plugins>
+        <!-- Compiler plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <source>11</source>
+                <target>11</target>
+            </configuration>
+        </plugin>
+        <!-- WAR plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.2</version>
+        </plugin>
+    </plugins>
+</build>
 
+</project>
