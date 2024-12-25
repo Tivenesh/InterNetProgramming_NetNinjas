@@ -15,9 +15,16 @@
     <context:component-scan base-package="com.tvpss" />
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-
-    <!-- Enable Spring MVC configuration -->
+    
+    <!-- Enable annotation-driven Spring MVC -->
     <mvc:annotation-driven />
+
+    <!-- Scan for Controllers -->
+    <context:component-scan base-package="com.tvpss.controller" />
+
+    <!-- Scan for Configuration, Service, Repository, and Entities -->
+    <context:component-scan base-package="config,com.tvpss.service,com.example.entity" />
+    
 
     <!-- Configure the ViewResolver for JSP views -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

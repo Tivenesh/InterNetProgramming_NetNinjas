@@ -18,7 +18,7 @@
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-webmvc</artifactId>
-        <version>5.3.21</version> <!-- Use the latest stable version -->
+        <version>5.3.30</version> <!-- Use the latest stable version -->
     </dependency>
 
     <!-- Servlet API (for web applications) -->
@@ -35,11 +35,6 @@
 	    <version>1.2</version>
     </dependency>
     
-    <dependency>
-    	<groupId>com.example</groupId>
-    	<artifactId>SpringLabApp</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
     <!-- Commons FileUpload for handling multipart requests -->
     <dependency>
         <groupId>commons-fileupload</groupId>
@@ -51,10 +46,56 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
-        </dependency>
+    </dependency>
         
+   <!-- Spring Core and ORM -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.3.30</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>5.3.30</version>
+    </dependency>
+
+    <!-- Hibernate Core -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>5.6.15.Final</version>
+    </dependency>
+
+    <!-- MySQL Connector -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.33</version>
+    </dependency>
+      
   </dependencies>
   <build>
     <finalName>TvpssApp</finalName>
-  </build>
+    <plugins>
+        <!-- Compiler plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <source>11</source>
+                <target>11</target>
+            </configuration>
+        </plugin>
+        <!-- WAR plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.2</version>
+        </plugin>
+    </plugins>
+</build>
+
 </project>
