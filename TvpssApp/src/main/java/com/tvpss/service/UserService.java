@@ -1,15 +1,16 @@
 package com.tvpss.service;
 
-import com.tvpss.repository.UserDao;
-import com.tvpss.model.User;
-import com.tvpss.model.UserRoles;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import com.tvpss.model.User;
+import com.tvpss.model.UserRoles;
+import com.tvpss.repository.UserDao;
 
 @Service
 public class UserService {
@@ -44,16 +45,22 @@ public class UserService {
     }
     
     @Transactional
+    public boolean isUsernameExists(String username) {
+        User user = userDao.findByUsername(username);
+        return user != null;  // Returns true if the user already exists.
+    }
+
+    @Transactional
     public void addUser(String username, String email, int role, String state, String password) {
         User user = userDao.findByUsername(username);
-        if(user != null) {
-            user.setEmail(email);
-            user.setRole(role);
-            user.setState(state);
-            userDao.save(user);
+        if (user != null) {
+            throw new RuntimeException("Username already exists");
         }
+        user = new User(username, password, role, state, email);
+        userDao.save(user);
     }
-    
+
+
     @Transactional
     public void updateUser(String username, String email, int role, String state) {
         User user = userDao.findByUsername(username);
@@ -61,7 +68,7 @@ public class UserService {
             user.setEmail(email);
             user.setRole(role);
             user.setState(state);
-           
+            userDao.save(user);  // Save after updating
         }
     }
 

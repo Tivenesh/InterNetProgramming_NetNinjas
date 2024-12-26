@@ -82,6 +82,7 @@
 </head>
 
 <body>
+    
     <div class="dashboard">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -188,6 +189,13 @@
         </main>
     </div>
     
+    <!-- Check if username already exists -->
+    <c:if test="${not empty error}">
+        <script>
+            alert("${error}");
+        </script>
+    </c:if>
+    
     <script>
 	 	// Validate email and passwords
 	    function validateForm() {
@@ -206,6 +214,7 @@
 	            alert("Passwords do not match!");
 	            return false;
 	        }
+            
 	        return true;
 	    }
     </script>

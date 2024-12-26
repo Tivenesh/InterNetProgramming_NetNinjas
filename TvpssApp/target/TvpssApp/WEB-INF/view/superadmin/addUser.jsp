@@ -82,6 +82,7 @@
 </head>
 
 <body>
+    
     <div class="dashboard">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -188,6 +189,12 @@
         </main>
     </div>
     
+    <c:if test="${not empty error}">
+        <script>
+            alert("${error}");
+        </script>
+    </c:if>
+    
     <script>
 	 	// Validate email and passwords
 	    function validateForm() {
@@ -206,6 +213,21 @@
 	            alert("Passwords do not match!");
 	            return false;
 	        }
+	        
+	     // Check if username already exists via AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "/TvpssApp/checkUsernameExists?username=" + encodeURIComponent(username), false);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = xhr.responseText;
+                    if (response === "true") {
+                        alert("Username already exists.");
+                        return false; // Prevent form submission if username exists
+                    }
+                }
+            };
+            xhr.send();
+            
 	        return true;
 	    }
     </script>
