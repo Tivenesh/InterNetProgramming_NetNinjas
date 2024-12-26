@@ -91,8 +91,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="/TvpssApp/dashboard">Dashboard</a></li>
-                    <li><a href="/TvpssApp/manageUsers" class="active">User Management</a></li>
+                    <li><a href="/TvpssApp/superadmin/dashboard">Dashboard</a></li>
+                    <li><a href="/TvpssApp/superadmin/manageUsers" class="active">User Management</a></li>
                 </ul>
             </nav>
             <div class="settings">
@@ -138,7 +138,7 @@
 
             <!-- Add User Form -->
             <div class="form-container">
-                <form action="/TvpssApp/addUser" method="post" onsubmit="return validateForm()">
+                <form action="/TvpssApp/superadmin/addUser" method="post" onsubmit="return validateForm()">
                     <label for="username">Full Name:</label>
                     <input type="text" id="username" name="username" required placeholder="Fill in your name">
 
@@ -180,7 +180,7 @@
                     <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter the password">
 
                     <div style="display: flex; justify-content: space-between;">
-                        <button type="button" class="cancel-btn" onclick="location.href='/TvpssApp/manageUsers'">Cancel</button>
+                        <button type="button" class="cancel-btn" onclick="location.href='/TvpssApp/superadmin/manageUsers'">Cancel</button>
                         <button type="submit" class="submit-btn">Submit</button>
                     </div>
                 </form>

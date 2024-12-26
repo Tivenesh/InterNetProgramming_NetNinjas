@@ -12,6 +12,14 @@ public class UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    
+    @Transactional
+    public long countUsersByRole(int role) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select count(u) from User u where u.role = :role", Long.class)
+                .setParameter("role", role)
+                .uniqueResult();
+    }
 
     @Transactional
     public void save(User user) {

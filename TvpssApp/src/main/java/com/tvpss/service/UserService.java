@@ -31,6 +31,11 @@ public class UserService {
     }
    
     @Transactional
+    public long getUserCountByRole(int role) {
+        return userDao.countUsersByRole(role);
+    }
+    
+    @Transactional
     public User findByUsernameAndPassword(String username, String password) {
         User user = userDao.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
