@@ -141,7 +141,7 @@
                 <div class="form-container">
                     <form action="/TvpssApp/updateUser" method="post" onsubmit="return validateForm()">
 					    <label for="username">Username:</label>
-					    <input type="text" id="username" name="username" value="${user.username}" required><br><br>
+					    <input type="text" id="username" name="username" value="${user.username}" disabled><br><br>
 					
 					    <label for="email">Email:</label>
 					    <input type="email" id="email" name="email" value="${user.email}" required><br><br>

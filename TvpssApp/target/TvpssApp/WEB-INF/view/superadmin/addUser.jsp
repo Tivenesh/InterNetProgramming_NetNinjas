@@ -82,7 +82,6 @@
 </head>
 
 <body>
-    
     <div class="dashboard">
         <!-- Sidebar -->
         <aside class="sidebar">
