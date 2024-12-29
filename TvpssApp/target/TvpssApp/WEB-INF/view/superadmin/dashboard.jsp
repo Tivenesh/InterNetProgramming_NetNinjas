@@ -94,7 +94,7 @@
             <nav>
                 <ul>
                     <li><a href="#" class="active">Dashboard</a></li>
-                    <li><a href="/TvpssApp/manageUsers">User Management</a></li>
+                    <li><a href="/TvpssApp/superadmin/manageUsers">User Management</a></li>
                 </ul>
             </nav>
             <div class="settings">
@@ -130,26 +130,23 @@
 
 			    <div class="welcome-search">
 			        <h1>Hello, welcome!</h1>
-			        <div class="search-bar">
-			            <input type="text" placeholder="Search here...">
-			        </div>
 			    </div>
 			</header>
 
             <section class="stats">
-                <div class="stat">
-                    <h3>Number of State Admin</h3>
-                    <p>63</p>
-                </div>
-                <div class="stat">
-                    <h3>Number of PPD Admin</h3>
-                    <p>85</p>
-                </div>
-                <div class="stat">
-                    <h3>Number of School Admin</h3>
-                    <p>102</p>
-                </div>
-            </section>
+			    <div class="stat">
+			        <h3>Number of State Admin</h3>
+			        <p>${stateAdminCount}</p>
+			    </div>
+			    <div class="stat">
+			        <h3>Number of PPD Admin</h3>
+			        <p>${ppdAdminCount}</p>
+			    </div>
+			    <div class="stat">
+			        <h3>Number of School Admin</h3>
+			        <p>${schoolAdminCount}</p>
+			    </div>
+			</section>
             
             <section class="charts">
 			    <div class="chart-container">

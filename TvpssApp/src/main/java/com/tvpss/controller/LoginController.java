@@ -47,16 +47,16 @@ public class LoginController {
         // Redirect to the specific dashboard based on role
         if (role != null) {
             switch (role) {
-                case UserRoles.SUPER_ADMIN:
-                    return "/superadmin/dashboard";
-                case UserRoles.ADMIN_PPD:
-                    return "/adminppd/dashboard";
-                case UserRoles.ADMIN_STATE:
-                    return "/adminstate/dashboard";
-                case UserRoles.ADMIN_SCHOOL:
-                    return "redirect:/adminschool/dashboard";
-                case UserRoles.STUDENT:
-                    return "/student/dashboard";
+            case UserRoles.SUPER_ADMIN:
+                return "redirect:/superadmin/dashboard";
+            case UserRoles.ADMIN_PPD:
+                return "redirect:/adminppd/dashboard";
+            case UserRoles.ADMIN_STATE:
+                return "redirect:/adminstate/dashboard";
+            case UserRoles.ADMIN_SCHOOL:
+                return "redirect:/adminschool/dashboard";
+            case UserRoles.STUDENT:
+                return "redirect:/student/dashboard";
                 default:
                     model.addAttribute("error", "Role not recognized.");
                     return "login";

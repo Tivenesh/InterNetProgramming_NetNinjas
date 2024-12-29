@@ -45,7 +45,7 @@
 	    </div>
 	    <div class="modal-footer">
 	        <button class="btn-cancel" onclick="hideModal()">No</button>
-	        <form id="deleteForm" action="/TvpssApp/deleteUser" method="post" style="margin: 0;">
+	        <form id="deleteForm" action="/TvpssApp/superadmin/deleteUser" method="post" style="margin: 0;">
 	            <input type="hidden" name="username" id="deleteUsername" value="">
 	            <button class="btn-confirm" type="submit">Yes</button>
 	        </form>
@@ -62,8 +62,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="/TvpssApp/dashboard">Dashboard</a></li>
-                    <li><a href="/TvpssApp/manageUsers" class="active">User Management</a></li>
+                    <li><a href="/TvpssApp/superadmin/dashboard">Dashboard</a></li>
+                    <li><a href="/TvpssApp/superadmin/manageUsers" class="active">User Management</a></li>
                 </ul>
             </nav>
             <div class="settings">
@@ -109,7 +109,7 @@
 
 			<section class="manage-users-header">
 				<div class="search-bar">
-					<form action="" method="get">
+					<form action="/TvpssApp/superadmin/manageUsers" method="get">
 						<input 
 							type="text" 
 							id="search" 
@@ -128,7 +128,8 @@
 					</select>
 				</div>
 
-				<button class="add-user-btn" onclick="location.href='/TvpssApp/addUser'">+ Add New User</button>
+				<button class="add-user-btn" onclick="location.href='/TvpssApp/superadmin/addUser'">+ Add New User</button>
+
 			</section>
 
 	        <!-- User Table -->
@@ -154,7 +155,7 @@
 						            <td>
 						                <!-- Check if the user is not a Super Admin -->
 						                <c:if test="${user.getUserRoleName() != 'Super Admin'}">
-						                    <button class="edit-btn" onclick="location.href='/TvpssApp/editUser?username=${user.username}'">Edit</button>
+						                    <button class="edit-btn" onclick="location.href='/TvpssApp/superadmin/editUser?username=${user.username}'">Edit</button>
 						                    <button class="delete-btn" onclick="showModal('${user.username}')">Delete</button>
 						                </c:if>
 						            </td>

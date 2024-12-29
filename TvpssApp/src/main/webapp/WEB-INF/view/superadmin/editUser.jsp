@@ -93,8 +93,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="/TvpssApp/dashboard">Dashboard</a></li>
-                    <li><a href="/TvpssApp/manageUsers" class="active">User Management</a></li>
+                    <li><a href="/TvpssApp/superadmin/dashboard">Dashboard</a></li>
+                    <li><a href="/TvpssApp/superadmin/manageUsers" class="active">User Management</a></li>
                 </ul>
             </nav>
             <div class="settings">
@@ -139,9 +139,10 @@
             <!-- Edit User Form -->
             <section class="form-section">
                 <div class="form-container">
-                    <form action="/TvpssApp/updateUser" method="post" onsubmit="return validateForm()">
+                    <form action="/TvpssApp/superadmin/updateUser" method="post" onsubmit="return validateForm()">
 					    <label for="username">Username:</label>
-					    <input type="text" id="username" name="username" value="${user.username}" required><br><br>
+					    <input type="text" id="username" name="username" value="${user.username}" disabled><br><br>
+					    <input type="hidden" name="username" value="${user.username}">
 					
 					    <label for="email">Email:</label>
 					    <input type="email" id="email" name="email" value="${user.email}" required><br><br>
