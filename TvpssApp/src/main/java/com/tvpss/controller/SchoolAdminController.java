@@ -281,4 +281,66 @@ public class SchoolAdminController {
         model.addAttribute("applications", results);
         return "adminschool/crew-application";
     }
+
+    @GetMapping("/submittvpssversion")
+    public String showTvpssVersionForm(HttpSession session, Model model) {
+        School school = (School) session.getAttribute("school");
+
+        model.addAttribute("page", "tvpss-version");
+        model.addAttribute("school", school);
+        model.addAttribute("pageTitle", "Submit TVPSS Version");
+        return "adminschool/submittvpssversion";
+    }
+    
+    
+    @PostMapping("/view-submitted-tvpss-form")
+    public String viewSubmittedTvpssForm(
+            @ModelAttribute("school") School school,
+            Model model) {
+        model.addAttribute("school", school);
+        return "adminschool/viewSubmittedTvpssForm"; // Path relative to /WEB-INF/view/
+    }
+    
+    @PostMapping("/save-tvpss-version")
+    public String saveTvpssVersion(
+            @ModelAttribute("school") School school,
+            @RequestParam("connerminittv") String connerminittv,
+            @RequestParam("recordingEquipment") String recordingEquipment,
+            @RequestParam("greenScreenTechnology") String greenScreenTechnology,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            MultipartFile logo = school.getLogo();
+
+            if (logo != null && !logo.isEmpty()) {
+                Path uploadPath = Paths.get(UPLOAD_DIRECTORY);
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                String originalFilename = logo.getOriginalFilename();
+                String newFilename = System.currentTimeMillis() + "_" + originalFilename;
+
+                Path filePath = uploadPath.resolve(newFilename);
+                Files.copy(logo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                school.setLogoFilename(newFilename);
+            }
+
+            // Additional fields handling
+            school.setConnerminittv(connerminittv);
+            school.setRecordingEquipment(recordingEquipment);
+            school.setGreenScreenTechnology(greenScreenTechnology);
+
+            schoolService.saveSchool(school);
+            redirectAttributes.addFlashAttribute("successMessage", "TVPSS version submitted successfully!");
+            return "redirect:/adminschool/viewSchoolInformation";
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to upload logo: " + e.getMessage());
+            return "redirect:/adminschool/school-information";
+        }
+    }
+
 }

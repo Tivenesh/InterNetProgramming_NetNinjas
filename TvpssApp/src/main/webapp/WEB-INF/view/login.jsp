@@ -91,7 +91,7 @@
 <body>
     <div class="login-container">
         <h2>Login to TVPSS</h2>
-        <form action="login" method="post">
+        <form action="<c:url value='/login'/>" method="post">
             <!-- Display error message -->
             <c:if test="${not empty error}">
                 <div class="error">${error}</div>

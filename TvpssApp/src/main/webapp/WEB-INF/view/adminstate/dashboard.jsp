@@ -120,7 +120,7 @@
 	                <ul>
                     <li><a href="/TvpssApp/adminstate/dashboard" class="menu-item ${page == null || page == 'dashboard' ? 'active' : ''}">Dashboard</a><li>
 			        <li><a href="/TvpssApp/adminstate/viewCertApplication" class="menu-item ${page == 'viewCertApplication' || page == 'generateCertificate' ? 'active' : ''}">Generate E-Certificate</a><li>
-				    <li><a href="/TvpssApp/adminstate/???" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
+				    <li><a href="/TvpssApp/schoolVersion/view" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
 	                </ul>
 	            </nav>
 	            <div class="settings">

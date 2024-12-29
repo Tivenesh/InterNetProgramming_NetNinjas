@@ -45,6 +45,30 @@ public class School implements Serializable {
     @Column(name = "logo_filename")
     private String logoFilename;
 
+    @Column(name = "conner_minittv")
+    private String connerminittv;
+
+    @Column(name = "recording_equipment")
+    private String recordingEquipment;
+
+    @Column(name = "green_screen_technology")
+    private String greenScreenTechnology;
+
+    @Column(name = "studio")
+    private String studio;
+
+    @Column(name = "youtube_upload")
+    private String youtubeUpload;
+
+    @Column(name = "recording_in_school")
+    private String recordingInSchool;
+
+    @Column(name = "recording_in_out_school")
+    private String recordingInOutSchool;
+
+    @Column(name = "tvpss_logo")
+    private String tvpssLogo;
+
     public School() {
     }
 
@@ -137,18 +161,80 @@ public class School implements Serializable {
         this.youtubeLink = youtubeLink;
     }
 
+    public String getConnerminittv() {
+        return connerminittv;
+    }
+
+    public void setConnerminittv(String connerminittv) {
+        this.connerminittv = connerminittv;
+    }
+
+    public String getRecordingEquipment() {
+        return recordingEquipment;
+    }
+
+    public void setRecordingEquipment(String recordingEquipment) {
+        this.recordingEquipment = recordingEquipment;
+    }
+
+    public String getGreenScreenTechnology() {
+        return greenScreenTechnology;
+    }
+
+    public void setGreenScreenTechnology(String greenScreenTechnology) {
+        this.greenScreenTechnology = greenScreenTechnology;
+    }
+
+    public String getStudio() {
+        return studio;
+    }
+
+    public void setStudio(String studio) {
+        this.studio = studio;
+    }
+
+    public String getYoutubeUpload() {
+        return youtubeUpload;
+    }
+
+    public void setYoutubeUpload(String youtubeUpload) {
+        this.youtubeUpload = youtubeUpload;
+    }
+
+    public String getRecordingInSchool() {
+        return recordingInSchool;
+    }
+
+    public void setRecordingInSchool(String recordingInSchool) {
+        this.recordingInSchool = recordingInSchool;
+    }
+
+    public String getRecordingInOutSchool() {
+        return recordingInOutSchool;
+    }
+
+    public void setRecordingInOutSchool(String recordingInOutSchool) {
+        this.recordingInOutSchool = recordingInOutSchool;
+    }
+
+    public String getTvpssLogo() {
+        return tvpssLogo;
+    }
+
+    public void setTvpssLogo(String tvpssLogo) {
+        this.tvpssLogo = tvpssLogo;
+    }
+
     @Override
     public String toString() {
-        return "School{" +
-               "code='" + code + '\'' +
-               ", name='" + name + '\'' +
-               ", address1='" + address1 + '\'' +
-               ", address2='" + address2 + '\'' +
-               ", postcode='" + postcode + '\'' +
-               ", state='" + state + '\'' +
-               ", telephoneNumber='" + telephoneNumber + '\'' +
-               ", email='" + email + '\'' +
-               ", youtubeLink='" + youtubeLink + '\'' +
-               '}';
+        return "School [code=" + code + ", name=" + name + ", address1=" + address1 + ", address2=" + address2
+                + ", postcode=" + postcode + ", state=" + state + ", telephoneNumber=" + telephoneNumber + ", email="
+                + email + ", logo=" + logo + ", youtubeLink=" + youtubeLink + ", logoFilename=" + logoFilename
+                + ", connerminittv=" + connerminittv + ", recordingEquipment=" + recordingEquipment
+                + ", greenScreenTechnology=" + greenScreenTechnology + ", studio=" + studio + ", youtubeUpload="
+                + youtubeUpload + ", recordingInSchool=" + recordingInSchool + ", recordingInOutSchool="
+                + recordingInOutSchool + ", tvpssLogo=" + tvpssLogo + "]";
     }
+
+    
 }

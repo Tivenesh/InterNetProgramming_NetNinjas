@@ -89,7 +89,7 @@
 	            <nav>
 	                <ul>
 	                    <li><a href="#" class="active">Dashboard</a></li>
-	                    <li><a href="/TvpssApp/???">School TVPSS Validation</a></li>
+	                    <li><a href="/TvpssApp/adminppd/schoolValidation">School TVPSS Validation</a></li>
 	                </ul>
 	            </nav>
 	            <div class="settings">
