@@ -38,19 +38,9 @@ public class UserController {
 
     // View all users (manage users page)
     @GetMapping("/manageUsers")
-    public String manageUsers(@RequestParam(defaultValue = "1") int page, Model model) {
-        int pageSize = 5; // Number of users per page
+    public String manageUsers(Model model) {
         List<User> allUsers = userService.findAllUsers();
-        int totalUsers = allUsers.size();
-        int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
-
-        int startIndex = (page - 1) * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, totalUsers);
-        List<User> usersOnPage = allUsers.subList(startIndex, endIndex);
-
-        model.addAttribute("users", usersOnPage);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("users", allUsers);
         return "superadmin/manageUsers"; // Return SuperAdmin manage users page
     }
 

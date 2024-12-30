@@ -3,11 +3,19 @@ package com.tvpss.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tvpss.model.School;
+import com.tvpss.repository.SchoolDao;
 
 @Service
 public class SchoolService {
+	
+	@Autowired
+    private SchoolDao schoolDao;
+	
     private School school = new School(); // In-memory storage for a single school
     private List<School> schoolDatabase = new ArrayList<>();
     
@@ -24,8 +32,13 @@ public class SchoolService {
         return schoolDatabase; // Retrieve all saved schools
     }
     
+//    public long getTotalSchools() {
+//        return schoolDatabase.size();
+//    }
+    
+    @Transactional
     public long getTotalSchools() {
-        return schoolDatabase.size();
+        return schoolDao.countTotalSchools();
     }
 
     public School getSchoolBySchoolCode(String schoolCode) {

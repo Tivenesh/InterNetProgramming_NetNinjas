@@ -186,13 +186,6 @@
 	</div>
 	
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			const userTableRows = document.querySelectorAll('.user-table tbody tr');
-			if (userTableRows.length > 5) {
-				location.href = '?page=2';
-			}
-		});
-
 	    // Automatically hide the alert box after 5 seconds with slide-out effect
 	    setTimeout(() => {
 	        const alertBox = document.querySelector('.alert');
@@ -250,33 +243,34 @@
 		    }
 		}
 	    
-	    function sortTable() {
-	        const table = document.querySelector('.user-table tbody');
-	        const rows = Array.from(table.getElementsByTagName('tr')); 
-	        const sortBy = document.getElementById('sort').value;
+		function sortTable() {
+		    const table = document.querySelector('.user-table tbody');
+		    const rows = Array.from(table.getElementsByTagName('tr')); 
+		    const sortBy = document.getElementById('sort').value;
 
-	        if (sortBy === 'default') {
-	
-	            rows.sort((a, b) => a.rowIndex - b.rowIndex);
-	        } else {
-	            rows.sort((a, b) => {
-	                let valueA, valueB;
+		    if (sortBy === 'default') {
 
-	                if (sortBy === 'name') {
-	                    valueA = a.cells[0].innerText.toLowerCase();
-	                    valueB = b.cells[0].innerText.toLowerCase();
-	                } else if (sortBy === 'state') {
-	                    valueA = a.cells[1].innerText.toLowerCase(); 
-	                    valueB = b.cells[1].innerText.toLowerCase();
-	                }
+		        rows.sort((a, b) => a.rowIndex - b.rowIndex);
+		    } else {
+		        rows.sort((a, b) => {
+		            let valueA, valueB;
 
-	                return valueA.localeCompare(valueB);
-	            });
-	        }
+		            if (sortBy === 'name') {
+		                valueA = a.cells[0].innerText.toLowerCase(); 
+		                valueB = b.cells[0].innerText.toLowerCase();
+		            } else if (sortBy === 'state') {
+		                valueA = a.cells[1].innerText.toLowerCase(); 
+		                valueB = b.cells[1].innerText.toLowerCase();
+		            }
 
-	    
-	        rows.forEach(row => table.appendChild(row));
-	    }
+		            return valueA.localeCompare(valueB); 
+		        });
+		    }
+
+
+		    rows.forEach(row => table.appendChild(row));
+		}
+
 
 	</script>
 </body>
