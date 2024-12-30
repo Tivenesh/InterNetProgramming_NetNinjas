@@ -153,28 +153,25 @@
 	            <div class="divider"></div>
 	            <div class="welcome-search">
 	                <h1>Hello, welcome!</h1>
-	                <div class="search-bar">
-	                    <input type="text" placeholder="Search here...">
-	                </div>
 	            </div>
 	        </header>
 	
 	        <div class="dashboard-container">
 	            <!-- Statistics Cards -->
 	            <div class="stats-cards">
-	                <div class="stats-card">
-	                    <h4>Number of Applications Certificate</h4>
-	                    <p>15</p>
-	                </div>
-	                <div class="stats-card">
-	                    <h4>Number of Achievements</h4>
-	                    <p>89</p>
-	                </div>
-	                <div class="stats-card">
-	                    <h4>Number of TVPSS According to State</h4>
-	                    <p>264</p>
-	                </div>
-	            </div>
+				    <div class="stats-card">
+				        <h4>Number of Applications Certificate</h4>
+				        <p>${certificateCount}</p>
+				    </div>
+				    <div class="stats-card">
+				        <h4>Number of Achievements</h4>
+				        <p>${achievementCount}</p>
+				    </div>
+				    <div class="stats-card">
+				        <h4>Number of TVPSS According to State</h4>
+				        <p>264</p> 
+				    </div>
+				</div>
 	
 	            <!-- Charts Section -->
 	            <div class="charts-container">
@@ -187,23 +184,6 @@
 	                <!-- Circular Chart -->
 	                <div class="chart-box">
 	                    <h4>School Student Achievement Percentage by State</h4>
-	                    <div class="dropdown">
-	                        <select>
-	                            <option>Johor</option>
-					            <option>Melaka</option>
-					            <option>Negeri Sembilan</option>
-					            <option>Selangor</option>
-					            <option>Pahang</option>
-					            <option>Perak</option>
-					            <option>Kelantan</option>
-					            <option>Terengganu</option>
-					            <option>Penang</option>
-					            <option>Kedah</option>
-					            <option>Perlis</option>
-					            <option>Sabah</option>
-					            <option>Sarawak</option>
-	                        </select>
-	                    </div>
 	                    <div class="circular-chart">
 	                        <canvas id="circularChart"></canvas>
 	                    </div>

@@ -29,7 +29,13 @@ public class StateAdminController {
     
     @GetMapping("/dashboard")
     public String showAdminStateDashboard(Model model) {
-
+    	long certificateCount = certificateService.getAllCertificates().size();
+        long achievementCount = achievementService.getAllAchievements().size();
+        
+        // Pass data to the JSP
+        model.addAttribute("certificateCount", certificateCount);
+        model.addAttribute("achievementCount", achievementCount);
+        
         return "adminstate/dashboard";
     }
 

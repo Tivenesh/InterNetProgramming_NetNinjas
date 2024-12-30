@@ -120,7 +120,7 @@
 	                <ul>
                     <li><a href="/TvpssApp/adminstate/dashboard" class="menu-item ${page == null || page == 'dashboard' ? 'active' : ''}">Dashboard</a><li>
 			        <li><a href="/TvpssApp/adminstate/viewCertApplication" class="menu-item ${page == 'viewCertApplication' || page == 'generateCertificate' ? 'active' : ''}">Generate E-Certificate</a><li>
-				    <li><a href="/TvpssApp/adminstate/???" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
+				    <li><a href="/TvpssApp/schoolVersion/view" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
 	                </ul>
 	            </nav>
 	            <div class="settings">
@@ -162,19 +162,19 @@
 	        <div class="dashboard-container">
 	            <!-- Statistics Cards -->
 	            <div class="stats-cards">
-	                <div class="stats-card">
-	                    <h4>Number of Applications Certificate</h4>
-	                    <p>15</p>
-	                </div>
-	                <div class="stats-card">
-	                    <h4>Number of Achievements</h4>
-	                    <p>89</p>
-	                </div>
-	                <div class="stats-card">
-	                    <h4>Number of TVPSS According to State</h4>
-	                    <p>264</p>
-	                </div>
-	            </div>
+				    <div class="stats-card">
+				        <h4>Number of Applications Certificate</h4>
+				        <p>${certificateCount}</p>
+				    </div>
+				    <div class="stats-card">
+				        <h4>Number of Achievements</h4>
+				        <p>${achievementCount}</p>
+				    </div>
+				    <div class="stats-card">
+				        <h4>Number of TVPSS According to State</h4>
+				        <p>264</p> <!-- Static value, update if needed -->
+				    </div>
+				</div>
 	
 	            <!-- Charts Section -->
 	            <div class="charts-container">

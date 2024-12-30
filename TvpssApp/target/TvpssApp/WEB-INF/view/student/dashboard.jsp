@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tvpss.model.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,12 +38,30 @@
         nav {
             display: flex;
             gap: 32px;
+            margin-right: 150px;
         }
         nav a {
             text-decoration: none;
             font-weight: 500;
             font-size: 16px;
             color: #515B92;
+        }
+        .student-email {
+            padding: 10px 24px;
+            background: #FFC601;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            color: #30325C;
+            text-decoration: none;
+            margin-right: 30px;
+        }
+        .right-section {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            gap: 20px;  /* Adds spacing between nav, email, and button */
         }
         .apply-btn {
             display: inline-block;
@@ -54,8 +73,6 @@
             text-align: center;
             color: #30325C;
             text-decoration: none;
-            margin-left: 30px;
-            margin-right: 40px;
         }
         .hero {
             text-align: center;
@@ -123,11 +140,27 @@
             <img src="/TvpssApp/resources/images/tvpss.png" alt="Ministry of Education Logo">
 
         </div>
+        <div class="right-section">
         <nav>
             <a href="/TvpssApp/dashboard">Dashboard</a>
-            <a href="/TvpssApp/applicationResult">Application Results</a>
+            <a href="/TvpssApp/student/application">Application</a>
+            <a href="/TvpssApp/student/applicationResult?id=${application.id}">Application Results</a>
+            <a href="/TvpssApp/login">Log Out</a>
         </nav>
-        <a href="/TvpssApp/application" class="apply-btn">Apply Now</a>
+        <div class="student-email">
+            <% 
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+                if (loggedInUser != null) {
+            %>
+                <span><%= loggedInUser.getEmail() %></span>
+            <% } else { %>
+                <span>Guest</span>
+            <% } %>
+        </div>
+        </div>
+
+        <a href="/TvpssApp/student/application" class="apply-btn">Apply Now</a>
+
     </header>
 
     <section class="hero">
@@ -135,7 +168,7 @@
         <p>
             Join us in producing interesting and creative news content. An opportunity to learn, create, and share stories on the school platform. Apply now and be part of the team!
         </p>
-        <a href="/TvpssApp/applicationResult" class="apply-now">Apply Now</a>
+        <a href="/TvpssApp/student/application" class="apply-now">Apply Now</a>
     </section>
 
     <section class="steps">
@@ -145,7 +178,7 @@
         </div>
 
         <!-- Apply Now Button -->
-        <a href="/TvpssApp/application" class="steps-apply-now">Apply Now</a>
+        <a href="/TvpssApp/student/application" class="steps-apply-now">Apply Now</a>
     </section>
 
 </body>
