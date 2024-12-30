@@ -23,6 +23,10 @@ public class SchoolService {
     public List<School> getAllSchools() {
         return schoolDatabase; // Retrieve all saved schools
     }
+    
+    public long getTotalSchools() {
+        return schoolDatabase.size();
+    }
 
     public School getSchoolBySchoolCode(String schoolCode) {
         // Simulates a database lookup

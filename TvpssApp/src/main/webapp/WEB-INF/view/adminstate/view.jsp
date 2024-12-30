@@ -123,7 +123,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="/TvpssApp/schoolVersion/dashboard">Dashboard</a></li>
+                    <li><a href="/TvpssApp/adminstate/dashboard">Dashboard</a></li>
                     <li><a href="/TvpssApp/adminstate/viewCertApplication">Generate E-Certificate</a></li>
                     <li><a href="/TvpssApp/schoolVersion/view" class="active">View School Version Status</a></li>
                 </ul>

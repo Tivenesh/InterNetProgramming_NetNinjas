@@ -4,6 +4,8 @@ import com.tvpss.model.Achievement;
 import com.tvpss.model.Certificate;
 import com.tvpss.service.AchievementService;
 import com.tvpss.service.CertificateService;
+import com.tvpss.service.SchoolService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +29,19 @@ public class StateAdminController {
     @Autowired
     private AchievementService achievementService;
     
+    @Autowired
+    private SchoolService schoolService;
+    
     @GetMapping("/dashboard")
     public String showAdminStateDashboard(Model model) {
     	long certificateCount = certificateService.getAllCertificates().size();
         long achievementCount = achievementService.getAllAchievements().size();
+        long totalSchools = schoolService.getTotalSchools();
         
         // Pass data to the JSP
         model.addAttribute("certificateCount", certificateCount);
         model.addAttribute("achievementCount", achievementCount);
+        model.addAttribute("totalSchools", totalSchools);
         
         return "adminstate/dashboard";
     }

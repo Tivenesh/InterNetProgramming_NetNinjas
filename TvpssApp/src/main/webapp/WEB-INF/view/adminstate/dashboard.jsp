@@ -169,7 +169,7 @@
 				    </div>
 				    <div class="stats-card">
 				        <h4>Number of TVPSS According to State</h4>
-				        <p>264</p> 
+				        <p>${totalSchools}</p>
 				    </div>
 				</div>
 	
