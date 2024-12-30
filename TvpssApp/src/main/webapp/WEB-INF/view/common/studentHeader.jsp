@@ -24,6 +24,8 @@
             align-items: center;
             padding: 0 32px;
             box-sizing: border-box;
+            position: fixed;
+            top: 0;
         }
         .logo {
             display: flex;
@@ -74,63 +76,6 @@
             color: #30325C;
             text-decoration: none;
         }
-        .hero {
-            text-align: center;
-            color: #FFFFFF;
-            padding: 50px 20px;
-        }
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 20px;
-            line-height: 1.5;
-            margin-bottom: 30px;
-            max-width: 760px;
-            margin: 0 auto;
-        }
-        .hero .apply-now {
-            background: #FFC601;
-            border-radius: 25px;
-            padding: 10px 24px;
-            color: #000;
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 40px;
-        }
-        .steps {
-            width: 760px;
-            margin: 0px auto;
-            background: #FDFEFF;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 100px;
-        }
-        .steps-image img {
-            width: 100%;
-            display: block;
-            border-radius: 10px;
-        }
-        
-        .steps-apply-now {
-            display: block;
-            background: #FFC601;
-            color: #000000;
-            font-size: 14px;
-            font-weight: 500;
-            text-align: center;
-            text-decoration: none;
-            padding: 10px 24px;
-            border-radius: 25px;
-            margin: 20px auto;
-            width: 150px;
-        }
     </style>
 </head>
 <body>
@@ -142,7 +87,7 @@
         </div>
         <div class="right-section">
         <nav>
-            <a href="/TvpssApp/dashboard">Dashboard</a>
+            <a href="/TvpssApp/student/dashboard">Dashboard</a>
             <a href="/TvpssApp/student/application">Application</a>
             <a href="/TvpssApp/student/applicationResult?id=${application.id}">Application Results</a>
             <a href="/TvpssApp/login">Log Out</a>
@@ -163,23 +108,8 @@
 
     </header>
 
-    <section class="hero">
-        <h1>SCHOOL RESOURCE CENTER TV</h1>
-        <p>
-            Join us in producing interesting and creative news content. An opportunity to learn, create, and share stories on the school platform. Apply now and be part of the team!
-        </p>
-        <a href="/TvpssApp/student/application" class="apply-now">Apply Now</a>
-    </section>
 
-    <section class="steps">
-        <!-- Image Section -->
-        <div class="steps-image">
-            <img src="/TvpssApp/resources/images/studentPortal.png" alt="Steps Illustration">
-        </div>
-
-        <!-- Apply Now Button -->
-        <a href="/TvpssApp/student/application" class="steps-apply-now">Apply Now</a>
-    </section>
+    
 
 </body>
 </html>

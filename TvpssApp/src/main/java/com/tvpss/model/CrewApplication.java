@@ -27,16 +27,32 @@ public class CrewApplication implements Serializable {
     @Column(name = "status", nullable = false)
     private String status; // e.g., "Pending", "Approved", "Rejected"
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "state", nullable = false)
+    private String state;
+
+    @Column(name = "region", nullable = false)
+    private String region;
+
+    @Column(name = "school_name", nullable = false)
+    private String schoolName;
+
     // Constructors
     public CrewApplication() {}
 
-    public CrewApplication(Long id, String icNumber, String fullName, String position, int form, String status) {
+    public CrewApplication(Long id, String icNumber, String fullName, String position, int form, String status, String email, String state, String region, String schoolName) {
         this.id = id;
         this.icNumber = icNumber;
         this.fullName = fullName;
         this.position = position;
         this.form = form;
         this.status = status;
+        this.email = email;
+        this.state = state;
+        this.region = region;
+        this.schoolName = schoolName;
     }
 
     public Long getId() {
@@ -87,9 +103,49 @@ public class CrewApplication implements Serializable {
         this.status = status;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
     @Override
     public String toString() {
         return "CrewApplication [id=" + id + ", icNumber=" + icNumber + ", fullName=" + fullName + ", position="
-                + position + ", form=" + form + ", status=" + status + "]";
+                + position + ", form=" + form + ", status=" + status + ", email=" + email + ", state=" + state
+                + ", region=" + region + ", schoolName=" + schoolName + "]";
     }
+
+    public CrewApplication orElse(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElse'");
+    }
+
+    
 }

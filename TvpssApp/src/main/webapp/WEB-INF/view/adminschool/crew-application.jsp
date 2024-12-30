@@ -8,7 +8,6 @@
     <title>Crew Application</title>
     <link rel="stylesheet" href="<c:url value='/resources/css/crewApplication.css' />">
     <style>
-
         /* Empty style block removed */
     </style>
 </head>
@@ -93,7 +92,6 @@
      <!-- Confirmation Modal -->
     <div id="confirmationModal" class="modal hidden">
         <div class="modal-content">
-
             <span class="close" onclick="closeModal()">×</span>
             <h2 id="modalTitle" style="font-size: 16px; font-weight: 600;"></h2>
             <p id="modalBody" style="font-size: 13px; color: #6b7280;"></p>

@@ -251,7 +251,7 @@ public class SchoolAdminController {
     }
 
     @GetMapping("/view/{id}")
-    public String viewApplication(@PathVariable String id, Model model) {
+    public String viewApplication(@PathVariable Long id, Model model) {
         CrewApplication application = applicationService.getApplicationById(id);
         if (application == null) {
             model.addAttribute("errorMessage", "Application not found!");
@@ -263,11 +263,11 @@ public class SchoolAdminController {
 
     @PostMapping("/updateStatus")
     public String updateApplicationStatus(
-            @RequestParam("applicationIds") List<String> applicationIds,
+            @RequestParam("applicationIds") List<Long> applicationIds,
             @RequestParam("status") String status,
             RedirectAttributes redirectAttributes) {
 
-        for (String applicationId : applicationIds) {
+        for (Long applicationId : applicationIds) {
             applicationService.updateApplicationStatus(applicationId, status);
         }
 

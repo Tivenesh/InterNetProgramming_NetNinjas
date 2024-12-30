@@ -27,6 +27,12 @@ public class UserService {
             userDao.save(new User("adminstate", "state123", UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com"));
             userDao.save(new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com"));
             userDao.save(new User("student", "student123", UserRoles.STUDENT, "Penang", "student@tvpss.com"));
+            userDao.save(new User("qiqi03", "chuaqi123", UserRoles.STUDENT, "Johor", "chloee031023@gmail.com"));
+            userDao.save(new User("joyce1019", "joyce123", UserRoles.STUDENT, "Johor", "joyce031019@gmail.com"));
+            userDao.save(new User("denies0516", "denies123", UserRoles.STUDENT, "Johor", "denies0516@gmail.com"));
+            userDao.save(new User("enting0601", "enting123", UserRoles.STUDENT, "Johor", "enting0601@gmail.com"));
+            userDao.save(new User("tingfang0416", "tingfang123", UserRoles.STUDENT, "Johor", "ttf0416@gmail.com"));
+            userDao.save(new User("zyii0905", "zyii123", UserRoles.STUDENT, "Johor", "zyiibusytoeat@gmail.com"));
         }
     }
    

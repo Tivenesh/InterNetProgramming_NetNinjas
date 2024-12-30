@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class CrewApplicationDao {
     }
 
     @Transactional
-    public CrewApplication getById(String id) {
+    public CrewApplication getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(CrewApplication.class, id);
     }
@@ -33,7 +34,18 @@ public class CrewApplicationDao {
     }
 
     @Transactional
-    public void delete(String id) {
+    public CrewApplication getApplicationByEmail(String email) {
+    Session session = sessionFactory.getCurrentSession();
+    List<CrewApplication> result = session.createQuery("FROM CrewApplication c WHERE c.email = :email", CrewApplication.class)
+                                    .setParameter("email", email)
+                                    .setMaxResults(1)
+                                    .list();
+    return result.isEmpty() ? null : result.get(0);
+        
+}
+
+    @Transactional
+    public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
         CrewApplication application = session.get(CrewApplication.class, id);
         if (application != null) {
