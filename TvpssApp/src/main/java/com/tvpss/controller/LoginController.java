@@ -13,12 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 @Controller
-@SessionAttributes({"role", "loggedInUser"}) // Persist the role in the session
 public class LoginController {
 
     @Autowired
@@ -53,7 +51,8 @@ public class LoginController {
 
     }
     @GetMapping("/dashboard")
-    public String showDashboard(@SessionAttribute("role") Integer role, Model model) {
+    public String showDashboard(HttpSession session, Model model) {
+        Integer role = (Integer) session.getAttribute("role");
         // Redirect to the specific dashboard based on role
         if (role != null) {
             switch (role) {

@@ -73,6 +73,7 @@ public class ApplicationService {
     @Transactional
     public void addApplication(CrewApplication application) {
         applicationDao.save(application);
+        System.out.println("Saved application:" + application.getId());
     }
 }
 

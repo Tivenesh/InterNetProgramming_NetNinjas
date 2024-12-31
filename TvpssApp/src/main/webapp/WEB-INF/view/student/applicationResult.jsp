@@ -37,7 +37,7 @@
             <!-- Show Comment only if Status is Success or Unsuccessful -->
             <c:if test="${application.status ne 'In Progress'}">
                 <p class="comment-section">
-                    <strong>Comment From Teacher:</strong> ${application.commentFromTeacher}
+                    <strong>Comment From Teacher:</strong> 
                 </p>
             </c:if>
         </div>

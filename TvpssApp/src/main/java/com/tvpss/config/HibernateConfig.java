@@ -40,7 +40,6 @@ public class HibernateConfig {
         return sessionFactory;
     }
 
-    @SuppressWarnings("null")
     @Bean
     public HibernateTransactionManager transactionManager(LocalSessionFactoryBean sessionFactory) {
         return new HibernateTransactionManager(sessionFactory.getObject());

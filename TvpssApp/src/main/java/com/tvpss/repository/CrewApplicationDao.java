@@ -35,12 +35,11 @@ public class CrewApplicationDao {
 
     @Transactional
     public CrewApplication getApplicationByEmail(String email) {
-    Session session = sessionFactory.getCurrentSession();
-    List<CrewApplication> result = session.createQuery("FROM CrewApplication c WHERE c.email = :email", CrewApplication.class)
-                                    .setParameter("email", email)
-                                    .setMaxResults(1)
-                                    .list();
-    return result.isEmpty() ? null : result.get(0);
+        return sessionFactory.getCurrentSession()
+        .createQuery("from CrewApplication where email = :email", CrewApplication.class)
+        .setParameter("email", email)
+        .setMaxResults(1)  // Keep this if necessary; otherwise, remove it
+        .uniqueResult();
         
 }
 

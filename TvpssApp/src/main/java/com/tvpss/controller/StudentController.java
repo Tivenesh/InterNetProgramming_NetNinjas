@@ -34,9 +34,8 @@ public class StudentController {
             CrewApplication application = applicationService.getApplicationByEmail(loggedInUser.getEmail());
             System.out.println("Application: " + application);
 
-            if(application != null) {
-                model.addAttribute("application", application);
-                model.addAttribute("isApplicationSubmitted", true);
+            if(application != null && application.getId() != null) {
+                return "forward:/student/applicationResult?applicationId=" + application.getId();
             }
         }
         
@@ -54,9 +53,11 @@ public class StudentController {
                                     @RequestParam("schoolName") String schoolName,
                                     @RequestParam("position") String position,
                                     HttpSession session) {
+        System.out.println("Received POST request for application submission.");
         CrewApplication existingApplication = applicationService.getApplicationByEmail(email);
         if(existingApplication != null) {
-            return "redirect:/student/applicationResult?id=" + existingApplication.getId();
+            System.out.println("Existing application found.");
+            return "redirect:/student/applicationResult?applicationId=" + existingApplication.getId();
         }
         CrewApplication application = new CrewApplication();
         application.setIcNumber(icNumber);
@@ -73,7 +74,8 @@ public class StudentController {
         System.out.println("Full Name: " + fullName);
 
         applicationService.addApplication(application);
-        return "redirect:/student/applicationResult?id=" + application.getId(); // Redirect to the applicationResult page
+        System.out.println("Application submitted successfully.");
+        return "redirect:/student/applicationResult?applicationId=" + application.getId(); // Redirect to the applicationResult page
     }
 
 
@@ -81,6 +83,7 @@ public class StudentController {
     public String showApplicationResult(Model model, @RequestParam(value = "applicationId", required = false) Long applicationId) {
         if (applicationId == null) {
             model.addAttribute("error", "Application ID is missing.");
+            System.out.println("Application ID is missing.");
             return "student/dashboard";  // Redirect to dashboard or error page
         }
         CrewApplication application = applicationService.getApplicationById(applicationId);
@@ -90,6 +93,7 @@ public class StudentController {
             
         }
         model.addAttribute("application", application);
+        System.out.println("Redirecting to Application Result with ID: " + application.getId());
         return "student/applicationResult";  
     }
 

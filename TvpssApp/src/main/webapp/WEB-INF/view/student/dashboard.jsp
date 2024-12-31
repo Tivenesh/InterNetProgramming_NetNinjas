@@ -144,7 +144,7 @@
         <nav>
             <a href="/TvpssApp/dashboard">Dashboard</a>
             <a href="/TvpssApp/student/application">Application</a>
-            <a href="/TvpssApp/student/applicationResult?id=${application.id}">Application Results</a>
+            <a href="/TvpssApp/student/applicationResult?applicationId=${application.id}">Application Results</a>
             <a href="/TvpssApp/login">Log Out</a>
         </nav>
         <div class="student-email">
