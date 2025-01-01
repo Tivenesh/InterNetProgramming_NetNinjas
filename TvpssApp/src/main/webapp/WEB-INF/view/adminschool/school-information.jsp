@@ -29,15 +29,15 @@
                     <div class="form-group">
                     	<label for="schoolCode">School Code</label>
                         <div class="input-wrapper">
-        					<input type="text" name="code" placeholder="Enter school code" value="${school.code}" required>
-        					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('code')" alt="Clear">
+        					<input type="text" name="code" id="schoolCode" placeholder="Enter school code" value="${school.code}" required>
+        					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolCode')" alt="Clear">
     					</div>
     				</div>
     					
     				<div class="form-group">
                         <label for="schoolName">School Name</label>
                         <div class="input-wrapper">
-        					<input type="text" name="name" placeholder="Enter school name" value="${school.name}" required>
+        					<input type="text" name="name" id="schoolName" placeholder="Enter school name" value="${school.name}" required>
         					<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolName')" alt="Clear">
     					</div>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <label for="schoolAddress1">School Address I</label>
                         <div class="input-wrapper">
-                        	<input type="text" name="address1" placeholder="Enter school address I" value="${school.address1}" required>
+                        	<input type="text" name="address1" id="schoolAddress1" placeholder="Enter school address I" value="${school.address1}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolAddress1')" alt="Clear">
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label for="schoolAddress2">School Address II</label>
                         <div class="input-wrapper">
-                        	<input type="text" name="address2" placeholder="Enter school address II" value="${school.address2}">
+                        	<input type="text" name="address2" id="schoolAddress2" placeholder="Enter school address II" value="${school.address2}">
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolAddress2')" alt="Clear">
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="form-group half-width">
                         <label for="postcode">Postcode</label>
                         <div class="input-wrapper">
-                        	<input type="text" name="postcode" placeholder="Enter postcode" value="${school.postcode}" required>
+                        	<input type="text" name="postcode" id="postcode" placeholder="Enter postcode" value="${school.postcode}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('postcode')" alt="Clear">
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                     <div class="form-group half-width">
                         <label for="state">State</label>
                         <div class="input-wrapper">
-                        	<input type="text" name="state" placeholder="Enter state" value="${school.state}" required>
+                        	<input type="text" name="state" id="state" placeholder="Enter state" value="${school.state}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('state')" alt="Clear">
                         </div>
                     </div>
@@ -77,15 +77,15 @@
                     <div class="form-group half-width">
                         <label for="telephone">Tel. No</label>
                         <div class="input-wrapper">
-                        	<input type="text" name="telephoneNumber" placeholder="Enter telephone number" value="${school.telephoneNumber}" required>
-                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('telephone')" alt="Clear">
+                        	<input type="text" name="telephoneNumber" id="telephoneNumber" placeholder="Enter telephone number" value="${school.telephoneNumber}" required>
+                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('telephoneNumber')" alt="Clear">
                         </div>
                     </div>
 
                     <div class="form-group half-width">
                         <label for="email">Email</label>
                         <div class="input-wrapper">
-                        	<input type="email" name="email" placeholder="Enter school email" value="${school.email}" required>
+                        	<input type="email" name="email" id="email" placeholder="Enter school email" value="${school.email}" required>
                         	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('email')" alt="Clear">
                         </div>
                     </div>
@@ -93,16 +93,16 @@
                     <div class="form-group">
                         <label for="logo">School Logo</label>
                         <div class="input-wrapper">
-                        	<input type="file" name="logo" accept="image/*">
-                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('logo')" alt="Clear">
+                        	<input type="file" name="logoFile" id="logoFile" accept="image/*" value="${school.logoFile}">
+                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('logoFile')" alt="Clear">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="youtubeLink">Link Video</label>
                         <div class="input-wrapper">
-                        	<input type="url" name="youtubeLink" placeholder="Upload YouTube link" value="${school.youtubeLink}" required>
-                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('logo')" alt="Clear">
+                        	<input type="url" name="youtubeLink" id="youtubeLink" placeholder="Upload YouTube link" value="${school.youtubeLink}" required>
+                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('youtubeLink')" alt="Clear">
                         </div>
                     </div>
 
@@ -124,14 +124,14 @@
         	</div>
         </div>
         
-        <!-- Success Dialog -->
+        <!-- Success Dialog
     <div id="successModal" class="modal" style="display: ${not empty successMessage ? 'block' : 'none'};">
         <div class="modal-content">
             <span class="close" onclick="closeSuccessDialog()">&times;</span>
             <h2>${successMessage}</h2>
             <p>Your data has been recorded to the system.</p>
         </div>
-    </div>
+    </div> -->
 
 </section>
 </div>
@@ -141,12 +141,27 @@
 <script>
     // Function to clear the input field
     function clearInput(inputId) {
-        const inputField = document.getElementById(inputId);
-        if (inputField) {
-            inputField.value = ''; // Clear the input value
-            inputField.focus(); // Focus the input field after clearing
+    const inputField = document.getElementById(inputId);
+    if (inputField) {
+        if (inputField.type === 'file') {
+            // Create a new file input element
+            const newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = inputField.name;
+            newInput.accept = inputField.accept;
+            newInput.className = inputField.className;
+            newInput.required = inputField.required;
+            
+            // Replace the existing input with the new one
+            inputField.parentNode.replaceChild(newInput, inputField);
+        } else {
+            // Clear regular text, email, or URL inputs
+            inputField.value = '';
+            inputField.focus();
         }
     }
+}
+
     
     function validateForm() {
         let isValid = true; // Flag to track if the form is valid
@@ -172,14 +187,14 @@
         });
 
         // Validate the file input specifically
-        const fileInput = document.getElementById('logo');
-        if (fileInput && !fileInput.files.length) {
+        const fileInput = document.querySelector("input[name='logoFile']");
+        if (fileInput && fileInput.files.length === 0 && !fileInput.hasAttribute('optional')) {
             isValid = false;
             fileInput.classList.add('error');
-            const errorText = document.createElement('span');
-            errorText.classList.add('error-message');
-            errorText.textContent = 'Please upload a file.';
             if (!fileInput.parentNode.querySelector('.error-message')) {
+                const errorText = document.createElement('span');
+                errorText.classList.add('error-message');
+                errorText.textContent = 'Please upload a file.';
                 fileInput.parentNode.appendChild(errorText);
             }
         }

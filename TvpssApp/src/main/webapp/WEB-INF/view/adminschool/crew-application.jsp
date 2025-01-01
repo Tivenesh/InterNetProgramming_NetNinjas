@@ -22,12 +22,9 @@
         <section class="content">
             <%@ include file="/WEB-INF/view/common/adSchoolheader.jsp" %>
 
-
             <hr class="divider">
             <!-- School Information Form -->
             <div class="title-container">
-
-
                 <h2>Crew Application</h2>
             </div>
             <!-- Search bar -->
@@ -92,7 +89,6 @@
         </section>
     </div>
     
-
     <!-- Confirmation Modal -->
     <div id="confirmationModal" class="modal hidden">
         <div class="modal-content">
@@ -219,8 +215,6 @@
             checkboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
         }
     </script>
-
-
 </body>
 </html>
 </html>

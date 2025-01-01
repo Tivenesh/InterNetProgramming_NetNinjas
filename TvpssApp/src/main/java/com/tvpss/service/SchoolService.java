@@ -16,39 +16,33 @@ public class SchoolService {
 	@Autowired
     private SchoolDao schoolDao;
 	
-    private School school = new School(); // In-memory storage for a single school
     private List<School> schoolDatabase = new ArrayList<>();
     
+
+    @Transactional
+    public void saveSchool(School school) {
+        schoolDao.saveOrUpdate(school);
+    }
+
+    @Transactional
     public School getSchool() {
-        return school;
+        School school = schoolDao.getSchoolInfo();
+        return school != null ? school : new School();
     }
 
-    public void saveSchool(School updatedSchool) {
-        this.school = updatedSchool; // Updates the in-memory "current school"
-        schoolDatabase.add(updatedSchool); // Simulates saving to a database
-    }
-
+    @Transactional
     public List<School> getAllSchools() {
-        return schoolDatabase; // Retrieve all saved schools
+        return schoolDao.findAll();
     }
-    
-//    public long getTotalSchools() {
-//        return schoolDatabase.size();
-//    }
     
     @Transactional
     public long getTotalSchools() {
         return schoolDao.countTotalSchools();
     }
 
+    @Transactional
     public School getSchoolBySchoolCode(String schoolCode) {
-        // Simulates a database lookup
-        for (School school : schoolDatabase) {
-            if (school.getCode().equalsIgnoreCase(schoolCode)) {
-                return school;
-            }
-        }
-        return null; // Return null if not found
+        return schoolDao.findById(schoolCode).orElse(new School());
     }
     public SchoolService() {
         // Adding a test school for SCH001
@@ -64,10 +58,10 @@ public class SchoolService {
         testSchool.setLogoFilename("testLogo.png"); // Assuming a test logo exists
         testSchool.setYoutubeLink("https://www.youtube.com/watch?v=25bb8H0MOEM");
         testSchool.setStudio("Yes");
-        testSchool.setYoutubeUpload("Yes");
+        // testSchool.setYoutubeUpload("Yes");
         testSchool.setRecordingInSchool("Yes");
         testSchool.setRecordingInOutSchool("No");
-        testSchool.setTvpssLogo("Uploaded");
+        // testSchool.setTvpssLogo("Uploaded");
         schoolDatabase.add(testSchool);
     }
 

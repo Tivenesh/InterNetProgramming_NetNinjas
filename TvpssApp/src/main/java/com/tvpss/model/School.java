@@ -5,6 +5,7 @@ import javax.persistence.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "school")
@@ -37,7 +38,10 @@ public class School implements Serializable {
 
     @Lob
     @Column(name = "logo")
-    private MultipartFile logo;
+    private byte[] logo;
+
+    @Transient
+    private MultipartFile logoFile;
 
     @Column(name = "youtube_link")
     private String youtubeLink;
@@ -57,17 +61,11 @@ public class School implements Serializable {
     @Column(name = "studio")
     private String studio;
 
-    @Column(name = "youtube_upload")
-    private String youtubeUpload;
-
     @Column(name = "recording_in_school")
     private String recordingInSchool;
 
     @Column(name = "recording_in_out_school")
     private String recordingInOutSchool;
-
-    @Column(name = "tvpss_logo")
-    private String tvpssLogo;
 
     public School() {
     }
@@ -145,12 +143,20 @@ public class School implements Serializable {
         this.email = email;
     }
 
-    public MultipartFile getLogo() {
+    public byte[] getLogo() {
         return logo;
     }
 
-    public void setLogo(MultipartFile logo) {
+    public void setLogo(byte[] logo) {
         this.logo = logo;
+    }
+
+    public MultipartFile getLogoFile() {
+        return logoFile;
+    }
+
+    public void setLogoFile(MultipartFile logoFile) {
+        this.logoFile = logoFile;
     }
 
     public String getYoutubeLink() {
@@ -193,14 +199,6 @@ public class School implements Serializable {
         this.studio = studio;
     }
 
-    public String getYoutubeUpload() {
-        return youtubeUpload;
-    }
-
-    public void setYoutubeUpload(String youtubeUpload) {
-        this.youtubeUpload = youtubeUpload;
-    }
-
     public String getRecordingInSchool() {
         return recordingInSchool;
     }
@@ -217,24 +215,19 @@ public class School implements Serializable {
         this.recordingInOutSchool = recordingInOutSchool;
     }
 
-    public String getTvpssLogo() {
-        return tvpssLogo;
-    }
-
-    public void setTvpssLogo(String tvpssLogo) {
-        this.tvpssLogo = tvpssLogo;
-    }
-
     @Override
     public String toString() {
         return "School [code=" + code + ", name=" + name + ", address1=" + address1 + ", address2=" + address2
                 + ", postcode=" + postcode + ", state=" + state + ", telephoneNumber=" + telephoneNumber + ", email="
-                + email + ", logo=" + logo + ", youtubeLink=" + youtubeLink + ", logoFilename=" + logoFilename
-                + ", connerminittv=" + connerminittv + ", recordingEquipment=" + recordingEquipment
-                + ", greenScreenTechnology=" + greenScreenTechnology + ", studio=" + studio + ", youtubeUpload="
-                + youtubeUpload + ", recordingInSchool=" + recordingInSchool + ", recordingInOutSchool="
-                + recordingInOutSchool + ", tvpssLogo=" + tvpssLogo + "]";
+                + email + ", logo=" + Arrays.toString(logo) + ", logoFile=" + logoFile + ", youtubeLink=" + youtubeLink
+                + ", logoFilename=" + logoFilename + ", connerminittv=" + connerminittv + ", recordingEquipment="
+                + recordingEquipment + ", greenScreenTechnology=" + greenScreenTechnology + ", studio=" + studio
+                + ", recordingInSchool=" + recordingInSchool + ", recordingInOutSchool=" + recordingInOutSchool + "]";
     }
+
+    
+
+    
 
     
 }

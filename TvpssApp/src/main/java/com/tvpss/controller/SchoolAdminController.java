@@ -2,16 +2,16 @@ package com.tvpss.controller;
 
 import java.io.IOException;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -45,7 +46,7 @@ public class SchoolAdminController {
     @Autowired
     private AchievementService achievementService;
 
-    private static final String UPLOAD_DIRECTORY = "src/main/webapp/resources/static/uploads/school-logos";
+    // private static final String UPLOAD_DIRECTORY = "src/main/webapp/resources/static/uploads/school-logos";
 
     @ModelAttribute("school")
     public School school() {
@@ -75,6 +76,11 @@ public class SchoolAdminController {
     public String showSchoolInformation(HttpSession session, Model model) {
         School school = schoolService.getSchool();
 
+        if (school != null && school.getCode() != null) {
+            // If school information exists, redirect to view page
+            return "redirect:/adminschool/viewSchoolInformation";
+        }
+
         model.addAttribute("school", school);
         model.addAttribute("pageTitle", "School Information");
         model.addAttribute("page", "school-information");
@@ -84,24 +90,15 @@ public class SchoolAdminController {
     @PostMapping("/save-school-information")
     public String saveSchoolInformation(
             @ModelAttribute("school") School school,
-            RedirectAttributes redirectAttributes) {
+            @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
+            RedirectAttributes redirectAttributes,
+            HttpSession session) {
 
         try {
-            MultipartFile logo = school.getLogo();
-
-            if (logo != null && !logo.isEmpty()) {
-                Path uploadPath = Paths.get(UPLOAD_DIRECTORY);
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
-
-                String originalFilename = logo.getOriginalFilename();
-                String newFilename = System.currentTimeMillis() + "_" + originalFilename;
-
-                Path filePath = uploadPath.resolve(newFilename);
-                Files.copy(logo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                school.setLogoFilename(newFilename);
+            if (logoFile != null && !logoFile.isEmpty()) {
+                byte[] logoBytes = logoFile.getBytes();
+                school.setLogo(logoBytes);
+                school.setLogoFilename(logoFile.getOriginalFilename());
             }
 
             schoolService.saveSchool(school);
@@ -131,6 +128,52 @@ public class SchoolAdminController {
         redirectAttributes.addFlashAttribute("message", "School details saved successfully.");
         return "redirect:/adminschool/school-information";
     }
+
+    @GetMapping("/school-logo/{schoolCode}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getSchoolLogo(@PathVariable String schoolCode) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        
+        if (school != null && school.getLogo() != null) {
+            HttpHeaders headers = new HttpHeaders();
+            
+            // Detect file type based on filename extension
+            String logoFilename = school.getLogoFilename();
+            if (logoFilename != null) {
+                if (logoFilename.endsWith(".jpg") || logoFilename.endsWith(".jpeg")) {
+                    headers.setContentType(MediaType.IMAGE_JPEG);
+                } else if (logoFilename.endsWith(".png")) {
+                    headers.setContentType(MediaType.IMAGE_PNG);
+                } else if (logoFilename.endsWith(".gif")) {
+                    headers.setContentType(MediaType.IMAGE_GIF);
+                } else {
+                    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); // Default for unknown types
+                }
+            } else {
+                headers.setContentType(MediaType.IMAGE_PNG);  // Fallback to PNG
+            }
+
+            return new ResponseEntity<>(school.getLogo(), headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/edit-school")
+public String editSchoolInformation(Model model) {
+    School school = schoolService.getSchool();
+
+    if (school != null && school.getCode() != null) {
+        model.addAttribute("school", school);  // Load existing data for editing
+    } else {
+        model.addAttribute("school", new School());
+    }
+
+    model.addAttribute("pageTitle", "Edit School Information");
+    model.addAttribute("page", "school-information");
+    return "adminschool/school-information";  // Same JSP page but used for editing
+}
+
 
  // Achievement Management
 
@@ -309,38 +352,14 @@ public class SchoolAdminController {
             @RequestParam("greenScreenTechnology") String greenScreenTechnology,
             RedirectAttributes redirectAttributes) {
 
-        try {
-            MultipartFile logo = school.getLogo();
+        // Additional fields handling
+        school.setConnerminittv(connerminittv);
+        school.setRecordingEquipment(recordingEquipment);
+        school.setGreenScreenTechnology(greenScreenTechnology);
 
-            if (logo != null && !logo.isEmpty()) {
-                Path uploadPath = Paths.get(UPLOAD_DIRECTORY);
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
-
-                String originalFilename = logo.getOriginalFilename();
-                String newFilename = System.currentTimeMillis() + "_" + originalFilename;
-
-                Path filePath = uploadPath.resolve(newFilename);
-                Files.copy(logo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                school.setLogoFilename(newFilename);
-            }
-
-            // Additional fields handling
-            school.setConnerminittv(connerminittv);
-            school.setRecordingEquipment(recordingEquipment);
-            school.setGreenScreenTechnology(greenScreenTechnology);
-
-            schoolService.saveSchool(school);
-            redirectAttributes.addFlashAttribute("successMessage", "TVPSS version submitted successfully!");
-            return "redirect:/adminschool/viewSchoolInformation";
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to upload logo: " + e.getMessage());
-            return "redirect:/adminschool/school-information";
-        }
+        schoolService.saveSchool(school);
+        redirectAttributes.addFlashAttribute("successMessage", "TVPSS version submitted successfully!");
+        return "redirect:/adminschool/viewSchoolInformation";
     }
 
 }
