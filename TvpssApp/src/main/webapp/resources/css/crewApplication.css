@@ -70,6 +70,7 @@ h2 {
     font-size: 24px;
     font-weight: 500;
 }
+
 .content {
     flex-grow: 1;
     padding: 40px;
@@ -134,6 +135,10 @@ th, td {
 
 th {
     cursor: pointer;
+}
+
+tr {
+    line-height: 1.5;
 }
 
 tr:hover {

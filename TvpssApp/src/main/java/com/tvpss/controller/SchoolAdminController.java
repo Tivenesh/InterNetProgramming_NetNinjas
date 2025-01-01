@@ -250,12 +250,12 @@ public class SchoolAdminController {
         return "adminschool/crew-application";
     }
 
-    @GetMapping("/view/{id}")
-    public String viewApplication(@PathVariable Long id, Model model) {
-        CrewApplication application = applicationService.getApplicationById(id);
+    @GetMapping("/viewApplication")
+    public String viewApplication(@RequestParam("id") Long applicationId, Model model) {
+        CrewApplication application = applicationService.getApplicationById(applicationId);
         if (application == null) {
             model.addAttribute("errorMessage", "Application not found!");
-            return "error";
+            return "redirect:/adminschool/dashboard";
         }
         model.addAttribute("application", application);
         return "adminschool/viewApplication";
