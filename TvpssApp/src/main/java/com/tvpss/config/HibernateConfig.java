@@ -14,7 +14,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.tvpss.service", "com.tvpss.model"})
+@ComponentScan(basePackages = {"com.tvpss.service", "com.tvpss.model", "com.tvpss.repository"})
 public class HibernateConfig {
 
     @Bean

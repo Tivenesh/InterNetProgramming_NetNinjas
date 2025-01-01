@@ -19,7 +19,7 @@
         <h1>
             <c:choose>
                 <c:when test="${application.status eq 'In Progress'}">In Progress</c:when>
-                <c:when test="${application.status eq 'Success'}">Congratulations!</c:when>
+                <c:when test="${application.status eq 'Accepted'}">Congratulations!</c:when>
                 <c:otherwise>Unsuccessful</c:otherwise>
             </c:choose>
         </h1>
@@ -29,15 +29,19 @@
             <p><strong>IC No:</strong> ${application.icNumber}</p>
             <p>
                 <strong>Application Status:</strong> 
-                <span class="${application.status eq 'In Progress' ? 'pending' : (application.status eq 'Success' ? 'success' : 'rejected')}">
-                    ${application.status}
+                <span class="${application.status eq 'In Progress' ? 'pending' : (application.status eq 'Accepted' ? 'success' : 'rejected')}">
+                    <c:choose>
+                        <c:when test="${application.status eq 'Accepted'}">Success</c:when>
+                        <c:when test="${application.status eq 'Rejected'}">Unsuccessful</c:when>
+                        <c:otherwise>${application.status}</c:otherwise>
+                    </c:choose>
                 </span>
             </p>
 
             <!-- Show Comment only if Status is Success or Unsuccessful -->
             <c:if test="${application.status ne 'In Progress'}">
                 <p class="comment-section">
-                    <strong>Comment From Teacher:</strong> ${application.commentFromTeacher}
+                    <strong>Comment From Teacher:</strong> 
                 </p>
             </c:if>
         </div>
@@ -46,7 +50,7 @@
         <c:if test="${application.status ne 'In Progress'}">
             <p class="result-message">
                 <c:choose>
-                    <c:when test="${application.status eq 'Success'}">
+                    <c:when test="${application.status eq 'Accepted'}">
                         We are pleased to inform you that your application has been accepted. 
                         Congratulations on your achievement! You have demonstrated excellent performance, 
                         and we are confident that you will continue to succeed.

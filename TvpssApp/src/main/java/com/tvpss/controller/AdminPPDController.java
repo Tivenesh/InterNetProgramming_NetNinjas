@@ -104,7 +104,7 @@ public class AdminPPDController {
         // Update school properties based on user input	
         school.setLogoFilename(tvpssLogo != null && tvpssLogo.equalsIgnoreCase("true") ? "Uploaded" : "Not Uploaded");
         school.setStudio(studio != null && studio.equalsIgnoreCase("true") ? "Yes" : "No");
-        school.setYoutubeUpload(youtubeUpload != null && youtubeUpload.equalsIgnoreCase("true") ? "Yes" : "No");
+        // school.setYoutubeUpload(youtubeUpload != null && youtubeUpload.equalsIgnoreCase("true") ? "Yes" : "No");
         school.setRecordingInSchool(recordingInSchool != null && recordingInSchool.equalsIgnoreCase("true") ? "Yes" : "No");
         school.setRecordingInOutSchool(recordingInOutSchool != null && recordingInOutSchool.equalsIgnoreCase("true") ? "Yes" : "No");
 

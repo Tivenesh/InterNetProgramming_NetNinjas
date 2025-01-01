@@ -8,7 +8,9 @@
     <title>Crew Application</title>
     <link rel="stylesheet" href="<c:url value='/resources/css/crewApplication.css' />">
     <style>
-        /* Empty style block removed */
+        tr {
+            line-height: 2.0;
+        }
     </style>
 </head>
 <body>
@@ -20,11 +22,11 @@
         <section class="content">
             <%@ include file="/WEB-INF/view/common/adSchoolheader.jsp" %>
 
-			<hr class="divider">
+            <hr class="divider">
             <!-- School Information Form -->
             <div class="title-container">
-            	<h2>Crew Application</h2>
-			</div>
+                <h2>Crew Application</h2>
+            </div>
             <!-- Search bar -->
             <div class="search-container">
                 <input type="text" id="search" placeholder="Find Application" oninput="filterTable()">
@@ -35,11 +37,13 @@
             </div>
 
             <!-- Table -->
+            <form action="/TvpssApp/adminschool/updateStatus" id="applicationForm" method="post">
+                <input type="hidden" name="status" id="selectedStatus">
             <div class="table-container">
                 <table id="applicationTable">
                     <thead>
                         <tr>
-                        	<th> </th>
+                        	<th><input type="checkbox" onclick="toggleAllCheckboxes(this)"></th>
                             <th>IC Number</th>
                             <th>Full Name</th>
                             <th>Position</th>
@@ -51,33 +55,29 @@
                     <tbody>
                         <!-- Example row; replace with dynamic content -->
                         <c:forEach var="application" items="${applications}">
+                            <c:if test="${application.status != 'Rejected'}">
                             <tr>
                             	<td>
-                            	<input type="checkbox" name="id" value="${application.id}" class="rowCheckbox">
+                            	<input type="checkbox" name="applicationIds" value="${application.id}" class="rowCheckbox">
                         		</td>
                                 <td>${application.icNumber}</td>
                                 <td>${application.fullName}</td>
                                 <td>${application.position}</td>
                                 <td>${application.form}</td>
                                 <td>
-                				<span style="
-			                    color: <c:choose>
-			                            <c:when test="${application.status == 'Pending'}">orange</c:when>
-			                            <c:when test="${application.status == 'Approved'}">green</c:when>
-			                            <c:when test="${application.status == 'Rejected'}">red</c:when>
-			                            <c:otherwise>black</c:otherwise>
-			                          </c:choose>;
-					                    font-weight: bold;">
+                				<span style="color: ${application.status == 'In Progress'? 'orange' : (application.status == 'Accepted' ? 'green':'red')}; font-weight:bold;">
 					                    ${application.status}
 					                </span>
 					            </td>
-                                <td><button class="btn view" onclick="viewApplication(${application.id})">View</button></td>
+                                <td><a href="/TvpssApp/adminschool/viewApplication?id=${application.id}" class="btn view" style="text-decoration: none;">View</a></td>
                             </tr>
+                            </c:if>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
-
+            <input type="hidden" name="action" id="formAction">
+</form>
 
             <!-- Pagination -->
             <div class="pagination">
@@ -89,7 +89,7 @@
         </section>
     </div>
     
-     <!-- Confirmation Modal -->
+    <!-- Confirmation Modal -->
     <div id="confirmationModal" class="modal hidden">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">×</span>
@@ -131,11 +131,6 @@
 	        }
 	    }
 	}
-
-        // Example function for "View" button
-        function viewApplication(id) {
-            window.location.href = `/crewApplication/view/${id}`;
-        }
         
         function updateStatus(status) {
             const selectedCheckboxes = document.querySelectorAll('.rowCheckbox:checked');
@@ -159,42 +154,40 @@
         let selectedStatus = ""; // Variable to store the action (Accept/Reject)
 
         // Function to open the modal with custom messages
-        // Function to open the modal with custom messages
-function openModal(action) {
-    const modal = document.getElementById("confirmationModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalBody = document.getElementById("modalBody");
-    const confirmButton = document.getElementById("confirmButton");
+        function openModal(action) {
+            const modal = document.getElementById("confirmationModal");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalBody = document.getElementById("modalBody");
+            const confirmButton = document.getElementById("confirmButton");
 
-    selectedStatus = action; // Store the action (Accept/Reject)
+            selectedStatus = action; // Store the action (Accept/Reject)
 
-    // Calculate the number of selected rows
-    const selectedCheckboxes = document.querySelectorAll(".rowCheckbox:checked");
-    const count = selectedCheckboxes.length;
+            // Calculate the number of selected rows
+            const selectedCheckboxes = document.querySelectorAll(".rowCheckbox:checked");
+            const count = selectedCheckboxes.length;
+           
+         // If no applications are selected, alert the user and do not open the modal
+            if (count === 0) {
+                alert("Please select at least one application.");
+                return;
+            }
 
-   
- // If no applications are selected, alert the user and do not open the modal
-    if (count === 0) {
-        alert("Please select at least one application.");
-        return;
-    }
+            if (action === "Accepted") {
+                modalTitle.textContent = "Are you sure you want to accept this application?";
+                modalBody.textContent = "There are " + count + " applications that will be accepted.";
+                confirmButton.textContent = "Accept";
+                confirmButton.classList.add("accept");
+                confirmButton.classList.remove("reject");
+            } else if (action === "Rejected") {
+                modalTitle.textContent = "Are you sure you want to reject this application?";
+                modalBody.textContent = "There are " + count + " applications that will be rejected.";
+                confirmButton.textContent = "Reject";
+                confirmButton.classList.add("reject");
+                confirmButton.classList.remove("accept");
+            }
 
-    if (action === "Accepted") {
-        modalTitle.textContent = "Are you sure you want to accept this application?";
-        modalBody.textContent = "There are " + count + " applications that will be accepted.";
-        confirmButton.textContent = "Accept";
-        confirmButton.classList.add("accept");
-        confirmButton.classList.remove("reject");
-    } else if (action === "Rejected") {
-        modalTitle.textContent = "Are you sure you want to reject this application?";
-        modalBody.textContent = "There are " + count + " applications that will be rejected.";
-        confirmButton.textContent = "Reject";
-        confirmButton.classList.add("reject");
-        confirmButton.classList.remove("accept");
-    }
-
-    modal.classList.remove("hidden");
-}
+            modal.classList.remove("hidden");
+        }
 
         // Function to close the modal
         function closeModal() {
@@ -210,18 +203,10 @@ function openModal(action) {
                 return;
             }
 
-            selectedCheckboxes.forEach((checkbox) => {
-                const row = checkbox.closest("tr");
-                const statusCell = row.querySelector("td:nth-child(6) span"); // Status column
-
-                if (selectedStatus === "Accepted") {
-                    statusCell.textContent = "Accepted";
-                    statusCell.style.color = "green";
-                } else if (selectedStatus === "Rejected") {
-                    row.remove(); // Remove the row for rejected applications
-                }
-            });
-
+            const form = document.getElementById("applicationForm");
+            document.getElementById("selectedStatus").value = selectedStatus;
+ 
+            form.submit();
             closeModal(); // Close the modal
         }
         
@@ -233,3 +218,4 @@ function openModal(action) {
 </body>
 </html>
 </html>
+

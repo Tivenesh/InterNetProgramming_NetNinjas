@@ -93,8 +93,8 @@
         <h2>Login to TVPSS</h2>
         <form action="<c:url value='/login'/>" method="post">
             <!-- Display error message -->
-            <c:if test="${not empty error}">
-                <div class="error">${error}</div>
+            <c:if test="${param.error != null}">
+                <div class="error">Invalid username or password</div>
             </c:if>
 
             <!-- Email Input -->

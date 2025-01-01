@@ -58,6 +58,7 @@ public class UserController {
                           @RequestParam("state") String state,
                           @RequestParam("password") String password,
                           @RequestParam("confirmPassword") String confirmPassword,
+                          @RequestParam("enabled") boolean enabled,
                           RedirectAttributes redirectAttributes,
                           Model model) {
         if (!password.equals(confirmPassword)) {
@@ -76,7 +77,7 @@ public class UserController {
         }
 
         // Add the new user to the database
-        userService.addUser(username, email, role, state, password);
+        userService.addUser(username, email, role, state, password, enabled);
         redirectAttributes.addFlashAttribute("success", "New user was successfully added.");
         return "redirect:/superadmin/manageUsers?success=true"; // Redirect to Manage Users page
     }

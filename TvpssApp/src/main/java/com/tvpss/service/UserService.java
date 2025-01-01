@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tvpss.model.User;
@@ -18,21 +19,24 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @PostConstruct
     @Transactional
     public void initializeUsers() {
-        if(userDao.findAllUsers().isEmpty()) {
-            userDao.save(new User("superadmin", "super123", UserRoles.SUPER_ADMIN, "Selangor", "superadmin@tvpss.com"));
-            userDao.save(new User("adminppd", "ppd123", UserRoles.ADMIN_PPD, "Johor", "adminppd@tvpss.com"));
-            userDao.save(new User("adminstate", "state123", UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com"));
-            userDao.save(new User("adminschool", "school123", UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com"));
-            userDao.save(new User("student", "student123", UserRoles.STUDENT, "Penang", "student@tvpss.com"));
-            userDao.save(new User("qiqi03", "chuaqi123", UserRoles.STUDENT, "Johor", "chloee031023@gmail.com"));
-            userDao.save(new User("joyce1019", "joyce123", UserRoles.STUDENT, "Johor", "joyce031019@gmail.com"));
-            userDao.save(new User("denies0516", "denies123", UserRoles.STUDENT, "Johor", "denies0516@gmail.com"));
-            userDao.save(new User("enting0601", "enting123", UserRoles.STUDENT, "Johor", "enting0601@gmail.com"));
-            userDao.save(new User("tingfang0416", "tingfang123", UserRoles.STUDENT, "Johor", "ttf0416@gmail.com"));
-            userDao.save(new User("zyii0905", "zyii123", UserRoles.STUDENT, "Johor", "zyiibusytoeat@gmail.com"));
+        if(userDao.findAllUsers().isEmpty()) { 
+            userDao.save(new User("superadmin", passwordEncoder.encode("super123"), UserRoles.SUPER_ADMIN, "Selangor", "superadmin@tvpss.com", true));
+            userDao.save(new User("adminppd", passwordEncoder.encode("ppd123"), UserRoles.ADMIN_PPD, "Johor", "adminppd@tvpss.com", true));
+            userDao.save(new User("adminstate", passwordEncoder.encode("state123"), UserRoles.ADMIN_STATE, "Melaka", "adminstate@tvpss.com", true));
+            userDao.save(new User("adminschool", passwordEncoder.encode("school123"), UserRoles.ADMIN_SCHOOL, "Kedah", "adminschool@tvpss.com", true));
+            userDao.save(new User("student", passwordEncoder.encode("student123"), UserRoles.STUDENT, "Penang", "student@tvpss.com", true));
+            userDao.save(new User("qiqi03", passwordEncoder.encode("chuaqi123"), UserRoles.STUDENT, "Johor", "chloee031023@gmail.com", true));
+            userDao.save(new User("joyce1019", passwordEncoder.encode("joyce123"), UserRoles.STUDENT, "Johor", "joyce031019@gmail.com", true));
+            userDao.save(new User("denies0516", passwordEncoder.encode("denies123"), UserRoles.STUDENT, "Johor", "denies0516@gmail.com", true));
+            userDao.save(new User("enting0601", passwordEncoder.encode("enting123"), UserRoles.STUDENT, "Johor", "enting0601@gmail.com", true));
+            userDao.save(new User("tingfang0416", passwordEncoder.encode("tingfang123"), UserRoles.STUDENT, "Johor", "ttf0416@gmail.com", true));
+            userDao.save(new User("zyii0905", passwordEncoder.encode("zyii123"), UserRoles.STUDENT, "Johor", "zyiibusytoeat@gmail.com", true));
         }
     }
    
@@ -44,10 +48,15 @@ public class UserService {
     @Transactional
     public User findByUsernameAndPassword(String username, String password) {
         User user = userDao.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
         return null; // Return null if credentials don't match
+    }
+
+    @Transactional
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
     }
 
     @Transactional
@@ -62,12 +71,12 @@ public class UserService {
     }
 
     @Transactional
-    public void addUser(String username, String email, int role, String state, String password) {
+    public void addUser(String username, String email, int role, String state, String password, boolean enabled) {
         User user = userDao.findByUsername(username);
         if (user != null) {
             throw new RuntimeException("Username already exists");
         }
-        user = new User(username, password, role, state, email);
+        user = new User(username, password, role, state, email, enabled);
         userDao.save(user);
     }
 

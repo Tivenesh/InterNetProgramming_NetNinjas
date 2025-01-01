@@ -23,18 +23,30 @@ public class User implements Serializable {
     @Column(name = "email", unique = true)
     private String email;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = true;  // Default to enabled
+
     public User() {}
 
     // Add a new constructor
-    public User(String username, String password, int role, String state, String email) {
+    public User(String username, String password, int role, String state, String email, boolean enabled) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.state = state;
         this.email = email;
+        this.enabled = enabled;  
     }
 
     // Getters and Setters
+     public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getUsername() {
         return username;
     }

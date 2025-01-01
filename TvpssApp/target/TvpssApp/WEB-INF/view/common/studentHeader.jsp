@@ -40,7 +40,7 @@
         nav {
             display: flex;
             gap: 32px;
-            margin-right: 150px;
+            margin-right: 250px;
         }
         nav a {
             text-decoration: none;
@@ -89,7 +89,6 @@
         <nav>
             <a href="/TvpssApp/student/dashboard">Dashboard</a>
             <a href="/TvpssApp/student/application">Application</a>
-            <a href="/TvpssApp/student/applicationResult?id=${application.id}">Application Results</a>
             <a href="/TvpssApp/login">Log Out</a>
         </nav>
         <div class="student-email">

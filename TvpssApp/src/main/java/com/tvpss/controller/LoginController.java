@@ -1,55 +1,24 @@
 package com.tvpss.controller;
-
-import com.tvpss.model.User;
 import com.tvpss.model.UserRoles;
-import com.tvpss.service.UserService;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
-
+    @GetMapping("/")
+    public String redirectToLogin() {
+        return "redirect:/login";  // Redirect to login when accessing the root URL
+    }
+    
     @GetMapping("/login")
     public String showLoginPage() {
         return "login"; // Display login.jsp
     }
 
-    @PostMapping("/login")
-    public ModelAndView processLogin(@RequestParam("username") String username,
-                                     @RequestParam("password") String password,
-                                     Model model,
-                                     HttpServletRequest request) {
-        request.getSession().invalidate();
-
-        HttpSession session = request.getSession(true);
-        User user = userService.findByUsernameAndPassword(username, password);
-
-        if (user != null) {
-            // Save user role to pass to the view (optional if using session)
-            session.setAttribute("loggedInUser", user);
-            session.setAttribute("role", user.getRole());
-            model.addAttribute("role", user.getRole());
-            // Redirect to a common dashboard handler based on role
-            return new ModelAndView("redirect:/dashboard");
-        } else {
-            // Login failed
-            return new ModelAndView("login", "error", "Invalid username or password.");
-        }
-
-    }
     @GetMapping("/dashboard")
     public String showDashboard(HttpSession session, Model model) {
         Integer role = (Integer) session.getAttribute("role");
