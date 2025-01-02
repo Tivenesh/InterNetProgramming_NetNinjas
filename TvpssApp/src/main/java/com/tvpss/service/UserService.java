@@ -58,6 +58,11 @@ public class UserService {
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
     }
+    
+    @Transactional
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
 
     @Transactional
     public List<User> findAllUsers() {
@@ -69,6 +74,12 @@ public class UserService {
         User user = userDao.findByUsername(username);
         return user != null;  // Returns true if the user already exists.
     }
+    
+    @Transactional
+    public boolean isEmailExists(String email) {
+        User user = userDao.findByEmail(email);
+        return user != null;
+    }
 
     @Transactional
     public void addUser(String username, String email, int role, String state, String password, boolean enabled) {
@@ -76,7 +87,8 @@ public class UserService {
         if (user != null) {
             throw new RuntimeException("Username already exists");
         }
-        user = new User(username, password, role, state, email, enabled);
+        String encryptedPassword = passwordEncoder.encode(password);
+        user = new User(username, encryptedPassword, role, state, email, enabled);
         userDao.save(user);
     }
 
@@ -85,6 +97,18 @@ public class UserService {
     public void updateUser(String username, String email, int role, String state) {
         User user = userDao.findByUsername(username);
         if (user != null) {
+            user.setEmail(email);
+            user.setRole(role);
+            user.setState(state);
+            userDao.save(user);  // Save after updating
+            
+            User existingUserWithEmail = userDao.findByEmail(email);
+            
+            // Check if another user already has this email
+            if (existingUserWithEmail != null && !existingUserWithEmail.getUsername().equals(username)) {
+                throw new RuntimeException("Email is already in use by another account.");
+            }
+
             user.setEmail(email);
             user.setRole(role);
             user.setState(state);

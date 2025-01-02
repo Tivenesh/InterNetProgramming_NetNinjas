@@ -201,9 +201,11 @@
 	        const password = document.getElementById("password").value;
 	        const confirmPassword = document.getElementById("confirmPassword").value;
 	        
-	        // Check if email ends with @tvpss.com
-	        if (!email.endsWith("@tvpss.com")) {
-	            alert("Email must end with @tvpss.com");
+	     // Use regex to validate general email format
+	        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	        if (!emailRegex.test(email)) {
+	            alert("Please enter a valid email address.");
 	            return false; // Prevent form submission
 	        }
 	        
@@ -213,20 +215,39 @@
 	            return false;
 	        }
 	        
-	     // Check if username already exists via AJAX
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", "/TvpssApp/checkUsernameExists?username=" + encodeURIComponent(username), false);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const response = xhr.responseText;
-                    if (response === "true") {
-                        alert("Username already exists.");
-                        return false; // Prevent form submission if username exists
-                    }
-                }
-            };
-            xhr.send();
-            
+	     // Check if username exists
+	        const xhrUsername = new XMLHttpRequest();
+	        xhrUsername.open("GET", "/TvpssApp/checkUsernameExists?username=" + encodeURIComponent(username), false);
+	        xhrUsername.onreadystatechange = function () {
+	            if (xhrUsername.readyState === 4 && xhrUsername.status === 200) {
+	                const response = xhrUsername.responseText;
+	                if (response === "true") {
+	                    alert("Username already exists.");
+	                    userExists = true;
+	                }
+	            }
+	        };
+	        xhrUsername.send();
+
+	        // Check if email exists
+	        const xhrEmail = new XMLHttpRequest();
+	        xhrEmail.open("GET", "/TvpssApp/checkEmailExists?email=" + encodeURIComponent(email), false);
+	        xhrEmail.onreadystatechange = function () {
+	            if (xhrEmail.readyState === 4 && xhrEmail.status === 200) {
+	                const response = xhrEmail.responseText;
+	                if (response === "true") {
+	                    alert("Email already exists.");
+	                    emailExists = true;
+	                }
+	            }
+	        };
+	        xhrEmail.send();
+
+	        // Prevent form submission if username or email already exists
+	        if (userExists || emailExists) {
+	            return false;
+	        }
+
 	        return true;
 	    }
     </script>

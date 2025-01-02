@@ -3,6 +3,7 @@ package com.tvpss.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +59,7 @@ public class UserController {
                           @RequestParam("state") String state,
                           @RequestParam("password") String password,
                           @RequestParam("confirmPassword") String confirmPassword,
-                          @RequestParam("enabled") boolean enabled,
+                          @RequestParam(value = "enabled", required = false, defaultValue = "true") boolean enabled,
                           RedirectAttributes redirectAttributes,
                           Model model) {
         if (!password.equals(confirmPassword)) {
@@ -75,6 +76,16 @@ public class UserController {
             model.addAttribute("state", state);
             return "superadmin/addUser"; // Return to the form with error and data
         }
+        
+     // Check if the email exists
+        if (userService.isEmailExists(email)) {
+            model.addAttribute("error", "Email already exists.");
+            model.addAttribute("username", username);
+            model.addAttribute("email", email);
+            model.addAttribute("role", role);
+            model.addAttribute("state", state);
+            return "superadmin/addUser"; // Return to the form with error and data
+        }
 
         // Add the new user to the database
         userService.addUser(username, email, role, state, password, enabled);
@@ -82,6 +93,18 @@ public class UserController {
         return "redirect:/superadmin/manageUsers?success=true"; // Redirect to Manage Users page
     }
 
+    @GetMapping("/checkEmailExists")
+    public ResponseEntity<Boolean> checkEmailExists(@RequestParam("email") String email, 
+                                                    @RequestParam(value = "username", required = false) String username) {
+        User existingUser = userService.findByEmail(email);
+        
+        // If email exists but belongs to a different user
+        if (existingUser != null && (username == null || !existingUser.getUsername().equals(username))) {
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.ok(false);
+    }
+    
     // Show edit user form
     @GetMapping("/editUser")
     public String editUser(@RequestParam("username") String username, Model model) {
@@ -99,7 +122,15 @@ public class UserController {
                              @RequestParam("email") String email,
                              @RequestParam("role") int role,
                              @RequestParam("state") String state,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+    	User existingUser = userService.findByEmail(email);
+    	
+    	if (existingUser != null && !existingUser.getUsername().equals(username)) {
+            model.addAttribute("error", "Email already exists.");
+            return editUser(username, model);  // Reload form with error
+        }
+    
         userService.updateUser(username, email, role, state);
         redirectAttributes.addFlashAttribute("success", "User updated successfully.");
         return "redirect:/superadmin/manageUsers?success=true";

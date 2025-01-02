@@ -109,6 +109,8 @@
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
 
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
             <!-- Login Button -->
             <button type="submit" class="login-button">Login</button>
         </form>

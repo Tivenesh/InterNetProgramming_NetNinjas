@@ -40,6 +40,14 @@ public class UserDao {
                 .setParameter("username", username)
                 .uniqueResult();
     }
+    
+    @Transactional
+    public User findByEmail(String email) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from User where email = :email", User.class)
+                .setParameter("email", email)
+                .uniqueResult();
+    }
 
     @Transactional
     public void deleteByUsername(String username) {

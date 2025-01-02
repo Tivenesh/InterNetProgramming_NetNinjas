@@ -180,16 +180,41 @@
         </main>
     </div>
     
+    <c:if test="${not empty error}">
+        <script>
+            alert("${error}");
+        </script>
+    </c:if>
+    
     <script>
     // Validate email
     function validateForm() {
-        const email = document.getElementById("email").value;
-        if (!email.endsWith("@tvpss.com")) {
-            alert("Email must end with @tvpss.com");
-            return false;
-        }
-        return true;
-    }
+	    const email = document.getElementById("email").value;
+	
+	    // Validate email format using regex
+	    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	    if (!emailRegex.test(email)) {
+	        alert("Please enter a valid email address.");
+	        return false;
+	    }
+	
+	    // AJAX request to check if email already exists
+	    let emailExists = false;
+	    const xhr = new XMLHttpRequest();
+	    xhr.open("GET", "/TvpssApp/checkEmailExists?email=" + encodeURIComponent(email), false);
+	    xhr.onreadystatechange = function () {
+	        if (xhr.readyState === 4 && xhr.status === 200) {
+	            const response = xhr.responseText;
+	            if (response === "true") {
+	                alert("Email already exists.");
+	                emailExists = true;
+	            }
+	        }
+	    };
+	    xhr.send();
+	
+	    return !emailExists;
+	}
     </script>
 </body>
 </html>
