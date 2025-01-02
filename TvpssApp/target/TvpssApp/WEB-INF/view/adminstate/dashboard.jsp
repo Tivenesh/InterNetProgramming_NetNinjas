@@ -187,7 +187,7 @@
 	                    <div class="circular-chart">
 	                        <canvas id="circularChart"></canvas>
 	                    </div>
-	                    <div class="progress-label">60%<span>Domestic Percentage Johor</span></div>
+	                    <div class="progress-label">60%<span>Domestic Percentage</span></div>
 	                </div>
 	            </div>
 	        </div>

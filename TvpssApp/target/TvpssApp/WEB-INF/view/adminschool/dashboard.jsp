@@ -25,7 +25,7 @@
                 <div class="card-icon"><img src="<c:url value='/resources/images/numOfStudent.png' />" alt="Profile"></div>
                 <div class="card-info">
                     <span>Number of Students</span>
-                    <h2>${numStudents}</h2>
+                    <h2>${studentCount}</h2>
                 </div>
             </div>
             <div class="card">

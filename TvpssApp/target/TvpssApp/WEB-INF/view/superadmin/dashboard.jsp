@@ -172,23 +172,22 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const barChart = document.getElementById('activeUsersChart').getContext('2d');
+
+        const activeUsersData = [<c:forEach var="data" items="${activeUsersData}" varStatus="status">
+                                     ${data}<c:if test="${!status.last}">,</c:if>
+                                 </c:forEach>];
+
         new Chart(barChart, {
             type: 'bar',
             data: {
                 labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                 datasets: [{
                     label: 'Active Users',
-                    data: [12000, 18000, 5000, 10000, 15000, 20000, 22000],
+                    data: activeUsersData,
                     backgroundColor: [
-                        '#4B6CB7', // Blue for Monday
-                        '#4B6CB7', // Blue for Tuesday
-                        '#4B6CB7', // Blue for Wednesday
-                        '#4B6CB7', // Blue for Thursday
-                        '#4B6CB7', // Blue for Friday
-                        '#4B6CB7', // Blue for Saturday
-                        '#4B6CB7'  // Blue for Sunday
+                        '#4B6CB7', '#4B6CB7', '#4B6CB7', '#4B6CB7', '#4B6CB7', '#4B6CB7', '#4B6CB7'
                     ],
-                    borderColor: '#354A9F', // Darker blue border
+                    borderColor: '#354A9F',
                     borderWidth: 1
                 }]
             },
@@ -199,27 +198,28 @@
                     legend: {
                         display: true,
                         labels: {
-                            color: '#4B5563' // Neutral gray for the legend text
+                            color: '#4B5563'
                         }
                     }
                 },
                 scales: {
                     x: {
                         ticks: {
-                            color: '#4B5563' // Neutral gray for x-axis labels
+                            color: '#4B5563'
                         }
                     },
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            color: '#4B5563' // Neutral gray for y-axis labels
+                            color: '#4B5563'
                         }
                     }
                 }
             }
         });
     });
-    </script>
+</script>
+
     
 </body>
 </html>

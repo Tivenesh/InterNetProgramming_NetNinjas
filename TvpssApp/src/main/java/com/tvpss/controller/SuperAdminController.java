@@ -30,11 +30,14 @@ public class SuperAdminController {
         long ppdAdminCount = userService.getUserCountByRole(2);    // Role 2: PPD Admin
         long schoolAdminCount = userService.getUserCountByRole(4); // Role 4: School Admin
         long studentCount = userService.getUserCountByRole(5);  // Role 5: Student
+        
+        List<Integer> activeUsersData = List.of(12000, 18000, 5000, 10000, 15000, 20000, 22000);
 
         model.addAttribute("stateAdminCount", stateAdminCount);
         model.addAttribute("ppdAdminCount", ppdAdminCount);
         model.addAttribute("schoolAdminCount", schoolAdminCount);
         model.addAttribute("studentCount", studentCount);
+        model.addAttribute("activeUsersData", activeUsersData);
 
         return "superadmin/dashboard"; // Return SuperAdmin dashboard page
     }

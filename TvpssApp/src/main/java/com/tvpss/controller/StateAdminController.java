@@ -38,6 +38,12 @@ public class StateAdminController {
         long achievementCount = achievementService.getAllAchievements().size();
         long totalSchools = schoolService.getTotalSchools();
         
+        List<Integer> verifiedByVersion = List.of(40, 150, 300);
+        model.addAttribute("verifiedByVersion", verifiedByVersion);
+        
+        List<Integer> circularChartData = List.of(60, 40);
+        model.addAttribute("circularChartData", circularChartData);
+        
         // Pass data to the JSP
         model.addAttribute("certificateCount", certificateCount);
         model.addAttribute("achievementCount", achievementCount);

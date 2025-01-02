@@ -31,6 +31,7 @@ import com.tvpss.model.School;
 import com.tvpss.service.AchievementService;
 import com.tvpss.service.ApplicationService;
 import com.tvpss.service.SchoolService;
+import com.tvpss.service.UserService;
 
 @Controller
 @RequestMapping("/adminschool") // Base path for admin school routes
@@ -45,6 +46,9 @@ public class SchoolAdminController {
 
     @Autowired
     private AchievementService achievementService;
+    
+    @Autowired
+    private UserService userService;
 
     // private static final String UPLOAD_DIRECTORY = "src/main/webapp/resources/static/uploads/school-logos";
 
@@ -57,9 +61,11 @@ public class SchoolAdminController {
 
     @GetMapping("/dashboard")
     public String showAdminSchoolDashboard(Model model) {
+    	long studentCount = userService.getUserCountByRole(5);
+    	
         model.addAttribute("page", "dashboard");
         model.addAttribute("pageTitle", "Welcome Admin School!");
-        model.addAttribute("numStudents", 500);
+        model.addAttribute("studentCount", studentCount);
         model.addAttribute("totalAchievements", achievementService.getAllAchievements().size());
         model.addAttribute("numCrew", applicationService.getAllApplications().size());
 

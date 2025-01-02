@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="user-info">
-                        <img src="/TvpssApp/resources/images/PPDAdminLogo.png" alt="User Avatar">
+                        <img src="/TvpssApp/resources/images/stateAdminLogo.png" alt="User Avatar">
                         <span>User<br>Admin State</span>
                     </div>
                 </div>
