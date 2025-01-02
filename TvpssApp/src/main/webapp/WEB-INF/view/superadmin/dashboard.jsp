@@ -122,7 +122,7 @@
 				    </div>
 					<div class="user-info">
 					    <img src="/TvpssApp/resources/images/superAdminLogo.png" alt="User Avatar">
-					    <span>User<br>Super Admin</span>
+					    <span>Miss Tan<br>Super Admin</span>
 					</div>
 			    </div>
 			    
@@ -156,12 +156,12 @@
 			        </div>
 			    </div>
 			    <div class="chart-container">
-			        <div class="chart">
-					    <h3>User in Term</h3>
-					    <div class="circle-chart">
-					        <span>80%</span>
-					    </div>
-					    <p>Percentage of active users</p>
+			        <div class="stat">
+					    <h3>Number of Student</h3>
+					    <p>${studentCount}</p>
+					</div>
+					<div style="text-align: center;">
+						<img src="/TvpssApp/resources/images/studentIcon.png" alt="Student Icon" style="width: 300px; height: 180px; margin-top: 28px;" >
 					</div>
 			    </div>
 			</section>
@@ -218,14 +218,6 @@
                 }
             }
         });
-
-        // Circular chart configuration
-        const circleChart = document.querySelector('.circle-chart');
-        const percentageSpan = circleChart.querySelector('span');
-        const percentage = 80; // Example percentage value
-
-        circleChart.style.background = `conic-gradient(#4B6CB7 ${percentage}%, #F7F9FF ${percentage}%)`;
-        percentageSpan.textContent = `${percentage}%`;
     });
     </script>
     

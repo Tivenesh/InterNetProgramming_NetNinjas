@@ -91,7 +91,7 @@
 			    </div>
 			        <div class="user-info">
 			            <img src="/TvpssApp/resources/images/superAdminLogo.png" alt="User Avatar">
-			            <span>User<br>Super Admin</span>
+			            <span>Miss Tan<br>Super Admin</span>
 			        </div>
 			    </div>
 			    <div class="divider"></div> <!-- Thin dividing line -->

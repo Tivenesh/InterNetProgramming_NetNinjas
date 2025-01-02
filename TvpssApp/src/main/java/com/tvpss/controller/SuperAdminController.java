@@ -17,7 +17,7 @@ import com.tvpss.service.UserService;
 
 @Controller
 @RequestMapping("/superadmin")
-public class UserController {
+public class SuperAdminController {
 
     @Autowired
     private UserService userService;
@@ -29,10 +29,12 @@ public class UserController {
         long stateAdminCount = userService.getUserCountByRole(3);  // Role 3: State Admin
         long ppdAdminCount = userService.getUserCountByRole(2);    // Role 2: PPD Admin
         long schoolAdminCount = userService.getUserCountByRole(4); // Role 4: School Admin
+        long studentCount = userService.getUserCountByRole(5);  // Role 5: Student
 
         model.addAttribute("stateAdminCount", stateAdminCount);
         model.addAttribute("ppdAdminCount", ppdAdminCount);
         model.addAttribute("schoolAdminCount", schoolAdminCount);
+        model.addAttribute("studentCount", studentCount);
 
         return "superadmin/dashboard"; // Return SuperAdmin dashboard page
     }

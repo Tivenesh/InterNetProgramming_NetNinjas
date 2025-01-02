@@ -1,4 +1,3 @@
-com\tvpss\controller\UserController.class
 com\tvpss\model\UserRoles.class
 com\tvpss\config\SecurityConfig.class
 com\tvpss\repository\SchoolDao.class
@@ -28,4 +27,5 @@ com\tvpss\model\School.class
 com\tvpss\repository\CrewApplicationDao.class
 com\tvpss\service\ApplicationService.class
 com\tvpss\controller\StudentController.class
+com\tvpss\controller\SuperAdminController.class
 com\tvpss\controller\AdminPPDController.class
