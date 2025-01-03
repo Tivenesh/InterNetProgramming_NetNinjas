@@ -1,6 +1,7 @@
 package com.tvpss.controller;
 
 import com.tvpss.model.Achievement;
+import com.tvpss.model.School;
 import com.tvpss.model.Certificate;
 import com.tvpss.service.AchievementService;
 import com.tvpss.service.CertificateService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +45,7 @@ public class StateAdminController {
         
         List<Integer> circularChartData = List.of(60, 40);
         model.addAttribute("circularChartData", circularChartData);
-        
+
         // Pass data to the JSP
         model.addAttribute("certificateCount", certificateCount);
         model.addAttribute("achievementCount", achievementCount);
@@ -140,4 +142,23 @@ public class StateAdminController {
             return "adminstate/generateCertificate";
         }
     }
+    
+    @GetMapping("/schoolVersion/view")
+    public String viewSchoolVersions(Model model) {
+        List<School> schools = schoolService.getAllSchools();
+        model.addAttribute("schools", schools);
+        return "adminstate/view";
+    }
+
+    @GetMapping("/schoolVersion/details/{schoolCode}")
+    public String viewSchoolDetails(@PathVariable String schoolCode, Model model) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school == null) {
+            return "redirect:/adminstate/schoolVersion/view";
+        }
+        model.addAttribute("school", school);
+        return "adminstate/details";
+    }
+
+
 }

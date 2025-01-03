@@ -31,6 +31,11 @@ public class SchoolService {
     }
 
     @Transactional
+    public void saveOrUpdate(School school) {
+        schoolDao.saveOrUpdate(school);
+    }
+    
+    @Transactional
     public List<School> getAllSchools() {
         return schoolDao.findAll();
     }
@@ -42,8 +47,77 @@ public class SchoolService {
 
     @Transactional
     public School getSchoolBySchoolCode(String schoolCode) {
-        return schoolDao.findById(schoolCode).orElse(new School());
+        return schoolDao.getSchoolBySchoolCode(schoolCode);
     }
+    
+    @Transactional
+    public void updateVersionStatus(String schoolCode, String versionStatus) {
+        schoolDao.updateVersionStatus(schoolCode, versionStatus);
+    }
+    
+    @Transactional
+    public void updateTvpssVersion(School school) {
+        int version = 1;
+
+        // Criteria for Version 2
+        if (school.getConnerminittv() != null && school.getConnerminittv().equalsIgnoreCase("Yes")) {
+            version++;
+        }
+        // Criteria for Version 3
+        if (school.getRecordingEquipment() != null && school.getRecordingEquipment().equalsIgnoreCase("Yes")) {
+            version++;
+        }
+        // Criteria for Version 4
+        if (school.getGreenScreenTechnology() != null && school.getGreenScreenTechnology().equalsIgnoreCase("Yes")) {
+            version++;
+        }
+        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) {
+            version++;
+        }
+        if (school.getStudio() != null && school.getStudio().equalsIgnoreCase("Yes")) {
+            version++;
+        }
+
+        // Any additional criteria
+        if (school.getRecordingInSchool() != null && school.getRecordingInSchool().equalsIgnoreCase("Yes")) {
+            version++;
+        }
+        if (school.getRecordingInOutSchool() != null && school.getRecordingInOutSchool().equalsIgnoreCase("Yes")) {
+            version++;
+        }
+
+        school.setTvpssVersion(version);
+        saveSchool(school);
+    }
+
+    @Transactional
+    public void calculateAndSaveTvpssVersion(School school) {
+        int version = 1; // Start with version 1 as the default
+
+        // Check criteria for incrementing the version
+        if ("Yes".equalsIgnoreCase(school.getConnerminittv())) version++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingEquipment())) version++;
+        if ("Yes".equalsIgnoreCase(school.getGreenScreenTechnology())) version++;
+        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) version++;
+        if ("Yes".equalsIgnoreCase(school.getStudio())) version++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInSchool())) version++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInOutSchool())) version++;
+
+        // Set the calculated version
+        school.setTvpssVersion(version);
+
+        // Save or update the school in the database
+        schoolDao.saveOrUpdate(school);
+    }
+
+    
+    @Transactional
+    public void updateVersionStatus(School school, boolean isValid) {
+        school.setVersionStatus(isValid ? "Active" : "Inactive");
+        schoolDao.saveOrUpdate(school);
+    }
+
+    
     public SchoolService() {
         // Adding a test school for SCH001
         School testSchool = new School();

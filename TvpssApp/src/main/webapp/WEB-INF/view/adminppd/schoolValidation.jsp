@@ -140,37 +140,29 @@
 
         <!-- Table Container -->
         <div class="table-container">
-            <table id="schoolTable">
-                <thead>
-                    <tr>
-                        <th>School Code</th>
-                        <th>School Name</th>
-                        <th>District</th>
-                        <th>Contact Person</th>
-                        <th>Version Status</th>
-                        <th>Version</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="schoolVersion" items="${schoolVersions}">
-                        <tr>
-                            <td>${schoolVersion.schoolCode}</td>
-                            <td>${schoolVersion.schoolName}</td>
-                            <td>${schoolVersion.district}</td>
-                            <td>${schoolVersion.contactPerson}</td>
-                            <td>${schoolVersion.versionStatus}</td>
-                            <td>${schoolVersion.version}</td>
-                            <td>${schoolVersion.status}</td>
-                            <td>
-                                <a href="<c:url value='/adminppd/schoolDetails' />?schoolCode=${schoolVersion.schoolCode}" class="btn-view">View</a>
+            <table>
+    <thead>
+        <tr>
+            <th>School Code</th>
+            <th>School Name</th>
+            <th>Version Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="school" items="${schools}">
+            <tr>
+                <td>${school.code}</td>
+                <td>${school.name}</td>
+                <td>${school.versionStatus}</td>
+                <td>
+                    <a href="/adminppd/schoolDetails?schoolCode=${school.code}">View</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
 
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
             <c:if test="${empty schoolVersions}">
                 <div class="no-data">No school versions available to display.</div>
             </c:if>

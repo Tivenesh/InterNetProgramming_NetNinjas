@@ -1,3 +1,4 @@
+
 package com.tvpss.model;
 
 import javax.persistence.*;
@@ -67,6 +68,29 @@ public class School implements Serializable {
     @Column(name = "recording_in_out_school")
     private String recordingInOutSchool;
 
+    @Column(name = "tvpss_version")
+    private Integer tvpssVersion;
+
+    @Column(name = "version_status")
+    private String versionStatus;
+
+    public String getVersionStatus() {
+        return versionStatus;
+    }
+
+    public void setVersionStatus(String versionStatus) {
+        this.versionStatus = versionStatus;
+    }
+
+    public Integer getTvpssVersion() {
+        return tvpssVersion;
+    }
+
+    public void setTvpssVersion(Integer tvpssVersion) {
+        this.tvpssVersion = tvpssVersion;
+    }
+
+    
     public School() {
     }
 

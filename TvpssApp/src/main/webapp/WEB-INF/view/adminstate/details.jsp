@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="user-info">
-                        <img src="/TvpssApp/resources/images/stateAdminLogo.png" alt="User Avatar">
+                        <img src="/TvpssApp/resources/images/PPDAdminLogo.png" alt="User Avatar">
                         <span>User<br>Admin State</span>
                     </div>
                 </div>
@@ -119,13 +119,17 @@
                 <!-- Details Section -->
                 <div class="details-container">
                     <h2>School Version Information</h2>
-                    <p><strong>School Code:</strong> ${school.schoolCode != null ? school.schoolCode : "Not available"}</p>
-                    <p><strong>School Name:</strong> ${school.schoolName != null ? school.schoolName : "Not available"}</p>
-                    <p><strong>District:</strong> ${school.district != null ? school.district : "Not available"}</p>
-                    <p><strong>Version Status:</strong> ${school.versionStatus != null ? school.versionStatus : "Not available"}</p>
-                    <p><strong>Contact Person:</strong> ${school.contactPerson != null ? school.contactPerson : "Not available"}</p>
-                    <p><strong>Version:</strong> ${school.version != null ? school.version : "Not available"}</p>
-                    <p><strong>Status:</strong> ${school.status != null ? school.status : "Not available"}</p>
+                    <p><strong>School Code:</strong> ${school.code}</p>
+<p><strong>School Name:</strong> ${school.name}</p>
+<p><strong>State:</strong> ${school.state}</p>
+<p><strong>TVPSS Version:</strong> ${school.tvpssVersion}</p>
+<p><strong>Connerminittv:</strong> ${school.connerminittv}</p>
+<p><strong>Recording Equipment:</strong> ${school.recordingEquipment}</p>
+<p><strong>Green Screen Technology:</strong> ${school.greenScreenTechnology}</p>
+<p><strong>Studio:</strong> ${school.studio}</p>
+<p><strong>In-School Recording:</strong> ${school.recordingInSchool}</p>
+<p><strong>In & Out School Recording:</strong> ${school.recordingInOutSchool}</p>
+
                 </div>
 
                 <!-- Back Button -->

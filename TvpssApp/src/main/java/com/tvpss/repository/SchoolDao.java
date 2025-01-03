@@ -17,6 +17,40 @@ public class SchoolDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    
+    
+    @Transactional
+    public void saveOrUpdate(School school) {
+        Session session = sessionFactory.getCurrentSession();
+        School existingSchool = session.get(School.class, school.getCode());
+        if (existingSchool != null) {
+            // Retain version status unless explicitly set
+            if (school.getVersionStatus() == null) {
+                school.setVersionStatus(existingSchool.getVersionStatus());
+            }
+            session.merge(school);
+        } else {
+            // Default to Inactive for new schools
+            school.setVersionStatus(school.getVersionStatus() != null ? school.getVersionStatus() : "Inactive");
+            session.save(school);
+        }
+    }
+
+    @Transactional
+    public Optional<School> findByCode(String schoolCode) {
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(School.class, schoolCode));
+    }
+    
+    @Transactional
+    public void updateVersionStatus(String schoolCode, String versionStatus) {
+        Session session = sessionFactory.getCurrentSession();
+        School school = session.get(School.class, schoolCode);
+        if (school != null) {
+            school.setVersionStatus(versionStatus);
+            session.update(school);
+        }
+    }
+    
 
     @Transactional
     public long countTotalSchools() {
@@ -25,16 +59,22 @@ public class SchoolDao {
                 .uniqueResult();
     }
 
+    
     @Transactional
-    public void saveOrUpdate(School school) {
-        Session session = sessionFactory.getCurrentSession();
-        School existingSchool = session.get(School.class, school.getCode());
-        if (existingSchool != null) {
-            session.merge(school); // Update if exists
-        } else {
-            session.save(school);  // Save if new
-        }
+    public List<School> getAllSchools() {
+        return findAll();
     }
+
+    @Transactional
+    public List<School> findAll() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM School", School.class)
+                .list();
+    }
+
+
+    
+
 
 
     @Transactional
@@ -50,18 +90,22 @@ public class SchoolDao {
                 .uniqueResultOptional();
     }
 
-    @Transactional
-    public List<School> findAll() {
-        return sessionFactory.getCurrentSession()
-                .createQuery("FROM School", School.class)
-                .list();
-    }
-
+   
     @Transactional
     public School getSchoolById(Long id) {
         return sessionFactory.getCurrentSession().get(School.class, id);
     }
 
+    
+    @Transactional
+    public School getSchoolBySchoolCode(String schoolCode) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM School s WHERE s.code = :schoolCode", School.class)
+                .setParameter("schoolCode", schoolCode)
+                .uniqueResult();
+    }
+
+    
     @Transactional
     public School getSchoolInfo() {
         try {

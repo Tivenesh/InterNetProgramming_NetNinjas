@@ -164,30 +164,25 @@
                             <tr>
                                 <th>School Code</th>
                                 <th>School Name</th>
-                                <th>District</th>                          
-                                <th>Contact Person</th>
-                                <th>Version Status</th>
-                                
+                                <th>State</th>                                                        
+                                <th>Email</th>                                
                                 <th>Version</th>
-                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="version" items="${versions}">
-                                <tr>
-                                    <td>${version.schoolCode}</td>
-                                    <td>${version.schoolName}</td>
-                                    <td>${version.district}</td>
-                                    <td>${version.versionStatus}</td>
-                                    <td>${version.contactPerson}</td>
-                                    <td>${version.version}</td>
-                                    <td>${version.status}</td>
-                                    <td>
-                                        <a href="/TvpssApp/schoolVersion/details/${version.schoolCode}" class="btn-view">View</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+                            <c:forEach var="school" items="${schools}">
+    <tr>
+        <td>${school.code}</td>
+        <td>${school.name}</td>
+        <td>${school.state}</td>
+        <td>${school.email}</td>
+        <td>${school.tvpssVersion}</td>
+        <td>
+            <a href="/adminstate/schoolVersion/details/${school.code}" class="btn-view">View</a>
+        </td>
+    </tr>
+</c:forEach>
                         </tbody>
                     </table>
                     <c:if test="${empty versions}">

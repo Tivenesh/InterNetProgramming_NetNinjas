@@ -35,13 +35,9 @@ public class AdminPPDController {
      */
     @GetMapping("/schoolValidation")
     public String schoolValidation(Model model) {
-        // Retrieve all school versions
-        List<SchoolVersion> schoolVersions = schoolVersionService.getAllSchoolVersions();
-
-        // Add school versions to the model
-        model.addAttribute("schoolVersions", schoolVersions);
-
-        return "adminppd/schoolValidation"; // Maps to schoolValidation.jsp
+        List<School> schools = schoolService.getAllSchools();
+        model.addAttribute("schools", schools);
+        return "adminppd/schoolValidation";
     }
 
     /**
@@ -53,21 +49,14 @@ public class AdminPPDController {
      */
     @GetMapping("/schoolDetails")
     public String schoolDetails(@RequestParam("schoolCode") String schoolCode, Model model) {
-        // Fetch school details based on schoolCode
         School school = schoolService.getSchoolBySchoolCode(schoolCode);
-
-        // Check if school exists
         if (school == null) {
-            model.addAttribute("errorMessage", "School details not found for code: " + schoolCode);
-            return "redirect:/adminppd/schoolValidation";
+            model.addAttribute("errorMessage", "No school found with the provided code.");
+            return "adminppd/schoolValidation";
         }
-
-        // Add school details to the model
         model.addAttribute("school", school);
-
-        return "adminppd/schoolDetails"; // View for schoolDetails.jsp
+        return "adminppd/schoolDetails";
     }
-
 
 
     /**
@@ -82,41 +71,21 @@ public class AdminPPDController {
      * @param redirectAttributes  Attributes for flash messages.
      * @return Redirect to school details page with updates.
      */
-    @PostMapping("/updateSchoolDetails")
-    public String updateSchoolDetails(
-        @RequestParam String schoolCode,
-        @RequestParam(required = false) String tvpssLogo,
-        @RequestParam(required = false) String studio,
-        @RequestParam(required = false) String youtubeUpload,
-        @RequestParam(required = false) String recordingInSchool,
-        @RequestParam(required = false) String recordingInOutSchool,
-        RedirectAttributes redirectAttributes
-    ) {
-        // Fetch the school object
+    @PostMapping("/updateVersionStatus")
+    public String updateVersionStatus(@RequestParam String schoolCode,
+                                      @RequestParam String versionStatus,
+                                      RedirectAttributes redirectAttributes) {
         School school = schoolService.getSchoolBySchoolCode(schoolCode);
-
-        // Handle case where school is not found
-        if (school == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "School not found for code: " + schoolCode);
-            return "redirect:/adminppd/schoolValidation";
+        if (school != null) {
+            school.setVersionStatus(versionStatus);
+            schoolService.saveOrUpdate(school);
+            redirectAttributes.addFlashAttribute("successMessage", "Version status updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
         }
-
-        // Update school properties based on user input	
-        school.setLogoFilename(tvpssLogo != null && tvpssLogo.equalsIgnoreCase("true") ? "Uploaded" : "Not Uploaded");
-        school.setStudio(studio != null && studio.equalsIgnoreCase("true") ? "Yes" : "No");
-        // school.setYoutubeUpload(youtubeUpload != null && youtubeUpload.equalsIgnoreCase("true") ? "Yes" : "No");
-        school.setRecordingInSchool(recordingInSchool != null && recordingInSchool.equalsIgnoreCase("true") ? "Yes" : "No");
-        school.setRecordingInOutSchool(recordingInOutSchool != null && recordingInOutSchool.equalsIgnoreCase("true") ? "Yes" : "No");
-
-        // Save the updated school details
-        schoolService.saveSchool(school);
-
-        // Add success message
-        redirectAttributes.addFlashAttribute("successMessage", "School details updated successfully!");
-
-        // Redirect back to school details
-        return "redirect:/adminppd/schoolDetails?schoolCode=" + schoolCode;
+        return "redirect:/TvpssApp/adminppd/schoolValidation";
     }
+
     /**
      * Redirect to updated school details after update.
      *
@@ -133,5 +102,23 @@ public class AdminPPDController {
         model.addAttribute("updatedSchool", updatedSchool);
         return "adminppd/schoolDetails";
     }
+    
+    @PostMapping("/validateSchool")
+    public String validateSchool(
+        @RequestParam String schoolCode,
+        @RequestParam boolean isValid,
+        RedirectAttributes redirectAttributes
+    ) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            schoolService.updateVersionStatus(school, isValid);
+            redirectAttributes.addFlashAttribute("successMessage", "School version status updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
+        }
+        return "redirect:/adminppd/schoolValidation";
+    }
+
+    
 }
 
