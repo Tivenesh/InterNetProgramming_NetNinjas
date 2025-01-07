@@ -114,7 +114,11 @@ public class SecurityConfig {
     private void handleLoginFailure(HttpServletRequest request,
                                     HttpServletResponse response,
                                     AuthenticationException exception) throws IOException {
-        response.sendRedirect("/login?error=true");
+        HttpSession session = request.getSession();
+        session.setAttribute("errorMessage", "Invalid username or password. Please try again.");
+    
+    // Redirect to /login with error message stored in session
+        response.sendRedirect("/TvpssApp/login");
     }
 
     private String determineRedirectUrl(Authentication authentication) {
