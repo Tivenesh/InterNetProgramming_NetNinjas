@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -63,6 +65,78 @@ public class StateAdminController {
         return "adminstate/viewCertApplication";
     }
     
+
+    @GetMapping("/viewSchools")
+    public String viewSchools(Model model) {
+        List<School> schools = schoolService.getAllSchools(); // Fetch data
+        model.addAttribute("schools", schools); // Add the list of schools
+        return "adminstate/view"; // Forward to view.jsp
+    }
+
+    @PostMapping("/updateVersionStatus")
+    public String updateVersionStatus(@RequestParam String schoolCode,
+                                      @RequestParam String versionStatus,
+                                      RedirectAttributes redirectAttributes) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            school.setVersionStatus(versionStatus);
+            schoolService.saveOrUpdate(school);
+            redirectAttributes.addFlashAttribute("successMessage", "Version status updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
+        }
+        return "redirect:/adminstate/schoolVersion/view";
+    }
+
+    @PostMapping("/updateTvpssVersion")
+    public String updateTvpssVersion(@RequestParam String schoolCode,
+                                     @RequestParam Integer tvpssVersion,
+                                     RedirectAttributes redirectAttributes) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            school.setTvpssVersion(tvpssVersion);
+            schoolService.saveOrUpdate(school);
+            redirectAttributes.addFlashAttribute("successMessage", "TVPSS version updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
+        }
+        return "redirect:/adminstate/schoolVersion/details?schoolCode=" + schoolCode;
+    }
+
+    @PostMapping("/validateSchool")
+    public String validateSchool(@RequestParam String schoolCode,
+                                 @RequestParam boolean isValid,
+                                 RedirectAttributes redirectAttributes) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            schoolService.updateVersionStatus(school, isValid);
+            redirectAttributes.addFlashAttribute("successMessage", "School version status updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
+        }
+        return "redirect:/adminstate/schoolVersion/view";
+    }
+
+    @PostMapping("/saveTvpssVersion")
+    public String saveTvpssVersion(@RequestParam("schoolCode") String schoolCode,
+                                   @RequestParam("connerminittv") String connerminittv,
+                                   @RequestParam("recordingEquipment") String recordingEquipment,
+                                   @RequestParam("greenScreenTechnology") String greenScreenTechnology,
+                                   RedirectAttributes redirectAttributes) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            school.setConnerminittv(connerminittv);
+            school.setRecordingEquipment(recordingEquipment);
+            school.setGreenScreenTechnology(greenScreenTechnology);
+            schoolService.calculateAndSaveTvpssVersion(school);
+            redirectAttributes.addFlashAttribute("successMessage", "TVPSS version saved successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
+        }
+        return "redirect:/adminstate/schoolVersion/view";
+    }
+
+
     @GetMapping("/generateCertificate")
     public String generateCertificate(@RequestParam("certificateId") String certificateId, Model model) {
         try {

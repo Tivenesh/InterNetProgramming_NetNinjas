@@ -57,37 +57,19 @@ public class SchoolService {
     
     @Transactional
     public void updateTvpssVersion(School school) {
-        int version = 1;
+        int version = 1;  // Default version
 
-        // Criteria for Version 2
-        if (school.getConnerminittv() != null && school.getConnerminittv().equalsIgnoreCase("Yes")) {
-            version++;
-        }
-        // Criteria for Version 3
-        if (school.getRecordingEquipment() != null && school.getRecordingEquipment().equalsIgnoreCase("Yes")) {
-            version++;
-        }
-        // Criteria for Version 4
-        if (school.getGreenScreenTechnology() != null && school.getGreenScreenTechnology().equalsIgnoreCase("Yes")) {
-            version++;
-        }
-        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) {
-            version++;
-        }
-        if (school.getStudio() != null && school.getStudio().equalsIgnoreCase("Yes")) {
-            version++;
-        }
-
-        // Any additional criteria
-        if (school.getRecordingInSchool() != null && school.getRecordingInSchool().equalsIgnoreCase("Yes")) {
-            version++;
-        }
-        if (school.getRecordingInOutSchool() != null && school.getRecordingInOutSchool().equalsIgnoreCase("Yes")) {
-            version++;
-        }
+        // Increment based on criteria
+        if ("Yes".equalsIgnoreCase(school.getConnerminittv())) version++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingEquipment())) version++;
+        if ("Yes".equalsIgnoreCase(school.getGreenScreenTechnology())) version++;
+        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) version++;
+        if ("Yes".equalsIgnoreCase(school.getStudio())) version++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInSchool())) version++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInOutSchool())) version++;
 
         school.setTvpssVersion(version);
-        saveSchool(school);
+        saveSchool(school);  // Save the updated version
     }
 
     @Transactional

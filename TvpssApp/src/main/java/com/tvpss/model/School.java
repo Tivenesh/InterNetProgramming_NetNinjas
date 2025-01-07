@@ -74,6 +74,17 @@ public class School implements Serializable {
     @Column(name = "version_status")
     private String versionStatus;
 
+    @Column(name = "school_officer_name")
+    private String schoolOfficerName;
+
+    public String getSchoolOfficerName() {
+        return schoolOfficerName;
+    }
+
+    public void setSchoolOfficerName(String schoolOfficerName) {
+        this.schoolOfficerName = schoolOfficerName;
+    }
+
     public String getVersionStatus() {
         return versionStatus;
     }
@@ -246,8 +257,12 @@ public class School implements Serializable {
                 + email + ", logo=" + Arrays.toString(logo) + ", logoFile=" + logoFile + ", youtubeLink=" + youtubeLink
                 + ", logoFilename=" + logoFilename + ", connerminittv=" + connerminittv + ", recordingEquipment="
                 + recordingEquipment + ", greenScreenTechnology=" + greenScreenTechnology + ", studio=" + studio
-                + ", recordingInSchool=" + recordingInSchool + ", recordingInOutSchool=" + recordingInOutSchool + "]";
+                + ", recordingInSchool=" + recordingInSchool + ", recordingInOutSchool=" + recordingInOutSchool
+                + ", tvpssVersion=" + tvpssVersion + ", versionStatus=" + versionStatus + ", schoolOfficerName="
+                + schoolOfficerName + "]";
     }
+
+    
 
     
 

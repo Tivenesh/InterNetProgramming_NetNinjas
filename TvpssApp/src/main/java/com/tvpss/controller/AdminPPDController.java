@@ -40,6 +40,19 @@ public class AdminPPDController {
         return "adminppd/schoolValidation";
     }
 
+    @PostMapping("/updateSchool")
+    public String updateSchool(@RequestParam String schoolCode,
+                               @RequestParam String schoolOfficerName, // New field
+                               RedirectAttributes redirectAttributes) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            school.setSchoolOfficerName(schoolOfficerName);
+            schoolService.saveOrUpdate(school);
+            redirectAttributes.addFlashAttribute("successMessage", "School updated successfully.");
+        }
+        return "redirect:/adminppd/schoolValidation";
+    }
+
     /**
      * Display details of a specific school.
      *
@@ -84,6 +97,21 @@ public class AdminPPDController {
             redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
         }
         return "redirect:/TvpssApp/adminppd/schoolValidation";
+    }
+
+    @PostMapping("/updateTvpssVersion")
+    public String updateTvpssVersion(@RequestParam String schoolCode,
+                                     @RequestParam Integer tvpssVersion,
+                                     RedirectAttributes redirectAttributes) {
+        School school = schoolService.getSchoolBySchoolCode(schoolCode);
+        if (school != null) {
+            school.setTvpssVersion(tvpssVersion);  // Set new version
+            schoolService.saveOrUpdate(school);    // Save to database
+            redirectAttributes.addFlashAttribute("successMessage", "TVPSS version updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
+        }
+        return "redirect:/adminppd/schoolDetails?schoolCode=" + schoolCode;
     }
 
     /**
