@@ -59,6 +59,14 @@
                     </div>
 
                     <div class="form-group half-width">
+                        <label for="schoolOfficerName">School Officer Name</label>
+                        <div class="input-wrapper">
+                        	<input type="text" name="schoolOfficerName" id="schoolOfficerName" placeholder="Enter school officer name" value="${school.schoolOfficerName}" required>
+                        	<img src="<c:url value='/resources/images/clearIcon.png' />" class="clear-icon" onclick="clearInput('schoolOfficerName')" alt="Clear">
+                        </div>
+                    </div>
+
+                    <div class="form-group half-width">
                         <label for="postcode">Postcode</label>
                         <div class="input-wrapper">
                         	<input type="text" name="postcode" id="postcode" placeholder="Enter postcode" value="${school.postcode}" required>
