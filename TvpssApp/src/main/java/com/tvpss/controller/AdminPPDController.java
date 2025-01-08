@@ -26,7 +26,11 @@ public class AdminPPDController {
      * Dashboard for Admin PPD.
      */
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(Model model) {
+    	
+    	long totalSchools = schoolService.getTotalSchools();
+        model.addAttribute("totalSchools", totalSchools);
+        
         return "adminppd/dashboard";
     }
 

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +7,7 @@
     <title>View School Version Status</title>
     <link rel="stylesheet" href="/TvpssApp/resources/css/superAdminDashboard.css">
     <style>
+        /* Keep all original CSS styling as is */
         body {
             font-family: Arial, sans-serif;
             background-color: #F8FAFF;
@@ -54,7 +54,7 @@
 
         table th {
             background-color: #F3F4F6;
-            color: #4B6CB7; /* Updated for blue header text */
+            color: #4B6CB7;
         }
 
         table tr:hover {
@@ -115,7 +115,6 @@
 </head>
 <body>
     <div class="dashboard">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
                 <img src="/TvpssApp/resources/images/TvpssLogo.png" alt="TVPSS Logo">
@@ -124,13 +123,11 @@
             <nav>
                 <ul>
                     <li><a href="/TvpssApp/adminstate/dashboard">Dashboard</a></li>
-                    <li><a href="/TvpssApp/adminstate/viewCertApplication">Generate E-Certificate</a></li>
-                    <li><a href="/TvpssApp/schoolVersion/view" class="active">View School Version Status</a></li>
+                    <li><a href="/TvpssApp/adminstate/schoolVersion/view" class="active">View School Version Status</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="content">
             <header class="header">
                 <div class="header-top">
@@ -145,9 +142,7 @@
                         <span>User<br>State Admin</span>
                     </div>
                 </div>
-                <div class="welcome-search">
-                    <h1>View School Version Status</h1>
-                </div>
+                <h1>View School Version Status</h1>
             </header>
 
             <div class="dashboard-container">
@@ -159,50 +154,52 @@
 
                 <!-- Table Container -->
                 <div class="table-container">
-                    <table id="schoolTable">
+                    <table>
                         <thead>
                             <tr>
                                 <th>School Code</th>
                                 <th>School Name</th>
-                                <th>State</th>                                                        
-                                <th>Email</th>                                
+                                <th>School Officer Name</th>
+                                <th>Version Status</th>
                                 <th>Version</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="school" items="${schools}">
-    <tr>
-        <td>${school.code}</td>
-        <td>${school.name}</td>
-        <td>${school.state}</td>
-        <td>${school.email}</td>
-        <td>${school.tvpssVersion}</td>
-        <td>
-            <a href="/adminstate/schoolVersion/details/${school.code}" class="btn-view">View</a>
-        </td>
-    </tr>
-</c:forEach>
-                        </tbody>
+    <c:forEach var="school" items="${schools}">
+        <tr>
+            <td>${school.code}</td>
+            <td>${school.name}</td>
+            <td>${school.versionStatus}</td>
+            <td>${school.versionStatus}</td>
+            <td>${school.tvpssVersion}</td>
+            <td>
+<a href="<c:url value='/adminstate/detailsschool/${school.code}' />" class="btn-view">View</a>
+
+
+            </td>
+        </tr>
+    </c:forEach>
+</tbody>
+
+<c:if test="${empty schools}">
+    <div class="no-data">No schools available to display.</div>
+</c:if>
+
                     </table>
-                    <c:if test="${empty versions}">
-                        <div class="no-data">No school versions available to display.</div>
-                    </c:if>
+                
                 </div>
             </div>
         </main>
     </div>
-    
     <script>
-        // Function to filter table rows based on search input
         function filterTable() {
             const searchValue = document.getElementById('searchBox').value.toLowerCase();
-            const rows = document.querySelectorAll('#schoolTable tbody tr');
+            const rows = document.querySelectorAll('.table-container table tbody tr');
             rows.forEach(row => {
-                const schoolCode = row.children[0].textContent.toLowerCase();
-                const schoolName = row.children[1].textContent.toLowerCase();
-                const district = row.children[2].textContent.toLowerCase();
-                row.style.display = schoolCode.includes(searchValue) || schoolName.includes(searchValue) || district.includes(searchValue) ? '' : 'none';
+                const cells = row.querySelectorAll('td');
+                const rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                row.style.display = rowText.includes(searchValue) ? '' : 'none';
             });
         }
     </script>

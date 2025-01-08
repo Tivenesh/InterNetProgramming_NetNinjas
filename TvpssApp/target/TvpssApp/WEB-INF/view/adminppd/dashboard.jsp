@@ -124,9 +124,6 @@
 	
 				    <div class="welcome-search">
 				        <h1>Hello, welcome!</h1>
-				        <div class="search-bar">
-				            <input type="text" placeholder="Search here...">
-				        </div>
 				    </div>
 				</header>
 	
@@ -142,8 +139,8 @@
 	                <p>15</p>
 	            </div>
 	            <div class="stats-card">
-	                <h4>Number of Schools in the District (Johor)</h4>
-	                <p>381</p>
+	                <h4>Number of Schools in Johor</h4>
+	                <p>${totalSchools}</p>
 	            </div>
 	        </div>
 	
@@ -158,23 +155,6 @@
 	            <!-- Pie Chart -->
 	            <div class="chart-box">
 	    <h4>Total Percentage follows Version</h4>
-	    <div class="dropdown">
-	        <select>
-	            <option>Johor</option>
-	            <option>Melaka</option>
-	            <option>Negeri Sembilan</option>
-	            <option>Selangor</option>
-	            <option>Pahang</option>
-	            <option>Perak</option>
-	            <option>Kelantan</option>
-	            <option>Terengganu</option>
-	            <option>Penang</option>
-	            <option>Kedah</option>
-	            <option>Perlis</option>
-	            <option>Sabah</option>
-	            <option>Sarawak</option>
-	        </select>
-	    </div>
 	    <div style="width: 200px; height: 200px; margin: 0 auto;">
 	        <canvas id="pieChart"></canvas>
 	    </div>

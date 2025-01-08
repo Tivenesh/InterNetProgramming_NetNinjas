@@ -136,51 +136,46 @@
                     <h1>School TVPSS Validation</h1> 
                 </div>
             </header>
+<div class="dashboard-container">
+                <!-- Search Bar -->
+                <div class="search-bar-container">
+                    <input type="text" id="searchBox" placeholder="Search by School Name, Code, or District">
+                    <button onclick="filterTable()">Search</button>
+                </div>
+            <!-- Table Container -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>School Code</th>
+                            <th>School Name</th>
+                            <th>School Officer Name</th>
+                            <th>Version Status</th>
+                             <th>Version</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="school" items="${schools}">
+                            <tr>
+                                <td>${school.code}</td>
+                                <td>${school.name}</td>
+                                <td>${school.versionStatus}</td>
+                                <td>${school.versionStatus}</td>
+                                 <td>${school.tvpssVersion}</td>
+                                <td>
+                                    <a href="<c:url value='/adminppd/schoolDetails' />?schoolCode=${school.code}" class="btn-view">View</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-
-        <!-- Table Container -->
-        <div class="table-container">
-            <table>
-    <thead>
-        <tr>
-            <th>School Code</th>
-            <th>School Name</th>
-            <th>Version Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="school" items="${schools}">
-            <tr>
-                <td>${school.code}</td>
-                <td>${school.name}</td>
-                <td>${school.versionStatus}</td>
-                <td>
-                    <a href="/adminppd/schoolDetails?schoolCode=${school.code}">View</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-
-            <c:if test="${empty schoolVersions}">
-                <div class="no-data">No school versions available to display.</div>
-            </c:if>
-        </div>
+                <c:if test="${empty schools}">
+                    <div class="no-data">No schools available to display.</div>
+                </c:if>
+            </div>
+        </main>
     </div>
-    
-    <script>
-        // Function to filter table rows based on search input
-        function filterTable() {
-            const searchValue = document.getElementById('searchBox').value.toLowerCase();
-            const rows = document.querySelectorAll('#schoolTable tbody tr');
-            rows.forEach(row => {
-                const schoolCode = row.children[0].textContent.toLowerCase();
-                const schoolName = row.children[1].textContent.toLowerCase();
-                const district = row.children[2].textContent.toLowerCase();
-                row.style.display = schoolCode.includes(searchValue) || schoolName.includes(searchValue) || district.includes(searchValue) ? '' : 'none';
-            });
-        }
-    </script>
 </body>
 </html>

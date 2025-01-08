@@ -84,6 +84,7 @@
 
         .error {
             color: red;
+            font-size: 16px;
             margin-bottom: 15px;
         }
     </style>
@@ -93,9 +94,15 @@
         <h2>Login to TVPSS</h2>
         <form action="<c:url value='/login'/>" method="post">
             <!-- Display error message -->
+            <c:if test="${not empty sessionScope.errorMessage}">
+                <div class="error">${sessionScope.errorMessage}</div>
+                <c:remove var="errorMessage" scope="session" />
+            </c:if>
+
             <c:if test="${param.error != null}">
                 <div class="error">Invalid username or password</div>
             </c:if>
+
 
             <!-- Email Input -->
             <div class="input-group">
