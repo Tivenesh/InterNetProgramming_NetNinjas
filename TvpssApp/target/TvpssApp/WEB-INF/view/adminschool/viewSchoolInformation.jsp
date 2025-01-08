@@ -55,6 +55,7 @@
                 <p><strong>School Name:</strong> ${school.name != null ? school.name : "Not available"}</p>
                 <p><strong>Address 1:</strong> ${school.address1 != null ? school.address1 : "Not available"}</p>
                 <p><strong>Address 2:</strong> ${school.address2 != null ? school.address2 : "Not available"}</p>
+                <p><strong>School Officer:</strong>${school.schoolOfficerName != null ? school.schoolOfficerName : "Not available"}</p>
                 <p><strong>Postcode:</strong> ${school.postcode != null ? school.postcode : "Not available"}</p>
                 <p><strong>State:</strong> ${school.state != null ? school.state : "Not available"}</p>
                 <p><strong>Telephone:</strong> ${school.telephoneNumber != null ? school.telephoneNumber : "Not available"}</p>

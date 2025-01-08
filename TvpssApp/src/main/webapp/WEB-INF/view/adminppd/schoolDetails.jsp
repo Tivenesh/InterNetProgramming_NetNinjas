@@ -273,7 +273,7 @@
                     <ul class="details-list">
                         <li><span>School Code:</span><span>${school.code}</span></li>
                         <li><span>School Name:</span><span>${school.name}</span></li>
-                         <li><span>School Officer Name:</span></li>
+                         <li><span>School Officer Name:</span><span>${school.schoolOfficerName}</span></li>
                         <li><span>Address 1:</span><span>${school.address1}</span></li>
                         <li><span>Address 2:</span><span>${school.address2}</span></li>
                         <li><span>Postcode:</span><span>${school.postcode}</span></li>

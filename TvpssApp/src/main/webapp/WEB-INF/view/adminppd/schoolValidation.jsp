@@ -160,7 +160,7 @@
                             <tr>
                                 <td>${school.code}</td>
                                 <td>${school.name}</td>
-                                <td>${school.versionStatus}</td>
+                                <td>${school.schoolOfficerName}</td>
                                 <td>${school.versionStatus}</td>
                                  <td>${school.tvpssVersion}</td>
                                 <td>

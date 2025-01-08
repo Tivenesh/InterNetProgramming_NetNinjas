@@ -166,11 +166,7 @@
 	</div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 	<script>
-		const verifiedByVersion = ${verifiedByVersion};
-	    const versionPercentages = ${versionPercentages};
-    
 	    // Bar Chart
 	    const barChart = new Chart(document.getElementById('barChart'), {
 	        type: 'bar',
@@ -178,7 +174,7 @@
 	            labels: ['Version 1', 'Version 2', 'Version 3'],
 	            datasets: [{
 	                label: 'Number Verified',
-	                data: verifiedByVersion,
+	                data: [40, 150, 300],
 	                backgroundColor: '#A0C4FF',
 	                borderRadius: 5
 	            }]
@@ -203,7 +199,7 @@
 	        data: {
 	            labels: ['Version 1', 'Version 2', 'Version 3'],
 	            datasets: [{
-	                data: versionPercentages,
+	                data: [20, 30, 50],
 	                backgroundColor: ['#FFD700', '#A0C4FF', '#4B6CB7']
 	            }]
 	        },
