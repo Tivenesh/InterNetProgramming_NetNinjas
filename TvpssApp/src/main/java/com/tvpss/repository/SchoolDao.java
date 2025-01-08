@@ -18,7 +18,20 @@ public class SchoolDao {
     @Autowired
     private SessionFactory sessionFactory;
     
-    
+    @Transactional
+    public long countActiveSchools() {
+        return (long) sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(s) FROM School s WHERE s.versionStatus = 'Active'")
+                .uniqueResult();
+    }
+
+    @Transactional
+    public long countInactiveSchools() {
+        return (long) sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(s) FROM School s WHERE s.versionStatus = 'Inactive'")
+                .uniqueResult();
+    }
+
     @Transactional
     public void saveOrUpdate(School school) {
         Session session = sessionFactory.getCurrentSession();

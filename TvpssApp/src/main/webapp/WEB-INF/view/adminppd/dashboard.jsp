@@ -132,11 +132,11 @@
 	        <div class="stats-cards">
 	            <div class="stats-card">
 	                <h4>Number of TVPSS Schools Confirmed</h4>
-	                <p>207</p>
+	                <p>${activeSchools}</p>
 	            </div>
 	            <div class="stats-card">
 	                <h4>Number of Pending Validations</h4>
-	                <p>15</p>
+	                <p>${pendingValidations}</p>
 	            </div>
 	            <div class="stats-card">
 	                <h4>Number of Schools in Johor</h4>

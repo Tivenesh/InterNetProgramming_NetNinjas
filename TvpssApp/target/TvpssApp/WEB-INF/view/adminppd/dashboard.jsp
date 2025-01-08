@@ -132,11 +132,11 @@
 	        <div class="stats-cards">
 	            <div class="stats-card">
 	                <h4>Number of TVPSS Schools Confirmed</h4>
-	                <p>207</p>
+	                <p>${activeSchools}</p>
 	            </div>
 	            <div class="stats-card">
 	                <h4>Number of Pending Validations</h4>
-	                <p>15</p>
+	                <p>${pendingValidations}</p>
 	            </div>
 	            <div class="stats-card">
 	                <h4>Number of Schools in Johor</h4>
@@ -155,7 +155,7 @@
 	            <!-- Pie Chart -->
 	            <div class="chart-box">
 	    <h4>Total Percentage follows Version</h4>
-	    <div style="width: 200px; height: 200px; margin: 0 auto;">
+	    <div style="width: 300px; height: 300px; margin: 0 auto;">
 	        <canvas id="pieChart"></canvas>
 	    </div>
 	</div>
@@ -166,7 +166,11 @@
 	</div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 	<script>
+		const verifiedByVersion = ${verifiedByVersion};
+	    const versionPercentages = ${versionPercentages};
+    
 	    // Bar Chart
 	    const barChart = new Chart(document.getElementById('barChart'), {
 	        type: 'bar',
@@ -174,7 +178,7 @@
 	            labels: ['Version 1', 'Version 2', 'Version 3'],
 	            datasets: [{
 	                label: 'Number Verified',
-	                data: [40, 150, 300],
+	                data: verifiedByVersion,
 	                backgroundColor: '#A0C4FF',
 	                borderRadius: 5
 	            }]
@@ -199,7 +203,7 @@
 	        data: {
 	            labels: ['Version 1', 'Version 2', 'Version 3'],
 	            datasets: [{
-	                data: [20, 30, 50],
+	                data: versionPercentages,
 	                backgroundColor: ['#FFD700', '#A0C4FF', '#4B6CB7']
 	            }]
 	        },

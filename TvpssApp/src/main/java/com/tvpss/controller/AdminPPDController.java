@@ -2,6 +2,8 @@ package com.tvpss.controller;
 
 import com.tvpss.model.School;
 import com.tvpss.model.SchoolVersion;
+import com.tvpss.repository.SchoolDao;
+import com.tvpss.repository.UserDao;
 import com.tvpss.service.SchoolService;
 import com.tvpss.service.SchoolVersionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class AdminPPDController {
 
     @Autowired
     private SchoolVersionService schoolVersionService;
+    
+    @Autowired
+    private SchoolDao schoolDao;
 
     /**
      * Dashboard for Admin PPD.
@@ -28,7 +33,12 @@ public class AdminPPDController {
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
     	
+    	long activeSchools = schoolDao.countActiveSchools();
+        long inactiveSchools = schoolDao.countInactiveSchools();
     	long totalSchools = schoolService.getTotalSchools();
+    	
+    	model.addAttribute("activeSchools", activeSchools);
+        model.addAttribute("pendingValidations", inactiveSchools);
         model.addAttribute("totalSchools", totalSchools);
         
         return "adminppd/dashboard";
