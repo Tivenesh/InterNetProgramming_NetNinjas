@@ -273,19 +273,22 @@
                     <ul class="details-list">
                         <li><span>School Code:</span><span>${school.code}</span></li>
                         <li><span>School Name:</span><span>${school.name}</span></li>
-                         <li><span>School Officer Name:</span><span>${school.schoolOfficerName}</span></li>
+                        <li><span>School Officer Name:</span><span>${school.schoolOfficerName}</span></li>
                         <li><span>Address 1:</span><span>${school.address1}</span></li>
                         <li><span>Address 2:</span><span>${school.address2}</span></li>
                         <li><span>Postcode:</span><span>${school.postcode}</span></li>
                         <li><span>State:</span><span>${school.state}</span></li>
                         <li><span>Telephone:</span><span>${school.telephoneNumber}</span></li>
+                        <li><span>Green Screen Technology:</span><span>${school.greenScreenTechnology}</span></li>
+                        <li><span>Recording Equipment:</span><span>${school.recordingEquipment}</span></li>
+                        <li><span>Conner Mini TV:</span><span>${school.connerminittv}</span></li>
                         <li><span>Email:</span><span>${school.email}</span></li>
                         <li><span>Logo TVPSS:</span>
                             <span>
-                                <c:if test="${not empty school.logoFilename}">
-                                    <img src="/resources/static/uploads/school-logos/${school.logoFilename}" alt="School Logo">
+                                <c:if test="${not empty school.logo}">
+                                    <img src="<c:url value='/adminschool/school-logo/${school.code}' />" alt="School Logo" width="100">
                                 </c:if>
-                                <c:if test="${empty school.logoFilename}">
+                                <c:if test="${empty school.logo}">
                                     <span>No logo uploaded</span>
                                 </c:if>
                             </span>
@@ -331,9 +334,9 @@
 </form>
 
 <form id="updateVersionForm" method="post" action="${pageContext.request.contextPath}/adminppd/updateTvpssVersion">
-<input type="hidden" id="updateTvpssVersionInput" name="tvpssVersion" value="${school.tvpssVersion}">
+    <input type="hidden" name="schoolCode" value="${school.code}">
+    <input type="hidden" id="updateTvpssVersionInput" name="tvpssVersion">
 
-    <input type="hidden" id="updateTvpssVersionInput" name="tvpssVersion" value="${school.tvpssVersion}">
     <ul class="checklist">
         <li>
             <input type="checkbox" name="tvpssLogo" value="true" onchange="updateVersionNumber()" ${school.logoFilename != null ? "checked" : ""}>
@@ -371,36 +374,8 @@ function updateVersionNumber() {
     document.getElementById('calculated-version').innerText = version;  // Update UI display
 }
 
-function calculateAndSubmit(event) {
-    event.preventDefault();  // Prevent default form submission
-    const form = document.getElementById('checklistForm');
-    const version = document.getElementById('calculatedVersion').value;  // Use the updated version
-    console.log('Calculated Version for Status:', version);
-
-    const formData = new FormData(form);  // Gather form data
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (response.ok) {
-            alert('Update successful! Version status and TVPSS version have been updated.');
-            redirectToSchoolValidation();  // Redirect after successful update
-        } else {
-            alert('Update successful! Version status and TVPSS version have been updated.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An unexpected error occurred while updating.');
-    });
-}
-
 function submitTvpssVersion(event) {
     event.preventDefault();  // Prevent default form submission
-    const version = document.getElementById('updateTvpssVersionInput').value;  // Get calculated version
-    console.log('Calculated Version for TVPSS Update:', version);
 
     const form = document.getElementById('updateVersionForm');
     const formData = new FormData(form);
@@ -412,7 +387,7 @@ function submitTvpssVersion(event) {
     .then(response => {
         if (response.ok) {
             alert('TVPSS Version updated successfully!');
-            redirectToSchoolValidation();  // Redirect after successful update
+            redirectToSchoolValidation();  // Redirect to school validation page
         } else {
             alert('Failed to update TVPSS Version. Please try again.');
         }

@@ -151,7 +151,7 @@
                             <th>School Name</th>
                             <th>School Officer Name</th>
                             <th>Version Status</th>
-                             <th>Version</th>
+                            <th>Version</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

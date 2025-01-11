@@ -36,15 +36,29 @@ public class SchoolDao {
     public void saveOrUpdate(School school) {
         Session session = sessionFactory.getCurrentSession();
         School existingSchool = session.get(School.class, school.getCode());
+
         if (existingSchool != null) {
-            // Retain version status unless explicitly set
-            if (school.getVersionStatus() == null) {
-                school.setVersionStatus(existingSchool.getVersionStatus());
+            // Update fields only if they are not null
+            if (school.getVersionStatus() != null) {
+                existingSchool.setVersionStatus(school.getVersionStatus());
             }
-            session.merge(school);
+            if (school.getTvpssVersion() != null) {
+                existingSchool.setTvpssVersion(school.getTvpssVersion());
+            }
+            if (school.getConnerminittv() != null) {
+                existingSchool.setConnerminittv(school.getConnerminittv());
+            }
+            if (school.getRecordingEquipment() != null) {
+                existingSchool.setRecordingEquipment(school.getRecordingEquipment());
+            }
+            if (school.getGreenScreenTechnology() != null) {
+                existingSchool.setGreenScreenTechnology(school.getGreenScreenTechnology());
+            }
+
+            // Save changes
+            session.merge(existingSchool);
         } else {
-            // Default to Inactive for new schools
-            school.setVersionStatus(school.getVersionStatus() != null ? school.getVersionStatus() : "Inactive");
+            // Save as new if school doesn't exist
             session.save(school);
         }
     }
