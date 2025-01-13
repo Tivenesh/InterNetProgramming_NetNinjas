@@ -110,7 +110,7 @@ public class AdminPPDController {
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
         }
-        return "redirect:/TvpssApp/adminppd/schoolValidation";
+        return "redirect:/adminppd/schoolValidation";
     }
 
     @PostMapping("/updateTvpssVersion")

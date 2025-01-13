@@ -7,25 +7,6 @@
     <title>View School Version Status</title>
     <link rel="stylesheet" href="/TvpssApp/resources/css/superAdminDashboard.css">
     <style>
-        /* Keep all original CSS styling as is */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F8FAFF;
-            margin: 0;
-            padding: 0;
-        }
-
-        .breadcrumb-container {
-            margin: 20px 10px;
-            font-size: 14px;
-            color: #6B7280;
-        }
-
-        .breadcrumb-container span {
-            font-weight: bold;
-            color: #4B6CB7;
-        }
-
         .dashboard-container {
             padding: 20px;
             max-width: 1200px;
@@ -54,7 +35,7 @@
 
         table th {
             background-color: #F3F4F6;
-            color: #4B6CB7;
+            color: #6B7280;
         }
 
         table tr:hover {
@@ -62,7 +43,7 @@
         }
 
         .btn-view {
-            background-color: #4B6CB7;
+            background-color: #3B82F6;
             color: white;
             padding: 8px 12px;
             border: none;
@@ -72,44 +53,107 @@
         }
 
         .btn-view:hover {
-            background-color: #354A9F;
+            background-color: #2563EB;
         }
 
-        .search-bar-container {
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding: 20px;
+        }
+
+        .modal-header {
+            background-color: #525D97;
+            color: white;
+            padding: 15px 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
             display: flex;
-            margin-bottom: 20px;
             justify-content: space-between;
             align-items: center;
         }
 
-        .search-bar-container input {
-            width: 100%;
-            max-width: 400px;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #CBD5E1;
-            border-radius: 5px;
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.4em;
         }
 
-        .search-bar-container button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            background-color: #4B6CB7;
+        .close {
             color: white;
-            border: none;
-            border-radius: 5px;
+            font-size: 24px;
+            font-weight: normal;
             cursor: pointer;
+            padding: 0 10px;
         }
 
-        .search-bar-container button:hover {
-            background-color: #3a56a3;
+        .details-list {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
         }
 
-        .no-data {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #6B7280;
+        .details-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .details-list li:last-child {
+            border-bottom: none;
+        }
+
+        .btn-update {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        .btn-update:hover {
+            background-color: #d32f2f;
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            display: none;
+            z-index: 2000;
+            animation: slideIn 0.3s, fadeOut 0.3s 2.7s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
     </style>
 </head>
@@ -123,9 +167,20 @@
             <nav>
                 <ul>
                     <li><a href="/TvpssApp/adminstate/dashboard">Dashboard</a></li>
+                    <li><a href="/TvpssApp/adminstate/viewCertApplication" class="menu-item ${page == 'viewCertApplication' || page == 'generateCertificate' ? 'active' : ''}">Generate E-Certificate</a></li>
                     <li><a href="/TvpssApp/adminstate/schoolVersion/view" class="active">View School Version Status</a></li>
                 </ul>
             </nav>
+            <div class="settings">
+                <div class="setting-item">
+                    <i class="icon-settings"></i> Setting
+                </div>
+                <div class="divider"></div>
+                <div class="setting-item">
+                    <i class="icon-logout"></i>
+                    <a href="/TvpssApp/login" style="text-decoration: none; color: inherit;">Logout</a>
+                </div>
+            </div>
         </aside>
 
         <main class="content">
@@ -138,21 +193,17 @@
                         </div>
                     </div>
                     <div class="user-info">
-                        <img src="/TvpssApp/resources/images/PPDAdminLogo.png" alt="User Avatar">
+                        <img src="/TvpssApp/resources/images/stateAdminLogo.png" alt="User Avatar">
                         <span>User<br>State Admin</span>
                     </div>
                 </div>
-                <h1>View School Version Status</h1>
+                <div class="divider"></div>
+                <div class="welcome-search">
+                    <h1>School TVPSS Information</h1>
+                </div>
             </header>
 
             <div class="dashboard-container">
-                <!-- Search Bar -->
-                <div class="search-bar-container">
-                    <input type="text" id="searchBox" placeholder="Search by School Name, Code, or District">
-                    <button onclick="filterTable()">Search</button>
-                </div>
-
-                <!-- Table Container -->
                 <div class="table-container">
                     <table>
                         <thead>
@@ -166,41 +217,110 @@
                             </tr>
                         </thead>
                         <tbody>
-    <c:forEach var="school" items="${schools}">
-        <tr>
-            <td>${school.code}</td>
-            <td>${school.name}</td>
-            <td>${school.versionStatus}</td>
-            <td>${school.versionStatus}</td>
-            <td>${school.tvpssVersion}</td>
-            <td>
-<a href="<c:url value='/adminstate/detailsschool/${school.code}' />" class="btn-view">View</a>
-
-
-            </td>
-        </tr>
-    </c:forEach>
-</tbody>
-
-<c:if test="${empty schools}">
-    <div class="no-data">No schools available to display.</div>
-</c:if>
-
+                            <c:forEach var="school" items="${schools}">
+                                <tr>
+                                    <td>${school.code}</td>
+                                    <td>${school.name}</td>
+                                    <td>${school.schoolOfficerName}</td>
+                                    <td>${school.versionStatus}</td>
+                                    <td>${school.tvpssVersion}</td>
+                                    <td>
+                                        <button class="btn-view" onclick="showDetails('${school.code}', '${school.name}', '${school.address1}', '${school.address2}', '${school.postcode}', '${school.state}', '${school.telephoneNumber}', '${school.email}', '${school.logoFilename}', '${school.youtubeLink}')">
+                                            View
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
                     </table>
-                
                 </div>
             </div>
         </main>
     </div>
+
+    <!-- Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>School Information</h2>
+                <span class="close">&times;</span>
+            </div>
+            <ul class="details-list">
+                <li><strong>School Code:</strong> <span id="schoolCode"></span></li>
+                <li><strong>School Name:</strong> <span id="schoolName"></span></li>
+                <li><strong>Address 1:</strong> <span id="address1"></span></li>
+                <li><strong>Address 2:</strong> <span id="address2"></span></li>
+                <li><strong>Postcode:</strong> <span id="postcode"></span></li>
+                <li><strong>State:</strong> <span id="state"></span></li>
+                <li><strong>Telephone:</strong> <span id="telephoneNumber"></span></li>
+                <li><strong>Email:</strong> <span id="email"></span></li>
+                <li><strong>Logo:</strong>
+                    <img id="schoolLogo" src="" alt="School Logo" width="100" style="display:none;">
+                    <span id="noLogo" style="display:none;">No logo uploaded</span>
+                </li>
+                <li><strong>YouTube Link:</strong> <a href="#" id="youtubeLink" target="_blank"></a></li>
+            </ul>
+            <div class="modal-footer">
+                <button id="updateButton" class="btn-update">Update Notification</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="successToast">
+        <span>School information updated successfully!</span>
+    </div>
+
     <script>
-        function filterTable() {
-            const searchValue = document.getElementById('searchBox').value.toLowerCase();
-            const rows = document.querySelectorAll('.table-container table tbody tr');
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                const rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
-                row.style.display = rowText.includes(searchValue) ? '' : 'none';
-            });
+        function showDetails(code, name, address1, address2, postcode, state, telephone, email, logo, youtubeLink) {
+            document.getElementById('schoolCode').textContent = code;
+            document.getElementById('schoolName').textContent = name;
+            document.getElementById('address1').textContent = address1;
+            document.getElementById('address2').textContent = address2;
+            document.getElementById('postcode').textContent = postcode;
+            document.getElementById('state').textContent = state;
+            document.getElementById('telephoneNumber').textContent = telephone;
+            document.getElementById('email').textContent = email;
+
+            if (logo && logo !== 'null') {
+                document.getElementById('schoolLogo').src = '/resources/static/uploads/school-logos/' + logo;
+                document.getElementById('schoolLogo').style.display = 'block';
+                document.getElementById('noLogo').style.display = 'none';
+            } else {
+                document.getElementById('schoolLogo').style.display = 'none';
+                document.getElementById('noLogo').style.display = 'block';
+            }
+
+            if (youtubeLink && youtubeLink !== 'null') {
+                document.getElementById('youtubeLink').href = youtubeLink;
+                document.getElementById('youtubeLink').textContent = youtubeLink;
+            } else {
+                document.getElementById('youtubeLink').textContent = 'No link provided';
+                document.getElementById('youtubeLink').href = '#';
+            }
+
+            const modal = document.getElementById('detailsModal');
+            modal.style.display = 'block';
+
+            document.querySelector('.close').onclick = function () {
+                modal.style.display = 'none';
+            };
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
+
+            document.getElementById('updateButton').onclick = function () {
+                const toast = document.getElementById('successToast');
+                toast.style.display = 'block';
+                modal.style.display = 'none';
+
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            };
         }
     </script>
 </body>

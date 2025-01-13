@@ -158,10 +158,10 @@
                     <li><span>Telephone:</span><span>${school.telephoneNumber}</span></li>
                     <li><span>Email:</span><span>${school.email}</span></li>
                     <li><span>Logo TVPSS:</span>
-                        <c:if test="${not empty school.logoFilename}">
-                            <img src="/resources/static/uploads/school-logos/${school.logoFilename}" alt="School Logo" width="100">
+                        <c:if test="${not empty school.logo}">
+                            <img src="<c:url value='/adminschool/school-logo/${school.code}' />" alt="School Logo" width="100">
                         </c:if>
-                        <c:if test="${empty school.logoFilename}">
+                        <c:if test="${empty school.logo}">
                             <span>No logo uploaded</span>
                         </c:if>
                     </li>

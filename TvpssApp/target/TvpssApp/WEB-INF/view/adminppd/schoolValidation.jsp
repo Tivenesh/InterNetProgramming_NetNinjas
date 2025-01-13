@@ -151,7 +151,7 @@
                             <th>School Name</th>
                             <th>School Officer Name</th>
                             <th>Version Status</th>
-                             <th>Version</th>
+                            <th>Version</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -160,7 +160,7 @@
                             <tr>
                                 <td>${school.code}</td>
                                 <td>${school.name}</td>
-                                <td>${school.versionStatus}</td>
+                                <td>${school.schoolOfficerName}</td>
                                 <td>${school.versionStatus}</td>
                                  <td>${school.tvpssVersion}</td>
                                 <td>
