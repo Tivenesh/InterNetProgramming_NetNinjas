@@ -521,11 +521,7 @@
 				 <div class="form-group">
                      <label class="form-label">Output Format</label>
                      <div class="form-check">
-<<<<<<< HEAD
-                         <input class="form-check-input" type="checkbox" id="pdfCheck" checked>
-=======
                          <input class="form-check-input" type="checkbox" id="pdfCheck">
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
                          <label class="form-check-label" for="pdfCheck">PDF</label>
                      </div>
                      <div class="form-check">
@@ -544,29 +540,15 @@
 				 
 			</form>
 			<br>
-<<<<<<< HEAD
-			<div class="form-container">
-				<canvas id="certificateCanvas" style="display:none;"></canvas>
-			</div>
-=======
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
 	      </div>  
 	</main>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById('generateBtn');
-<<<<<<< HEAD
-    const certificateCanvas = document.getElementById('certificateCanvas');
     const signatureUpload = document.getElementById('signatureUpload');
     let uploadedSignature = null;
 
-    // Signature preview functionality
-=======
-    const signatureUpload = document.getElementById('signatureUpload');
-    let uploadedSignature = null;
-
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
     signatureUpload.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
@@ -574,10 +556,6 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.onload = function(e) {
                 uploadedSignature = e.target.result;
                 
-<<<<<<< HEAD
-                // Optional: Create a preview of the uploaded signature
-=======
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
                 const previewContainer = document.createElement('div');
                 previewContainer.style.marginTop = '10px';
                 const previewImg = document.createElement('img');
@@ -586,10 +564,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 previewImg.style.maxHeight = '100px';
                 previewContainer.appendChild(previewImg);
                 
-<<<<<<< HEAD
-                // Remove any existing preview
-=======
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
                 const existingPreview = document.querySelector('.signature-preview');
                 if (existingPreview) {
                     existingPreview.remove();
@@ -597,39 +571,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 previewContainer.classList.add('signature-preview');
                 signatureUpload.parentNode.appendChild(previewContainer);
-<<<<<<< HEAD
-=======
 
                 updateLiveCertificatePreview();
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
             };
             reader.readAsDataURL(file);
         }
     });
 
-<<<<<<< HEAD
-    // Function to create certificate preview
-    function createCertificatePreview() {
-        // Create a div to represent the A4 certificate
-        const certificatePreview = document.createElement('div');
-        
-        // A4 dimensions: 210mm Ã 297mm
-        // At 300 DPI, this translates to 2480 Ã 3508 pixels
-        certificatePreview.style.width = '2480px';
-        certificatePreview.style.height = '3508px';
-        certificatePreview.style.position = 'relative';
-        certificatePreview.style.fontFamily = document.getElementById('fontSelect').value || 'Arial';
-        certificatePreview.style.color = document.getElementById('fontColorPicker').value;
-
-        // Get student details
-        const fullName = document.getElementById('full-name').value;
-        const activityName = document.getElementById('activity-name').value;
-        const category = document.getElementById('category').value;
-        const subCategory = document.getElementById('sub-category').value;
-        const awardInfo = document.getElementById('award-info').value;
-
-        // Get selected template
-=======
     function createCertificatePreview() {
         const certificatePreview = document.createElement('div');
         
@@ -644,7 +592,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const fontFamily = document.getElementById('fontSelect').value || 'Arial';
         const fontColor = document.getElementById('fontColorPicker').value || '#000000';
         
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
         const selectedTemplate = document.querySelector('input[name="template"]:checked').value;
         const templateBackgrounds = {
             'Classic': '/TvpssApp/resources/images/Classic.png',
@@ -652,23 +599,10 @@ document.addEventListener('DOMContentLoaded', function() {
             'Professional': '/TvpssApp/resources/images/Professional.png'
         };
 
-<<<<<<< HEAD
-        // Create signature HTML conditionally
-=======
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
         let signatureHtml = '';
         if (uploadedSignature) {
             signatureHtml = 
                 '<div style="' +
-<<<<<<< HEAD
-                    'margin-top: 500px; ' +
-                    'display: flex; ' +
-                    'justify-content: center; ' +
-                    'align-items: center; ' +
-                    'flex-direction: column;' +
-                '">' +
-                    '<img src="' + uploadedSignature + '" style="max-width: 400px; max-height: 200px; margin-bottom: 20px;">' +
-=======
                     'position: absolute;' +
                     'bottom: 380px;' +
                     'left: 50%;' +
@@ -676,15 +610,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     'text-align: center;' +
                 '">' +
                     '<img src="' + uploadedSignature + '" style="max-width: 700px; max-height: 450px;">' +
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
                     '<p style="font-size: 36px;">Authorized Signature</p>' +
                 '</div>';
         }
 
-<<<<<<< HEAD
-        // Create certificate content with A4-sized background
-=======
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
         certificatePreview.innerHTML = 
             '<div style="' +
                 'width: 100%; ' +
@@ -700,23 +629,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 'text-align: center;' +
                 'padding: 200px;' +
                 'box-sizing: border-box;' +
-<<<<<<< HEAD
-            '">' +
-                '<div style="' +
-                    'padding: 100px; ' +
-                    'border-radius: 50px; ' +
-                    'max-width: 1800px;' +
-                    'width: 100%;' +
-                    'text-align: center;' +
-                '">' +
-
-                    '<h2 style="font-size: 160px; font-weight: bold; margin-top: 950px;">' + fullName + '</h2>' +
-                    '<h3 style="font-size: 90px; margin-top: 480px;">' + activityName + '</h3>' +
-                    '<p style="font-size: 50px;">Award: ' + awardInfo + '</p>' +
-                    signatureHtml +
-                '</div>' +
-            '</div>';
-=======
                 'font-family: ' + fontFamily + ';' +
                 'color: ' + fontColor + ';' +
             '">' +
@@ -764,14 +676,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		            '">' + signatoryRole + +'<br>'signatoryName + '</p>' +
 		        '</div>' +*/
 		    '</div>'; 
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
 
         return certificatePreview;
     }
 
-<<<<<<< HEAD
-    // Function to generate and download certificate
-=======
     function updateLiveCertificatePreview() {
         const existingPreview = document.querySelector('.certificate-live-preview-container');
         if (existingPreview) {
@@ -821,7 +729,6 @@ document.addEventListener('DOMContentLoaded', function() {
     addPreviewEventListeners();
     updateLiveCertificatePreview();
 
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
     function generateCertificate(type) {
         const certificatePreview = createCertificatePreview();
         document.body.appendChild(certificatePreview);
@@ -833,15 +740,8 @@ document.addEventListener('DOMContentLoaded', function() {
             height: 3508,
             dpi: 300
         }).then(canvas => {
-<<<<<<< HEAD
-            // Remove the temporary preview
             document.body.removeChild(certificatePreview);
 
-            // Handle different export types
-=======
-            document.body.removeChild(certificatePreview);
-
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
             switch(type) {
                 case 'pdf':
                     const { jsPDF } = window.jspdf;
@@ -867,31 +767,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-<<<<<<< HEAD
-    // Event listener for generate button
     generateBtn.addEventListener('click', function(e) {
         e.preventDefault();
 
-        // Check which formats are selected
-=======
-    generateBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
         const pdfChecked = document.getElementById('pdfCheck').checked;
         const jpgChecked = document.getElementById('jpgCheck').checked;
         const pngChecked = document.getElementById('pngCheck').checked;
 
-<<<<<<< HEAD
-        // Generate certificates for selected formats
-=======
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
         if (pdfChecked) generateCertificate('pdf');
         if (jpgChecked) generateCertificate('jpg');
         if (pngChecked) generateCertificate('png');
     });
-<<<<<<< HEAD
-=======
 
     document.querySelectorAll('input[name="template"]').forEach(radio => {
         radio.addEventListener('change', updateLiveCertificatePreview);
@@ -901,7 +787,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('fontColorPicker').addEventListener('input', updateLiveCertificatePreview);
 
     updateLiveCertificatePreview();
->>>>>>> 1b645646b851d3012718437987a4e9bcd665c99c
 });
     </script>
 </body>
