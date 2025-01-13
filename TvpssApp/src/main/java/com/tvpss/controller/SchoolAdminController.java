@@ -263,7 +263,8 @@ public String editSchoolInformation(Model model) {
     }
 
     private String generateUniqueId() {
-        return "ACH" + System.currentTimeMillis();
+        int count = achievementService.getAllAchievements().size() + 1; // Add 1 to the current count
+        return String.format("ACH%04d", count);
     }
 
     private File saveUploadedFile(MultipartFile file, HttpServletRequest request) throws IOException {
