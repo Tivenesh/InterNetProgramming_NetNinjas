@@ -250,7 +250,7 @@
 		/* Generate Cert */
 		.generate-cert {
 			display:flex;
-			align-item: center;
+			align-items: center;
 		}
 		.generate-cert-btn {
             background-color: #4B6CB7;
@@ -262,7 +262,7 @@
             font-size: 14px;
             font-weight: bold;
             display:flex;
-			align-item: center;
+			align-items: center;
         }
 
         .generate-cert-btn:hover {
