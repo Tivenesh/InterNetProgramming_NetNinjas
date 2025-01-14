@@ -61,7 +61,7 @@
                 <p><strong>Email:</strong> ${school.email != null ? school.email : "Not available"}</p>
                 <p><strong>Logo:</strong> 
                     <c:if test="${not empty school.logo}">
-                        <img src="/resources/static/uploads/school-logos/${school.logo}" alt="School Logo" width="100">
+                        <img src="<c:url value='/adminschool/school-logo/${school.code}' />" alt="School Logo" width="100">
                     </c:if>
                     <c:if test="${empty school.logo}">
                         <span>No logo uploaded</span>
