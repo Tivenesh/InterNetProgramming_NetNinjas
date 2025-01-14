@@ -39,7 +39,7 @@
             <hr class="divider">
             <!-- School Information Form -->
             <div class="title-container">
-                <h2>View Student Achievement</h2>
+                <h2>${achievementTitle}</h2>
             </div>
             
             <!-- Search bar -->
@@ -56,7 +56,6 @@
                 <table id="achievementTable">
                     <thead>
                         <tr>
-                            <th> </th>
                             <th>Activity Name</th>
                             <th>Category</th>
                             <th>Form Mode</th>
@@ -68,9 +67,6 @@
                     <tbody>
                         <c:forEach var="achievement" items="${achievements}">
                             <tr>
-                                <td>
-                                    <input type="checkbox" name="id" value="${achievement.achievementId}" class="rowCheckbox">
-                                </td>
                                 <td>${achievement.activityName}</td>
                                 <td>${achievement.category}</td>
                                 <td>${achievement.formMode}</td>
@@ -84,10 +80,10 @@
                                         ${achievement.status}
                                     </span>
                                 </td>
-                                <td><button class="btn view" onclick="viewAchievement(${achievement.achievementId})">View</button></td>
+                                <td><button class="btn view" onclick="window.location.href='<c:url value='/adminschool/view-achievement?id=${achievement.achievementId}' />'">View</button></td>
                                 <td>
-                                    <button class="btn edit" onclick="window.location.href='<c:url value='/adminschool/submit-achievement?id=${achievement.achievementId}' />'"><i class="fa fa-edit"></i></button>
-                                    <button class="btn delete" onclick="showModal('${achievement.achievementId}')"><i class='fa fa-trash'></i></button>
+                                    <button class="btn edit" onclick="window.location.href='<c:url value='/adminschool/edit-achievement?id=${achievement.achievementId}' />'"><i class="fa fa-edit"></i></button>
+                                    <button class="btn delete" onclick="showDeleteModal('${achievement.achievementId}')"><i class='fa fa-trash'></i></button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -105,15 +101,15 @@
         </section>
     </div>
     
-    <!-- Confirmation Modal -->
-    <div id="confirmationModal" class="modal hidden">
+     <!-- Delete Confirmation Modal -->
+     <div id="deleteModal" class="modal hidden">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <p id="modalBody"></p>
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this achievement?</p>
             <div class="modal-actions">
-                <button class="btn cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn confirm" id="confirmButton" onclick="confirmAction()">Confirm</button>
+                <button class="btn" onclick="closeModal()">Cancel</button>
+                <button class="btn delete" id="confirmDelete">Confirm</button>
             </div>
         </div>
     </div>
@@ -135,48 +131,40 @@
         });
     }
 
-    function viewAchievement(id) {
-        window.location.href = `/adminschool/view/${id}`;
-    }
+    function showDeleteModal(achievementId) {
+            deleteAchievementId = achievementId;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
 
-    function closeModal() {
-        document.getElementById('confirmationModal').classList.add('hidden');
-    }
 
-    function showModal(achievementId) {
-    	console.log('Modal shown for Achievement ID:', achievementId);
-        const modal = document.getElementById('confirmationModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        const confirmButton = document.getElementById('confirmButton');
+        function closeModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            deleteAchievementId = null;
+        }
 
-        modalTitle.textContent = 'Confirm Deletion';
-        modalBody.textContent = `Are you sure you want to delete the achievement with ID ${achievementId}?`;
-        confirmButton.onclick = () => confirmAction(achievementId);
 
-        modal.classList.remove('hidden');
-    }
+        document.getElementById('confirmDelete').addEventListener('click', function () {
+            if (deleteAchievementId) {
+                fetch(`/adminschool/delete-achievement`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `achievementId=${achievementId}`
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.reload();
+                        } else {
+                            alert('Failed to delete achievement.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the achievement.');
+                    });
 
-    function confirmAction(achievementId) {
-        // Example of sending a delete request using Fetch API
-        fetch(`/adminschool/delete/${achievementId}`, {
-            method: 'DELETE'
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Reload the page or remove the row from the table
-                    window.location.reload();
-                } else {
-                    alert('Failed to delete achievement.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while deleting the achievement.');
-            });
-
-        closeModal();
-    }
+                closeModal();
+            }
+        });
 
     </script>
 </body>

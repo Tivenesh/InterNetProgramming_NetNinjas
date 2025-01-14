@@ -35,7 +35,7 @@ public class Achievement implements Serializable {
     @Column(name = "sub_category")
     private String subCategory;
 
-    @Column(name = "award_info")
+    @Column(name = "award_info", nullable = true)
     private String awardInfo;
 
     // Multiple Form - Storing file paths
@@ -95,7 +95,7 @@ public class Achievement implements Serializable {
     }
 
     public void setActivityName(String activityName) {
-        this.activityName = activityName;
+        this.activityName = activityName != null ? activityName.trim() : null;
     }
 
     public String getCategory() {

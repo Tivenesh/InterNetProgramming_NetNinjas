@@ -26,11 +26,13 @@ public class CertificateService {
     @Transactional
     public void initializeCertificates() {
         if(certificateDao.getAllCertificates().isEmpty()) {
-            certificateDao.save(new Certificate("SA1001", "SCH001", "SJK (C) Kuo Kuang 2", "Sport Achievement", "Single", "Pending"));
-            certificateDao.save(new Certificate("MA1001", "SCH002", "SK Impian Emas", "Academic Achievement", "Multiple", "Generated"));
-            certificateDao.save(new Certificate("MA1002", "SCH003", "SK Taman Universiti", "Sport Achievememt", "Single", "Pending"));
-            certificateDao.save(new Certificate("SA1002", "SCH004", "SK Mutiara Rini", "Singing Competition", "Multiple", "Generated"));
-            certificateDao.save(new Certificate("SA1003", "SCH005", "SK Taman Sri Pulai", "Essay Competition", "Single", "Pending"));
+            certificateDao.save(new Certificate("ACH0001", "SCH001", "SJK (C) Kuo Kuang 2", "Sport Achievement", "single", "Pending"));
+            certificateDao.save(new Certificate("ACH0002", "SCH004", "SK Mutiara Rini", "Singing Competition", "multiple", "Generated"));
+            certificateDao.save(new Certificate("ACH0003", "SCH005", "SK Taman Sri Pulai", "Essay Competition", "single", "Pending"));
+            certificateDao.save(new Certificate("ACH0004", "SCH002", "SK Impian Emas", "Academic Achievement", "multiple", "Generated"));
+            certificateDao.save(new Certificate("ACH0005", "SCH003", "SK Taman Universiti", "Sport Achievememt", "single", "Pending"));
+            certificateDao.save(new Certificate("ACH0006", "SCH007", "SK Mount AUstin", "Academic Achievement", "single", "Generated"));
+            certificateDao.save(new Certificate("ACH0007", "SCH008", "SK Skudai", "Sport Achievememt", "single", "Pending"));
         }
     }
     

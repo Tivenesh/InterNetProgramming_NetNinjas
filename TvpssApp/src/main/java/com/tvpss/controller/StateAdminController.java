@@ -150,7 +150,7 @@ public class StateAdminController {
 	    } 
 	    	catch (RuntimeException e) {
 	        model.addAttribute("error", "Data not found");
-	        return "errorPage"; 
+	        return "adminstate/viewCertApplication"; 
 	    }
     }
     

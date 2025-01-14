@@ -18,87 +18,94 @@
             <%@ include file="/WEB-INF/view/common/adSchoolheader.jsp" %>
             
             <hr class="divider">
+            <br>
             <!-- School Information Form -->
             <div class="title-container">
-                <h2>Student Achievement</h2>
+                <h2>${achievementTitle}</h2>
             </div>
             
             <div class="breadcrumb-container">
 		    <nav aria-label="breadcrumb">
 		        <ol class="breadcrumb">
 		            <li><a href="student-achievement">Student Achievement List</a></li>
-		            <li aria-current="page">Submit Student Achievement</li>
+		            <li aria-current="page">${achievementTitle}</li>
 		        </ol>
 		    </nav>
 			</div>
 		<div class="form-container">
 		    <h1>Student Information</h1>
 		    <form method="POST" action="<c:url value='/adminschool/submit-achievement' />" enctype="multipart/form-data">
-		        <!-- Select Form Mode -->
-		        <div class="form-group">
-		        	<label for="form-mode">Select Form Application</label>
-		         	<div class="input-wrapper">
-				        <select id="form-mode" name="formMode" onchange="toggleFormMode()">
-				        	<option disabled selected>- Choose Form Type-</option>
-				            <option value="single">Individual Achievement Form</option>
-				            <option value="multiple">Multiple Achievement Form</option>
-				        </select>
-		            </div>
-   				</div>
+			    <c:if test="${isEdit}">
+			        <input type="hidden" name="achievementId" value="${achievement.achievementId}">
+			        <input type="hidden" name="formMode" value="${achievement.formMode}">
+			    </c:if>
+			    
+			    <c:if test="${!isEdit}">
+			        <div class="form-group">
+			            <label for="form-mode">Select Form Application</label>
+			            <div class="input-wrapper">
+			                <select id="form-mode" name="formMode" onchange="toggleFormMode()">
+			                    <option disabled selected>- Choose Form Type-</option>
+			                    <option value="single">Individual Achievement Form</option>
+			                    <option value="multiple">Multiple Achievement Form</option>
+			                </select>
+			            </div>
+			        </div>
+			    </c:if>
     					 
 		        <!-- Individual Form -->
-		        <div id="single-form" style="display: block;">
+		        <div id="single-form" style="display: ${isEdit || empty formMode ? 'block' : 'none'};">
 		        
 			        <div class="form-group">
 			            <label for="ic-number">IC Number</label>
 			            <div class="input-wrapper">
-			            	<input type="text" id="ic-number" name="icNumber" value="${achievements.icNumber}" required>
+			            	<input type="text" id="ic-number" name="icNumber" value="${achievement.icNumber}" required>
 			            </div>
 	   				</div>
 			        <div class="form-group">   				
 			            <label for="full-name">Full Name</label>
 			            <div class="input-wrapper">
-			            	<input type="text" id="full-name" name="fullName" value="${achievements.fullName}" required>
+			            	<input type="text" id="full-name" name="fullName" value="${achievement.fullName}" required>
 			            </div>
 	   				</div>
 	   				<div class="form-group">  		            
 			            <label for="activity-name">Activity Name</label>
 			            <div class="input-wrapper">
-			            <input type="text" id="activity-name-single" name="activityName" value="${achievements.activityName}" required>
+			            <input type="text" id="activity-name-single" name="activityName" value="${achievement.activityName}" required>
 			            </div>
 	   				</div>
-	   				<div class="form-group">  		
+	   				<div class="form-group">
 			            <label for="category">Category</label>
 			            <div class="input-wrapper">
-				            <select id="category-single" name="category" required>
-		                        <option disabled selected>- Choose Achievement Category -</option>
-				                <option value="Academic">Academic Achievement</option>
-				                <option value="Cultural">Cultural Achievement</option>
-				                <option value="Innovation">Innovation Achievement</option>
-				                <option value="Sport">Sport Achievement</option>
-				                <option value="Volunteer">Volunteer</option>
-				            </select>
+			                <select id="category-single" name="category" required>
+			                    <option disabled ${empty achievement.category ? 'selected' : ''}>- Choose Achievement Category -</option>
+			                    <c:forEach items="${['Academic Achievement', 'Cultural Achievement', 'Innovation Achievement', 'Sport Achievement', 'Volunteer']}" var="cat">
+			                        <option value="${cat}" ${achievement.category == cat ? 'selected' : ''}>
+			                        	${cat}
+			                        </option>
+			                    </c:forEach>
+			                </select>
 			            </div>
-	   				</div>
+			        </div>
 	   				<div class="form-group">  		
 			            <label for="sub-category">Sub-category</label>
 			            <div class="input-wrapper">
-			            	<input type="text" id="sub-category" name="subCategory" >
+			            	<input type="text" id="sub-category" name="subCategory" value="${achievement.subCategory}">
 			            </div>
 	   				</div> 	
-					<div class="form-group">  
-			            <label for="award-info">Award Information</label>
-			            <div class="input-wrapper">
-				            <select id="award-info" name="awardInfo">
-		                        <option disabled selected>- Choose Award -</option>
-				                <option value="Champion">Champion / Gold</option>
-				                <option value="Runner-up">Runner-up / Silver</option>
-				                <option value="Third Place">Third Place / Bronze</option>
-				                <option value="Consolation">Consolation / Other Awards</option>
-				                <option value="Participation">Participation</option>
-				            </select>
-			            </div>
-	   				</div>
+					<div class="form-group">
+            <label for="award-info">Award Information</label>
+            <div class="input-wrapper">
+                <select id="award-info" name="awardInfo">
+                    <option disabled ${empty achievement.awardInfo ? 'selected' : ''}>- Choose Award -</option>
+                    <c:forEach items="${['Champion', 'Runner-up', 'Third Place', 'Consolation', 'Participation']}" var="award">
+                        <option value="${award}" ${achievement.awardInfo == award ? 'selected' : ''}>
+                            ${award}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
 		        </div>
 		
 		        <!-- Multiple Form -->
@@ -107,12 +114,12 @@
 			        <div class="form-group">  	
 			        	<label for="category">Category</label>
 			        	<div class="input-wrapper">
-				            <select id="category-multiple" name="category" required>
+				            <select id="category-multiple" name="category" value="${achievements.category}" required>
 		                        <option disabled selected>- Choose Achievement Category -</option>
-				                <option value="Academic">Academic Achievement</option>
-				                <option value="Cultural">Cultural Achievement</option>
-				                <option value="Innovation">Innovation Achievement</option>
-				                <option value="Sport">Sport Achievement</option>
+				                <option value="Academic Achievement">Academic Achievement</option>
+				                <option value="Cultural Achievement">Cultural Achievement</option>
+				                <option value="Innovation Achievement">Innovation Achievement</option>
+				                <option value="Sport Achievement">Sport Achievement</option>
 				                <option value="Volunteer">Volunteer</option>
 				            </select>
 			            </div>
@@ -138,9 +145,11 @@
 		        </div>
 			
 		        <div class="form-actions">
-	                <button type="button" class="btn cancel" onclick="window.history.back()">Cancel</button>
-	                <button type="submit" class="btn submit">Submit</button>
-                </div>
+			        <button type="button" class="btn cancel" onclick="window.history.back()">Cancel</button>
+			        <button type="submit" class="btn submit">
+			            ${isEdit ? 'Update' : 'Submit'}
+			        </button>
+			    </div>
                 
 			    </form>
 			</div>
@@ -168,40 +177,54 @@
 	</div>
 	
 <script>
-function toggleFormMode() {
-    const formMode = document.getElementById("form-mode").value;
-    const singleForm = document.getElementById("single-form");
-    const multipleForm = document.getElementById("multiple-form");
+// Global functions need to be accessible from HTML
+window.closeConfirmationDialog = function() {
+    document.getElementById('confirmation-dialog').classList.add('hidden');
+};
 
-    if (formMode === "single") {
-        singleForm.style.display = "block";
-        multipleForm.style.display = "none";
-    } else if (formMode === "multiple"){
-        singleForm.style.display = "none";
-        multipleForm.style.display = "block";
+window.closeSuccessDialog = function() {
+    document.getElementById('successModal').classList.add('hidden');
+};
+
+// Form mode toggling function
+window.toggleFormMode = function() {
+    if (!${isEdit}) {
+        const formMode = document.getElementById("form-mode").value;
+        const singleForm = document.getElementById("single-form");
+        const multipleForm = document.getElementById("multiple-form");
+
+        if (formMode === "single") {
+            singleForm.style.display = "block";
+            multipleForm.style.display = "none";
+        } else if (formMode === "multiple") {
+            singleForm.style.display = "none";
+            multipleForm.style.display = "block";
+        }
     }
-}
+};
 
-document.addEventListener('DOMContentLoaded', function () {
+// Main initialization code
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const submitButton = document.querySelector('.form-actions .btn.submit');
     const confirmationDialog = document.getElementById('confirmation-dialog');
+    const confirmDialogSubmitBtn = document.querySelector('.dialog-actions .btn.submit');
+    const confirmDialogCancelBtn = document.querySelector('.dialog-actions .btn.cancel');
 
-    submitButton.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default form submission
+    // Initialize edit mode form display if needed
+    if (${isEdit}) {
+        const formMode = '${achievement.formMode}';
+        const singleForm = document.getElementById("single-form");
+        const multipleForm = document.getElementById("multiple-form");
         
-        // Validate both single and multiple form modes
-        const formMode = document.getElementById('form-mode').value;
-        
-        if (formMode === '') {
-            alert('Please select a form application type');
-            return;
+        if (formMode.toLowerCase() === 'single') {
+            singleForm.style.display = "block";
+            multipleForm.style.display = "none";
+        } else if (formMode.toLowerCase() === 'multiple') {
+            singleForm.style.display = "none";
+            multipleForm.style.display = "block";
         }
-
-        if (validateForm(formMode)) {
-            openConfirmationDialog();
-        }
-    });
+    }
 
     function validateForm(formMode) {
         let isValid = true;
@@ -210,11 +233,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
         document.querySelectorAll('.error-message').forEach(el => el.remove());
 
-        if (formMode === 'single') {
+        // Skip form mode validation for edit mode
+        if (!${isEdit}) {
+            if (!formMode) {
+                alert('Please select a form application type');
+                return false;
+            }
+        }
+
+        if (${isEdit} || formMode === 'single') {
             // Validate single form fields
             const singleFormFields = document.querySelectorAll('#single-form input[required], #single-form select[required]');
             singleFormFields.forEach(field => {
-                if (!field.value.trim()) {
+                if (!field.value) {
                     isValid = false;
                     addErrorToField(field);
                 }
@@ -230,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 addErrorToField(multipleCategory);
             }
 
-            if (!activityName.value.trim()) {
+            if (!activityName.value) {
                 isValid = false;
                 addErrorToField(activityName);
             }
@@ -256,21 +287,25 @@ document.addEventListener('DOMContentLoaded', function () {
         confirmationDialog.classList.remove('hidden');
     }
 
-    function closeConfirmationDialog() {
-        confirmationDialog.classList.add('hidden');
-    }
+    // Submit button click handler
+    submitButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        const formMode = ${isEdit} ? '${achievement.formMode}' : document.getElementById('form-mode').value;
+        
+        if (validateForm(formMode)) {
+            openConfirmationDialog();
+        }
+    });
 
-    function submitForm() {
+    // Confirmation dialog submit button
+    confirmDialogSubmitBtn.addEventListener('click', function() {
         closeConfirmationDialog();
         form.submit();
-    }
+    });
 
-    // Confirmation dialog buttons
-    const cancelButton = document.querySelector('.dialog-actions .btn.cancel');
-    cancelButton.addEventListener('click', closeConfirmationDialog);
-
-    const confirmButton = document.querySelector('.dialog-actions .btn.submit');
-    confirmButton.addEventListener('click', submitForm);
+    // Confirmation dialog cancel button
+    confirmDialogCancelBtn.addEventListener('click', closeConfirmationDialog);
 });
 </script>
 

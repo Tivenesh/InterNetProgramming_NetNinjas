@@ -195,16 +195,51 @@ public String editSchoolInformation(Model model) {
     @GetMapping("/submit-achievement")
     public String showSubmitAchievementForm(Model model) {
         model.addAttribute("achievement", new Achievement());
+        model.addAttribute("pageTitle", "Student Achievements");
+        model.addAttribute("achievementTitle", "Add Student Achievement");
+        model.addAttribute("isEdit", false);
         return "adminschool/submit-achievement";
+    }
+    
+    @GetMapping("/edit-achievement")
+    public String editStudentAchievement(@RequestParam("id") String achievementId, Model model) {
+        Achievement achievement = achievementService.getAchievementByAchievementId(achievementId);
+        
+        if (achievement == null) {
+            return "redirect:/adminschool/student-achievement";
+        }
+        
+        model.addAttribute("achievement", achievement);
+        model.addAttribute("pageTitle", "Student Achievements");
+        model.addAttribute("achievementTitle", "Edit Student Achievement");
+        model.addAttribute("page", "submit-achievement");
+        model.addAttribute("isEdit", true);
+        
+        return "adminschool/submit-achievement";
+    }
+
+    @GetMapping("/view-achievement")
+    public String viewAchievement(@RequestParam("id") String achievementId, Model model) {
+        Achievement achievement = achievementService.getAchievementByAchievementId(achievementId);
+
+                if (achievement == null) {
+                    return "redirect:/adminschool/student-achievement";
+                }
+
+        model.addAttribute("achievement", achievement);
+        model.addAttribute("pageTitle", "Student Achievements");
+        model.addAttribute("achievementTitle", "View Student Achievement");
+        return "adminschool/view-achievement";
     }
     
     @PostMapping("/submit-achievement")
     public String handleAchievementSubmission(
-            @RequestParam("formMode") String formMode,
+    		@RequestParam(value = "formMode", required = false) String formMode,
+            @RequestParam(value = "achievementId", required = false) String achievementId,
             @RequestParam(value = "icNumber", required = false) String icNumber,
             @RequestParam(value = "fullName", required = false) String fullName,
-            @RequestParam("activityName") String activityName,
-            @RequestParam("category") String category,
+            @RequestParam(value = "activityName", required = false) String activityName,
+            @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "subCategory", required = false) String subCategory,
             @RequestParam(value = "awardInfo", required = false) String awardInfo,
             @RequestParam(value = "uploadDoc", required = false) MultipartFile uploadDoc,
@@ -213,25 +248,47 @@ public String editSchoolInformation(Model model) {
             HttpServletRequest request) {
 
         try {
+
+        	if (achievementId != null && !achievementId.isEmpty()) {
+                Achievement existingAchievement = achievementService.getAchievementByAchievementId(achievementId);
+                if (existingAchievement != null) {
+                    existingAchievement.setIcNumber(icNumber);
+                    existingAchievement.setFullName(fullName);
+                    // Check the form mode and apply the corresponding logic
+                    if ("single".equalsIgnoreCase(existingAchievement.getFormMode())) {
+                        existingAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll(",$", "") : null);
+                    } else if ("multiple".equalsIgnoreCase(existingAchievement.getFormMode())) {
+                        existingAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll("^,", "") : null);
+                    }
+                    existingAchievement.setCategory(category);
+                    existingAchievement.setSubCategory(subCategory);
+                    existingAchievement.setAwardInfo(awardInfo);
+                    
+                    achievementService.updateAchievement(existingAchievement);
+                    redirectAttributes.addFlashAttribute("successMessage", "Achievement updated successfully!");
+                    return "redirect:/adminschool/student-achievement";
+                }
+            }
+        	
             if ("single".equalsIgnoreCase(formMode)) {
                 Achievement singleAchievement = new Achievement();
                 singleAchievement.setAchievementId(generateUniqueId());
                 singleAchievement.setIcNumber(icNumber);
                 singleAchievement.setFullName(fullName);
-                singleAchievement.setActivityName(activityName);
+                singleAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll(",$", "") : null);
                 singleAchievement.setCategory(category);
                 singleAchievement.setSubCategory(subCategory);
                 singleAchievement.setAwardInfo(awardInfo);
-                singleAchievement.setFormMode("Single");
+                singleAchievement.setFormMode("single");
                 singleAchievement.setStatus("Pending");
-                achievementService.saveAchievement(singleAchievement);
+                achievementService.addAchievement(singleAchievement);
 
             } else if ("multiple".equalsIgnoreCase(formMode)) {
                 Achievement multipleAchievement = new Achievement();
                 multipleAchievement.setAchievementId(generateUniqueId());
-                multipleAchievement.setActivityName(activityName);
+                multipleAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll("^,", "") : null);
                 multipleAchievement.setCategory(category);
-                multipleAchievement.setFormMode("Multiple");
+                multipleAchievement.setFormMode("multiple");
                 multipleAchievement.setStatus("Pending");
 
                 if (uploadDoc != null && !uploadDoc.isEmpty()) {
@@ -247,24 +304,21 @@ public String editSchoolInformation(Model model) {
                     }
                 }
 
-                achievementService.saveAchievement(multipleAchievement);
+                achievementService.addAchievement(multipleAchievement);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage", "File upload failed: " + e.getMessage());
-            return "redirect:/adminschool/submit-achievement";
+            redirectAttributes.addFlashAttribute("successMessage", "Achievement added successfully!");
+            return "redirect:/adminschool/student-achievement";
+
         } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while processing the request: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred: " + e.getMessage());
             return "redirect:/adminschool/submit-achievement";
         }
-
-        return "redirect:/adminschool/student-achievement";
     }
 
     private String generateUniqueId() {
     	int count = achievementService.getAllAchievements().size() + 1; 
-        return String.format("ACH%03d", count);
+        return String.format("ACH%04d", count);
     }
 
     private File saveUploadedFile(MultipartFile file, HttpServletRequest request) throws IOException {
@@ -288,6 +342,22 @@ public String editSchoolInformation(Model model) {
             return "redirect:/adminschool/student-achievement";
 
     }
+
+    @PostMapping("/delete-achievement")
+    public ResponseEntity<String> deleteAchievement(@RequestParam("achievementId") String achievementId) {
+        if (achievementId == null || achievementId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Achievement ID.");
+        }
+    
+        Achievement achievement = achievementService.getAchievementByAchievementId(achievementId);
+        if (achievement != null) {
+            achievementService.deleteAchievement(achievementId);
+            return ResponseEntity.ok("Achievement deleted successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Achievement not found.");
+        }
+    }
+
     
     // Crew Application Management
 

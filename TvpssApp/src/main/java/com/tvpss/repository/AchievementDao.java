@@ -17,7 +17,7 @@ public class AchievementDao {
 
     @Transactional
     public void save(Achievement achievement) {
-        sessionFactory.getCurrentSession().saveOrUpdate(achievement);
+        sessionFactory.getCurrentSession().merge(achievement);
     }
 
     @Transactional
@@ -39,6 +39,14 @@ public class AchievementDao {
         Achievement achievement = findByAchievementId(achievementId).orElse(null);
         if (achievement != null) {
             sessionFactory.getCurrentSession().delete(achievement);
+        } else {
+            System.out.println("Achievement not found for ID: " + achievementId);
         }
+    }
+
+    @Transactional
+    public void add(Achievement achievement) {
+        System.out.println("Persisting Achievement: " + achievement.getAchievementId());
+        sessionFactory.getCurrentSession().persist(achievement);
     }
 }

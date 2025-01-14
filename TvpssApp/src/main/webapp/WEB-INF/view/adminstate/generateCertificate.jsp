@@ -380,7 +380,7 @@
 			    </div>
 			    <div class="divider"></div>
 			    <div class="setting-item">
-			        <i class="icon-logout"></i> Logout
+			        <a href="/TvpssApp/login" style="text-decoration: none; color: inherit;">Logout</a>
 			    </div>
 			</div>
         </aside>
@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		                'font-weight: bold;' +
 		                'text-align: center;' +
 		                'width: 100%;' +
-		            '">Abdullah Abdullah Abdullah ' + fullName + '</h2>' +
+		            '">' + fullName + '</h2>' +
 		            '<h4 style="' +
 		                'position: absolute;' +
 		                'top: 2250px;' +
