@@ -329,8 +329,9 @@
 			    </div>
 			    <div class="divider"></div>
 			    <div class="setting-item">
-			        <i class="icon-logout"></i> Logout
-			    </div>
+                    <i class="icon-logout"></i>
+                    <a href="/TvpssApp/login" style="text-decoration: none; color: inherit;">Logout</a>
+                </div>
 			</div>
         </aside>
 
