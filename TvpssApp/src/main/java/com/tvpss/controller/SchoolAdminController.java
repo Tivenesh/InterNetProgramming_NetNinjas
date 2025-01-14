@@ -166,7 +166,7 @@ public class SchoolAdminController {
     }
 
     @GetMapping("/edit-school")
-public String editSchoolInformation(Model model) {
+    public String editSchoolInformation(Model model) {
     School school = schoolService.getSchool();
 
     if (school != null && school.getCode() != null) {
@@ -255,11 +255,11 @@ public String editSchoolInformation(Model model) {
                     existingAchievement.setIcNumber(icNumber);
                     existingAchievement.setFullName(fullName);
                     // Check the form mode and apply the corresponding logic
-                    if ("single".equalsIgnoreCase(existingAchievement.getFormMode())) {
-                        existingAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll(",$", "") : null);
-                    } else if ("multiple".equalsIgnoreCase(existingAchievement.getFormMode())) {
-                        existingAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll("^,", "") : null);
-                    }
+                if ("single".equalsIgnoreCase(existingAchievement.getFormMode())) {
+                    existingAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll(",$", "") : null);
+                } else if ("multiple".equalsIgnoreCase(existingAchievement.getFormMode())) {
+                    existingAchievement.setActivityName(activityName != null ? activityName.trim().replaceAll("^,", "") : null);
+                }
                     existingAchievement.setCategory(category);
                     existingAchievement.setSubCategory(subCategory);
                     existingAchievement.setAwardInfo(awardInfo);
