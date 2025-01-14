@@ -345,7 +345,7 @@
 	<div class="modal" id="confirmationModal" style="display: none;">
 	    <div class="modal-header">
 	        <h2>Do you want to delete the user?</h2>
-	        <button class="close-btn" onclick="hideModal()">ÃÂ</button>
+	        <button class="close-btn" onclick="hideModal()">ÃÂÃÂ</button>
 	    </div>
 	    <div class="modal-body">
 	        <p>This will be an irreversible operation.</p>
@@ -525,7 +525,7 @@
                          <label class="form-check-label" for="pdfCheck">PDF</label>
                      </div>
                      <div class="form-check">
-                         <input class="form-check-input" type="checkbox" id="jpgCheck" checked>
+                         <input class="form-check-input" type="checkbox" id="jpgCheck">
                          <label class="form-check-label" for="jpgCheck">JPG</label>
                      </div>
                      <div class="form-check">
@@ -604,13 +604,12 @@ document.addEventListener('DOMContentLoaded', function() {
             signatureHtml = 
                 '<div style="' +
                     'position: absolute;' +
-                    'bottom: 380px;' +
+                    'bottom: 335px;' +
                     'left: 50%;' +
                     'transform: translateX(-50%);' +
                     'text-align: center;' +
                 '">' +
-                    '<img src="' + uploadedSignature + '" style="max-width: 700px; max-height: 450px;">' +
-                    '<p style="font-size: 36px;">Authorized Signature</p>' +
+                    '<img src="' + uploadedSignature + '" style="max-width: 700px; max-height: 420px;">' +
                 '</div>';
         }
 
@@ -642,7 +641,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		            'align-items: center;' +
 		            'text-align: center;' +
 		        '">' +
-		            '<h2 style="' +
+		            '<h3 style="' +
 		                'position: absolute;' +
 		                'top: 1780px;' +
 		                'left: 50%;' +
@@ -651,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		                'font-weight: bold;' +
 		                'text-align: center;' +
 		                'width: 100%;' +
-		            '">' + fullName + '</h2>' +
+		            '">' + fullName + '</h3>' +
 		            '<h4 style="' +
 		                'position: absolute;' +
 		                'top: 2250px;' +
