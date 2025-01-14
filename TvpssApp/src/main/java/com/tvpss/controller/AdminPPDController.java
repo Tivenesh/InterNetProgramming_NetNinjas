@@ -1,11 +1,8 @@
 package com.tvpss.controller;
 
 import com.tvpss.model.School;
-import com.tvpss.model.SchoolVersion;
 import com.tvpss.repository.SchoolDao;
-import com.tvpss.repository.UserDao;
 import com.tvpss.service.SchoolService;
-import com.tvpss.service.SchoolVersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +17,6 @@ public class AdminPPDController {
 
     @Autowired
     private SchoolService schoolService;
-
-    @Autowired
-    private SchoolVersionService schoolVersionService;
     
     @Autowired
     private SchoolDao schoolDao;
@@ -90,6 +84,7 @@ public class AdminPPDController {
      * Update the details of a school.
      *
      * @param schoolCode          The school code to update.
+     * @param collaborationExternalAgencies
      * @param tvpssLogo           Whether the school has uploaded a TVPSS logo.
      * @param studio              Whether the school has a TV studio.
      * @param youtubeUpload       Whether the school uploads to YouTube.
@@ -110,16 +105,22 @@ public class AdminPPDController {
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "School not found.");
         }
-        return "redirect:/TvpssApp/adminppd/schoolValidation";
+        return "redirect:/adminppd/schoolValidation";
     }
 
     @PostMapping("/updateTvpssVersion")
     public String updateTvpssVersion(@RequestParam String schoolCode,
                                      @RequestParam Integer tvpssVersion,
+                                     @RequestParam(required = false) String studio,
+                                     @RequestParam(required = false) String recordingInSchool,
+                                     @RequestParam(required = false) String recordingInOutSchool,
                                      RedirectAttributes redirectAttributes) {
         School school = schoolService.getSchoolBySchoolCode(schoolCode);
         if (school != null) {
             school.setTvpssVersion(tvpssVersion);  // Set new version
+            school.setStudio(studio != null ? "Yes" : "No"); // Handle checkboxes
+            school.setRecordingInSchool(recordingInSchool != null ? "Yes" : "No");
+            school.setRecordingInOutSchool(recordingInOutSchool != null ? "Yes" : "No");
             schoolService.saveOrUpdate(school);    // Save to database
             redirectAttributes.addFlashAttribute("successMessage", "TVPSS version updated successfully!");
         } else {

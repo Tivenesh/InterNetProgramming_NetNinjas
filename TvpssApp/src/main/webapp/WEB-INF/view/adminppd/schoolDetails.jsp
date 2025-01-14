@@ -282,6 +282,7 @@
                         <li><span>Green Screen Technology:</span><span>${school.greenScreenTechnology}</span></li>
                         <li><span>Recording Equipment:</span><span>${school.recordingEquipment}</span></li>
                         <li><span>Conner Mini TV:</span><span>${school.connerminittv}</span></li>
+                        <li><span>Collaboration With External Agencies:</span><span>${school.collaborationExternalAgencies}</span></li>
                         <li><span>Email:</span><span>${school.email}</span></li>
                         <li><span>Logo TVPSS:</span>
                             <span>
@@ -311,9 +312,9 @@
                     <div class="status-upgrade">
                         <div class="status-text">Upgrade Version Status</div>
                         <div class="status-arrows">
-                            <span class="status-from">1</span>
+                            <span class="status-from">${school.tvpssVersion != null ? school.tvpssVersion : 0}</span>
                             <span>→</span>
-                            <span><strong id="calculated-version">1</strong></span>
+                            <span><strong id="calculated-version">${school.tvpssVersion}</strong></span>
                         </div> 
                     </div>
 
@@ -358,6 +359,14 @@
             <input type="checkbox" name="recordingInOutSchool" value="true" onchange="updateVersionNumber()" ${school.recordingInOutSchool == "Yes" ? "checked" : ""}>
             <label>Recording in and out of School</label>
         </li>
+        <li>
+            <input type="checkbox" name="collaborationExternalAgencies" value="true" onchange="updateVersionNumber()" ${school.collaborationExternalAgencies == "Yes" ? "checked" : ""}>
+            <label>Collaboration with External Agencies</label>
+        </li>
+        <li>
+            <input type="checkbox" name="greenScreenTechnology" value="true" onchange="updateVersionNumber()" ${school.greenScreenTechnology == "Yes" ? "checked" : ""}>
+            <label>Green Screen Technology</label>
+        </li>
     </ul>
     <button type="submit" class="update-button">Update TVPSS Version</button>
 </form>
@@ -367,7 +376,7 @@
 
 <script>
 function updateVersionNumber() {
-    let version = 1;  // Default version
+    let version = 0;  // Default version
     document.querySelectorAll('input[type="checkbox"]:checked').forEach(() => version++);
     document.getElementById('calculatedVersion').value = version;  // Update hidden input for both forms
     document.getElementById('updateTvpssVersionInput').value = version;  // Ensure consistency for the second form

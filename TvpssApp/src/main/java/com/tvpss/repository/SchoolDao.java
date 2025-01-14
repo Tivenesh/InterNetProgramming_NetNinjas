@@ -39,6 +39,18 @@ public class SchoolDao {
 
         if (existingSchool != null) {
             // Update fields only if they are not null
+            if (existingSchool.getTvpssVersion() == null) {
+                existingSchool.setTvpssVersion(0);
+            }
+    
+            // Update other fields
+            if (school.getVersionStatus() != null) {
+                existingSchool.setVersionStatus(school.getVersionStatus());
+            }
+            if (school.getTvpssVersion() != null) {
+                existingSchool.setTvpssVersion(school.getTvpssVersion());
+            }
+
             if (school.getVersionStatus() != null) {
                 existingSchool.setVersionStatus(school.getVersionStatus());
             }
@@ -54,11 +66,26 @@ public class SchoolDao {
             if (school.getGreenScreenTechnology() != null) {
                 existingSchool.setGreenScreenTechnology(school.getGreenScreenTechnology());
             }
+            if (school.getCollaborationExternalAgencies() != null) {
+                existingSchool.setCollaborationExternalAgencies(school.getCollaborationExternalAgencies());
+            }
+            if (school.getStudio() != null) {
+                existingSchool.setStudio(school.getStudio());
+            }
+            if (school.getRecordingInSchool() != null) {
+                existingSchool.setRecordingInSchool(school.getRecordingInSchool());
+            }
+            if (school.getRecordingInOutSchool() != null) {
+                existingSchool.setRecordingInOutSchool(school.getRecordingInOutSchool());
+            }
 
             // Save changes
             session.merge(existingSchool);
         } else {
             // Save as new if school doesn't exist
+            if (school.getTvpssVersion() == null) {
+                school.setTvpssVersion(0); // Default version
+            }
             session.save(school);
         }
     }

@@ -69,14 +69,18 @@ public class School implements Serializable {
     private String recordingInOutSchool;
 
     @Column(name = "tvpss_version")
-    private Integer tvpssVersion;
+    private Integer tvpssVersion = 0;
 
     @Column(name = "version_status")
-    private String versionStatus;
+    private String versionStatus = "Inactive";
+
+    @Column(name = "collaboration_external_agencies")
+    private String collaborationExternalAgencies;
 
     @Column(name = "school_officer_name")
     private String schoolOfficerName;
 
+    
     public String getSchoolOfficerName() {
         return schoolOfficerName;
     }
@@ -250,6 +254,14 @@ public class School implements Serializable {
         this.recordingInOutSchool = recordingInOutSchool;
     }
 
+    public String getCollaborationExternalAgencies() {
+        return collaborationExternalAgencies;
+    }
+
+    public void setCollaborationExternalAgencies(String collaborationExternalAgencies) {
+        this.collaborationExternalAgencies = collaborationExternalAgencies;
+    }
+
     @Override
     public String toString() {
         return "School [code=" + code + ", name=" + name + ", address1=" + address1 + ", address2=" + address2
@@ -258,9 +270,12 @@ public class School implements Serializable {
                 + ", logoFilename=" + logoFilename + ", connerminittv=" + connerminittv + ", recordingEquipment="
                 + recordingEquipment + ", greenScreenTechnology=" + greenScreenTechnology + ", studio=" + studio
                 + ", recordingInSchool=" + recordingInSchool + ", recordingInOutSchool=" + recordingInOutSchool
-                + ", tvpssVersion=" + tvpssVersion + ", versionStatus=" + versionStatus + ", schoolOfficerName="
+                + ", tvpssVersion=" + tvpssVersion + ", versionStatus=" + versionStatus
+                + ", collaborationExternalAgencies=" + collaborationExternalAgencies + ", schoolOfficerName="
                 + schoolOfficerName + "]";
     }
+
+    
 
     
 

@@ -57,36 +57,40 @@ public class SchoolService {
     
     @Transactional
     public void updateTvpssVersion(School school) {
-        int version = 1;  // Default version
+        int currentVersion = school.getTvpssVersion() != null ? school.getTvpssVersion() : 0;
+        int newVersion = currentVersion;
 
-        // Increment based on criteria
-        if ("Yes".equalsIgnoreCase(school.getConnerminittv())) version++;
-        if ("Yes".equalsIgnoreCase(school.getRecordingEquipment())) version++;
-        if ("Yes".equalsIgnoreCase(school.getGreenScreenTechnology())) version++;
-        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) version++;
-        if ("Yes".equalsIgnoreCase(school.getStudio())) version++;
-        if ("Yes".equalsIgnoreCase(school.getRecordingInSchool())) version++;
-        if ("Yes".equalsIgnoreCase(school.getRecordingInOutSchool())) version++;
+        // Check criteria for incrementing the version
+        if ("Yes".equalsIgnoreCase(school.getConnerminittv())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingEquipment())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getGreenScreenTechnology())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getCollaborationExternalAgencies())) newVersion++;
+        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getStudio())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInSchool())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInOutSchool())) newVersion++;
 
-        school.setTvpssVersion(version);
+        school.setTvpssVersion(newVersion);
         saveSchool(school);  // Save the updated version
     }
 
     @Transactional
     public void calculateAndSaveTvpssVersion(School school) {
-        int version = 1; // Start with version 1 as the default
+        int currentVersion = school.getTvpssVersion() != null ? school.getTvpssVersion() : 0;
+        int newVersion = currentVersion;
 
         // Check criteria for incrementing the version
-        if ("Yes".equalsIgnoreCase(school.getConnerminittv())) version++;
-        if ("Yes".equalsIgnoreCase(school.getRecordingEquipment())) version++;
-        if ("Yes".equalsIgnoreCase(school.getGreenScreenTechnology())) version++;
-        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) version++;
-        if ("Yes".equalsIgnoreCase(school.getStudio())) version++;
-        if ("Yes".equalsIgnoreCase(school.getRecordingInSchool())) version++;
-        if ("Yes".equalsIgnoreCase(school.getRecordingInOutSchool())) version++;
+        if ("Yes".equalsIgnoreCase(school.getConnerminittv())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingEquipment())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getGreenScreenTechnology())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getCollaborationExternalAgencies())) newVersion++;
+        if (school.getYoutubeLink() != null && !school.getYoutubeLink().isEmpty()) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getStudio())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInSchool())) newVersion++;
+        if ("Yes".equalsIgnoreCase(school.getRecordingInOutSchool())) newVersion++;
 
         // Set the calculated version
-        school.setTvpssVersion(version);
+        school.setTvpssVersion(newVersion);
 
         // Save or update the school in the database
         schoolDao.saveOrUpdate(school);

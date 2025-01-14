@@ -1,38 +1,20 @@
 package com.tvpss.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Represents the version information for a specific school.
- */
-@Entity
-@Table(name = "school_version")
 public class SchoolVersion implements Serializable {
 
-    @Id
-    @Column(name = "school_code", nullable = false)
     private String schoolCode;       // School Code
-
-    @Column(name = "school_name", nullable = false)
     private String schoolName;       // School Name
-
-    @Column(name = "district", nullable = false)
     private String district;         // District
-
-    @Column(name = "contact_person")
     private String contactPerson;    // Contact Person
-
-    @Column(name = "version_status")
     private String versionStatus;    // Version Status
-
-    @Column(name = "status")
     private String status;           // Status (Active/Inactive)
-
-    @Column(name = "version", nullable = false)
     private int version;             // Version
 
     public SchoolVersion() {
+        this.versionStatus = "Inactive"; // Set default value for versionStatus
+        this.status = "Inactive"; 
     }
 
     public SchoolVersion(String schoolCode, String schoolName, String district, String contactPerson, String versionStatus, String status, int version) {

@@ -260,15 +260,7 @@
                 </li>
                 <li><strong>YouTube Link:</strong> <a href="#" id="youtubeLink" target="_blank"></a></li>
             </ul>
-            <div class="modal-footer">
-                <button id="updateButton" class="btn-update">Update Notification</button>
-            </div>
         </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast-notification" id="successToast">
-        <span>School information updated successfully!</span>
     </div>
 
     <script>
@@ -312,15 +304,7 @@
                 }
             };
 
-            document.getElementById('updateButton').onclick = function () {
-                const toast = document.getElementById('successToast');
-                toast.style.display = 'block';
-                modal.style.display = 'none';
-
-                setTimeout(() => {
-                    toast.style.display = 'none';
-                }, 3000);
-            };
+            
         }
     </script>
 </body>

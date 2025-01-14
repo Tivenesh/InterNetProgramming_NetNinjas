@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit TVPSS Version</title>
     <link rel="stylesheet" href="<c:url value='/resources/css/schoolInformation.css' />">
+    <style>
+    input[type="radio"] {
+    margin: 0;
+    position: relative;
+    top: 20px; /* Adjust this value to control how far down the radio button moves */
+}
+
+
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -73,6 +82,7 @@
                         </label>
                     </div>
 
+
                     <div class="form-group">
                         <label>Recording Equipment Available</label>
                         <label>
@@ -81,6 +91,18 @@
                         </label>
                         <label>
                             <input type="radio" name="recordingEquipment" value="No" ${school.recordingEquipment == 'No' ? 'checked' : ''}>
+                            No
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Collaborate with external agencies</label>
+                        <label>
+                            <input type="radio" name="collaborationExternalAgencies" value="Yes" ${school.collaborationExternalAgencies == 'Yes' ? 'checked' : ''}>
+                            Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="collaborationExternalAgencies" value="No" ${school.collaborationExternalAgencies == 'No' ? 'checked' : ''}>
                             No
                         </label>
                     </div>

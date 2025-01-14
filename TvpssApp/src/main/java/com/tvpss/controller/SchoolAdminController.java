@@ -263,7 +263,8 @@ public String editSchoolInformation(Model model) {
     }
 
     private String generateUniqueId() {
-        return "ACH" + System.currentTimeMillis();
+    	int count = achievementService.getAllAchievements().size() + 1; 
+        return String.format("ACH%03d", count);
     }
 
     private File saveUploadedFile(MultipartFile file, HttpServletRequest request) throws IOException {
@@ -356,12 +357,14 @@ public String editSchoolInformation(Model model) {
             @RequestParam("connerminittv") String connerminittv,
             @RequestParam("recordingEquipment") String recordingEquipment,
             @RequestParam("greenScreenTechnology") String greenScreenTechnology,
+            @RequestParam("collaborationExternalAgencies") String collaborationExternalAgencies,
             RedirectAttributes redirectAttributes) {
 
         // Additional fields handling
         school.setConnerminittv(connerminittv);
         school.setRecordingEquipment(recordingEquipment);
         school.setGreenScreenTechnology(greenScreenTechnology);
+        school.setCollaborationExternalAgencies(collaborationExternalAgencies);
 
         schoolService.saveSchool(school);
         redirectAttributes.addFlashAttribute("successMessage", "TVPSS version submitted successfully!");
