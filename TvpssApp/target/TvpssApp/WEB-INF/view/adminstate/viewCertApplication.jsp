@@ -320,7 +320,7 @@
                 <ul>
                     <li><a href="/TvpssApp/adminstate/dashboard" class="menu-item ${page == 'dashboard' ? 'active' : ''}">Dashboard</a><li>
 			        <li><a href="/TvpssApp/adminstate/viewCertApplication" class="menu-item ${page == null || page == 'viewCertApplication' || page == 'generateCertificate' ? 'active' : ''}">Generate E-Certificate</a><li>
-				    <li><a href="/TvpssApp/schoolVersion/view" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
+				    <li><a href="/TvpssApp/adminstate/schoolVersion/view" class="menu-item ${page== 'tvpss-version' ? 'active' : ''}">Submit TVPSS Version</a><li>
                 </ul>
             </nav>
             <div class="settings">
@@ -329,7 +329,7 @@
 			    </div>
 			    <div class="divider"></div>
 			    <div class="setting-item">
-			        <i class="icon-logout"></i> Logout
+			        <a href="/TvpssApp/login" style="text-decoration: none; color: inherit;">Logout</a>
 			    </div>
 			</div>
         </aside>
@@ -407,7 +407,7 @@
 					                </c:if>
 					                <c:choose>
 			                            <c:when test="${certificate.status != 'Generated'}">
-			                            	<a href="${pageContext.request.contextPath}/adminstate/?certificateId=${certificate.certificateId}">
+			                            	<a href="${pageContext.request.contextPath}/adminstate/generateCertificate?certificateId=${certificate.certificateId}">
 											    <button class="btn preview" type="button">Preview</button>
 											</a>
 

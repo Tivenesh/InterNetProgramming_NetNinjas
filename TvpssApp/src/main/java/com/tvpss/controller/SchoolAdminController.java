@@ -344,19 +344,16 @@ public class SchoolAdminController {
     }
 
     @PostMapping("/delete-achievement")
-    public ResponseEntity<String> deleteAchievement(@RequestParam("achievementId") String achievementId) {
-        if (achievementId == null || achievementId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Achievement ID.");
-        }
-    
-        Achievement achievement = achievementService.getAchievementByAchievementId(achievementId);
-        if (achievement != null) {
+    public String deleteAchievement(@RequestParam("achievementId") String achievementId, RedirectAttributes redirectAttributes) {
+        try {
             achievementService.deleteAchievement(achievementId);
-            return ResponseEntity.ok("Achievement deleted successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Achievement not found.");
+            redirectAttributes.addFlashAttribute("success", "Achievement deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Failed to delete achievement: " + e.getMessage());
         }
+        return "redirect:/adminschool/student-achievement?success=true";
     }
+
 
     
     // Crew Application Management
