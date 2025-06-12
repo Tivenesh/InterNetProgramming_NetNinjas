@@ -10,6 +10,7 @@ This project, "TvpssApp," is a comprehensive web application designed to manage 
 - [Goals](#goals)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
+- [What We Learned](#what-we-learned)
 - [Prerequisites](#prerequisites)
 - [Installation and Setup](#installation-and-setup)
   - [Database Setup](#database-setup)
@@ -71,6 +72,35 @@ The TVPSS App is designed to streamline the administration and participation in 
     -   Apache Maven
 -   **Server:**
     -   Apache Tomcat or any other Servlet Container.
+
+---
+
+## What We Learned
+
+This project provided hands-on experience with a full-stack Java web application, covering key enterprise-level technologies and software architecture principles.
+
+### **1. Spring Framework**
+-   **Spring MVC:** We learned to build a web application based on the Model-View-Controller pattern. This included setting up controllers with `@Controller` and mapping requests using `@RequestMapping`, `@GetMapping`, and `@PostMapping`.
+-   **Spring Security:** We implemented robust, role-based security from scratch. This involved:
+    -   Configuring authentication and authorization rules in a `SecurityConfig` class.
+    -   Implementing password hashing using `BCryptPasswordEncoder`.
+    -   Securing endpoints based on user roles (`.hasAuthority()`).
+    -   Creating custom login pages and success/failure handlers for a seamless user experience.
+-   **Dependency Injection:** We utilized Spring's core feature of Inversion of Control (IoC) by using `@Autowired` to inject dependencies like services and DAOs into our controllers.
+
+### **2. Hibernate & Data Persistence**
+-   **Object-Relational Mapping (ORM):** We learned how to map Java objects to database tables using JPA annotations like `@Entity`, `@Table`, `@Id`, and `@Column`. This allowed us to work with Java objects instead of writing raw SQL queries.
+-   **CRUD Operations:** We implemented the Data Access Object (DAO) pattern to create a repository layer for all database interactions (Create, Read, Update, Delete).
+-   **Transactional Management:** We used the `@Transactional` annotation to ensure that database operations are atomic and maintain data integrity, especially in service layer methods.
+
+### **3. Java Web Technologies**
+-   **JSP & JSTL:** We built the dynamic frontend using JavaServer Pages, and used the JSTL tag library (e.g., `<c:forEach>`, `<c:if>`) to render data passed from the backend controllers, making the UI interactive and data-driven.
+-   **Servlets:** We gained a foundational understanding of how Java web applications work, including the role of the `web.xml` deployment descriptor and the `DispatcherServlet` as the central front controller in a Spring MVC application.
+
+### **4. Project & Software Engineering**
+-   **Maven:** We managed all project dependencies and the build lifecycle using `pom.xml`. We learned how to package the application into a `.war` file for deployment.
+-   **MVC Architecture:** We structured the entire application into distinct Model, View, and Controller layers, promoting a clean separation of concerns and making the code easier to maintain and scale.
+-   **Web Server Deployment:** We learned how to deploy a Java web application to an external server like Apache Tomcat.
 
 ---
 
@@ -139,3 +169,40 @@ The TVPSS App is designed to streamline the administration and participation in 
 ---
 
 ## Folder Structure
+
+
+
+
+
+---
+
+## User Roles & Credentials
+
+The application is pre-populated with default users for each role to facilitate testing. These are defined in `src/main/java/com/tvpss/service/UserService.java`.
+
+| Role | Username | Password |
+| :--- | :--- | :--- |
+| Super Admin | `superadmin` | `super123` |
+| PPD Admin | `adminppd` | `ppd123` |
+| State Admin | `adminstate`| `state123` |
+| School Admin | `adminschool`| `school123` |
+| Student | `student` | `student123` |
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Contact
+
+For further inquiries, please contact the NetNinjas team.
+
+---
+
+## Acknowledgments
+
+-   Our project supervisors and the faculty at our institution.
+-   The open-source community for providing the frameworks and tools that made this project possible.
